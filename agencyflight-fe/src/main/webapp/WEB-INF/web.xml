@@ -11,14 +11,26 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/root-context.xml</param-value>
 	</context-param>
+	<context-param>
+		<param-name>heartbeatInterval</param-name>
+		<param-value>300</param-value>
+	</context-param>
+
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+
 
 	<servlet>
 		<servlet-name>agencyflight</servlet-name>
 		<servlet-class>ru.xpoft.vaadin.SpringVaadinServlet</servlet-class>
 		<init-param>
 			<param-name>beanName</param-name>
-			<!-- <param-value>com.devcoo.agencyflight.fe.ui.MainUI</param-value> -->
 			<param-value>mainUI</param-value>
+		</init-param>
+		<init-param>
+			<param-name>closeIdleSessions</param-name>
+			<param-value>true</param-value>
 		</init-param>
 	</servlet>
 

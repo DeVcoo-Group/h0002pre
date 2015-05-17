@@ -1,5 +1,9 @@
+@import "views/default";
+@import "views/login";
 @import "../valo/valo.scss";
 
 .agencyflight {
-  @include valo;
+	@include default;
+	@include dashboard-login-view;
+	@include valo;
 }

@@ -4,8 +4,9 @@ import com.devcoo.agencyflight.fe.ui.menu.FEMenu;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.VerticalLayout;
 
-public class TopPanel extends HorizontalLayout {
+public class TopPanel extends VerticalLayout {
 
 	private static final long serialVersionUID = -6431393804362388676L;
 	
@@ -13,7 +14,7 @@ public class TopPanel extends HorizontalLayout {
 	
 	public TopPanel() {
 		super();
-		setSpacing(true);
+		setSpacing(false);
 		init();
 	}
 	
@@ -22,10 +23,10 @@ public class TopPanel extends HorizontalLayout {
 		imgLogo.setHeight(45, Unit.PIXELS);
 		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
-		horizontalLayout.setWidth(5, Unit.PIXELS);
-		horizontalLayout.setHeight(5, Unit.PIXELS);
+		horizontalLayout.setMargin(true);
+		horizontalLayout.addComponent(imgLogo);
+		
 		addComponent(horizontalLayout);
-		addComponent(imgLogo);
 		addComponent(new FEMenu());
 	}
 
