@@ -10,14 +10,14 @@
 		<module>agencyflight-core</module>
 		<module>agencyflight-fe</module>
 	</modules>
-
 	<properties>
 		<vaadin.version>7.4.5</vaadin.version>
-		<spring.version>4.1.6.RELEASE</spring.version>
 		<vaadin.spring.integration>3.1</vaadin.spring.integration>
-		<servlet.version>2.5</servlet.version>
+		<slf4j.version>1.7.12</slf4j.version>
+		<serlet.api.version>2.5</serlet.api.version>
+		<!-- Logging -->
+		<logback.version>1.0.13</logback.version>
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.vaadin</groupId>
@@ -38,21 +38,24 @@
 			<groupId>ru.xpoft.vaadin</groupId>
 			<artifactId>spring-vaadin-integration</artifactId>
 			<version>${vaadin.spring.integration}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
+
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.12</version>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>${servlet.version}</version>
+			<version>${serlet.api.version}</version>
 		</dependency>
 	</dependencies>
 </project>
