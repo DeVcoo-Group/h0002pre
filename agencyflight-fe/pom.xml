@@ -10,10 +10,7 @@
 	<groupId>com.devcoo.agencyflight.fe</groupId>
 	<artifactId>agencyflight-fe</artifactId>
 	<packaging>war</packaging>
-	<properties>
-		<!-- servlet -->
-		<spring-framework.version>4.1.6.RELEASE</spring-framework.version>
-	</properties>
+	
 	<repositories>
 		<repository>
 			<id>vaadin-addons</id>
@@ -26,11 +23,6 @@
 			<groupId>com.devcoo.agencyflight.core</groupId>
 			<artifactId>agencyflight-core</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-server</artifactId>
-			<version>7.5.0.alpha1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
