@@ -11,7 +11,7 @@ import com.devcoo.agencyflight.core.user.UserService;
 
 public class TestUser {
 
-	@SuppressWarnings("resource")
+	//@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
@@ -22,13 +22,15 @@ public class TestUser {
 //
 		User user = new User();
 		user.setName("John Doe");
+		userManager.insert(user);;
 //		userManager.insert(user);
-//		List<User> list=userManager.getUser();
-//		System.out.println("User list "+list.size());
+		List<User> list=userManager.findUser("abc","123");
+		if(!list.isEmpty())
+		System.out.println("User list "+list.get(0).getName());
 		
-		User user1= userManager.getAuthoriseUser("abc","123");
+		//User user1= userManager.getAuthoriseUser("abc","123");
 		
-		System.out.println("User  "+user1.getName());
+		//System.out.println("User  "+user1.getName());
 
 	}
 
