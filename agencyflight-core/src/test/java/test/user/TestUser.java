@@ -1,5 +1,6 @@
 package test.user;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
@@ -21,10 +22,13 @@ public class TestUser {
 //		// System.out.println("User count: " + list.size());
 //
 		User user = new User();
-		user.setName("John Doe");
+		user.setName("test");
+		user.setPassword("123");
+		user.setCreateDate(new Date());
+		user.setActive(true);
 		userManager.insert(user);;
 //		userManager.insert(user);
-		List<User> list=userManager.findUser("abc","123");
+		List<User> list=userManager.findUser("test","123");
 		if(!list.isEmpty())
 		System.out.println("User list "+list.get(0).getName());
 		
