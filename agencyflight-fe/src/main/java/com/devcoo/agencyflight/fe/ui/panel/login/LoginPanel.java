@@ -1,5 +1,7 @@
 package com.devcoo.agencyflight.fe.ui.panel.login;
 
+import java.util.List;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -30,11 +32,10 @@ public class LoginPanel extends AbstractLoginView {
 	@Override
 	protected void signIn(String user, String password) {
 		if (!StringUtils.isEmpty(user) && !StringUtils.isEmpty(password)) {
-
-			User log_user= userManager.getAuthoriseUser(user,password);
-			if (log_user != null) {
+			List<User> list_log_user= userManager.findUser(user,password);
+			if (!list_log_user.isEmpty()) {
 				UI.getCurrent().getSession().setAttribute("isLogin", true);
-				UI.getCurrent().getSession().setAttribute("log_user", log_user);
+				UI.getCurrent().getSession().setAttribute("log_user", list_log_user.get(0));
 				Page.getCurrent().setUriFragment("!" + MainUI.AFTER_LOG_IN_PANEL_NAME);
 			}
 		}
