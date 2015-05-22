@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import com.devcoo.agencyflight.core.user.User;
@@ -25,8 +28,9 @@ public class StdEntity implements Serializable {
 	private Date createDate;
 	@Column(name="modifyDate")
 	private Date modifyDate;
-	@Column(name="lastModifier")
-	private Integer lastModifier;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="lastModifier")
+	private User lastModifier;
 	
 	public int getId() {
 		return id;
@@ -52,12 +56,13 @@ public class StdEntity implements Serializable {
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-	public Integer getLastModifier() {
+	public User getLastModifier() {
 		return lastModifier;
 	}
-	public void setLastModifier(Integer lastModifier) {
+	public void setLastModifier(User lastModifier) {
 		this.lastModifier = lastModifier;
 	}
+	
 	
 	
 }
