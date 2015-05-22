@@ -22,15 +22,18 @@ public class TestUser {
 //		// System.out.println("User count: " + list.size());
 //
 		User user = new User();
+		User user1= new User();
+		user1.setId(9);
 		user.setName("test");
 		user.setPassword("123");
 		user.setCreateDate(new Date());
 		user.setActive(true);
+		user.setLastModifier(user1);
 		userManager.insert(user);;
 //		userManager.insert(user);
 		List<User> list=userManager.findUser("test","123");
 		if(!list.isEmpty())
-		System.out.println("User list "+list.get(0).getName());
+		System.out.println("User list "+list.get(3).getLastModifier().getName());
 		
 		//User user1= userManager.getAuthoriseUser("abc","123");
 		
