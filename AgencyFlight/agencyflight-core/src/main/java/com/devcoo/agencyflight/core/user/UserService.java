@@ -2,8 +2,9 @@ package com.devcoo.agencyflight.core.user;
 
 import java.util.List;
 
-public interface UserService {
+import com.devcoo.agencyflight.core.std.StdService;
+
+public interface UserService extends StdService<User> {
 	List<User> findUser(String name,String password);
 	List<User> getAll();
-	void insert(User user);
 }

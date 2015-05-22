@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 
 import ru.xpoft.vaadin.VaadinView;
 
+import com.devcoo.agencyflight.core.context.WebContext;
 import com.devcoo.agencyflight.core.ui.login.AbstractLoginView;
 import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.user.UserService;
@@ -25,6 +26,7 @@ import com.vaadin.ui.UI;
 public class LoginPanel extends AbstractLoginView {
 	ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
 	UserService userManager = (UserService) ctx.getBean("userServiceImp");
+	WebContext context = new WebContext();
 	
 	private static final long serialVersionUID = 6901879027592109979L;
 	public static final String NAME = "";
@@ -35,7 +37,8 @@ public class LoginPanel extends AbstractLoginView {
 			List<User> list_log_user= userManager.findUser(user,password);
 			if (!list_log_user.isEmpty()) {
 				UI.getCurrent().getSession().setAttribute("isLogin", true);
-				UI.getCurrent().getSession().setAttribute("log_user", list_log_user.get(0));
+				context.setLog_user(list_log_user.get(0));
+				UI.getCurrent().getSession().setAttribute(WebContext.WEB_CONTEXT, context);
 				Page.getCurrent().setUriFragment("!" + MainUI.AFTER_LOG_IN_PANEL_NAME);
 			}
 		}

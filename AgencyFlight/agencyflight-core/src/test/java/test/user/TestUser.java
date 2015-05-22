@@ -1,6 +1,5 @@
 package test.user;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
@@ -26,10 +25,7 @@ public class TestUser {
 		user1.setId(9);
 		user.setName("test");
 		user.setPassword("123");
-		user.setCreateDate(new Date());
-		user.setActive(true);
-		user.setLastModifier(user1);
-		userManager.insert(user);;
+		userManager.save(user);
 //		userManager.insert(user);
 		List<User> list=userManager.findUser("test","123");
 		if(!list.isEmpty())
