@@ -28,10 +28,10 @@ public class BottomPanel extends VerticalLayout {
 	private void initGUI() {
 		imgLogo = new Image(null, new ThemeResource("images/logo.jpg"));
 		imgLogo.setHeight(45, Unit.PIXELS);
-		lblDesignAndBuild = VaadinFactory.getLabel("Designed and built by ");
-		lblCopyRight = VaadinFactory.getLabel("Copyright © DevCoo Group. All rights reserved.");
+		lblDesignAndBuild = VaadinFactory.getLabelHtml("Designed and built by ");
+		lblCopyRight = VaadinFactory.getLabelHtml("Copyright &#x00a9; DevCoo Group. All rights reserved.");
 		lblCopyRight.setSizeUndefined();
-		lblVersion = VaadinFactory.getLabel("Version 0.0.1");
+		lblVersion = VaadinFactory.getLabelHtml("Version 0.0.1");
 		lblVersion.setSizeUndefined();
 		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
@@ -43,6 +43,8 @@ public class BottomPanel extends VerticalLayout {
 		addComponent(horizontalLayout);
 		addComponent(lblCopyRight);
 		addComponent(lblVersion);
+		setStyleName("layout-footer");
+		
 		
 		setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
 		setComponentAlignment(lblCopyRight, Alignment.MIDDLE_CENTER);
