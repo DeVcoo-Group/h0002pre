@@ -27,6 +27,7 @@ public abstract class AbstractLoginView extends AbstractLayout {
         Component loginForm = buildLoginForm();
         addComponent(loginForm);
         setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
+        setStyleName("login-background");
     }
 
     private Component buildLoginForm() {
