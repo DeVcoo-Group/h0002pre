@@ -15,16 +15,12 @@ public abstract class AbstractMenuBar extends MenuBar {
 	
 	protected abstract void buildMenu();
 	
-	public Command getCommand(String viewName) {
-		return new DefaultCommand(viewName);
-	}
-	
-	private class DefaultCommand implements Command {
+	protected class MenuCommand implements Command {
 		
 		private static final long serialVersionUID = -4738395107718942614L;
 		private String viewName;
 		
-		public DefaultCommand(String viewName) {
+		public MenuCommand(String viewName) {
 			this.viewName = viewName;
 		}
 

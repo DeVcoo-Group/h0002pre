@@ -4,10 +4,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.devcoo.agencyflight.core.ui.AbstractUI;
+import com.devcoo.agencyflight.fe.ui.footer.BottomPanel;
 import com.devcoo.agencyflight.fe.ui.header.TopPanel;
 import com.devcoo.agencyflight.fe.ui.panel.dashboard.Dashboard;
 import com.vaadin.annotations.Theme;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @Component
@@ -25,6 +25,11 @@ public class MainUI extends AbstractUI {
 	@Override
 	protected VerticalLayout buildMainPanel() {
 		return new VerticalLayout();
+	}
+	
+	@Override
+	protected VerticalLayout buildBottomPanel() {
+		return new BottomPanel();
 	}
 
 	@Override

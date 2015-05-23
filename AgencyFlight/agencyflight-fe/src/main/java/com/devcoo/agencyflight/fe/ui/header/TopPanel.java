@@ -1,5 +1,6 @@
 package com.devcoo.agencyflight.fe.ui.header;
 
+import com.devcoo.agencyflight.fe.ui.constant.VaadinTheme;
 import com.devcoo.agencyflight.fe.ui.menu.FEMenu;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.HorizontalLayout;
@@ -14,11 +15,12 @@ public class TopPanel extends VerticalLayout {
 	
 	public TopPanel() {
 		super();
+		addStyleName(VaadinTheme.LAYOUT_BACKGROUND_WHITE);
 		setSpacing(false);
-		init();
+		initGUI();
 	}
 	
-	private void init() {
+	private void initGUI() {
 		imgLogo = new Image(null, new ThemeResource("images/logo.jpg"));
 		imgLogo.setHeight(45, Unit.PIXELS);
 		
