@@ -8,6 +8,7 @@ import com.devcoo.agencyflight.fe.ui.footer.BottomPanel;
 import com.devcoo.agencyflight.fe.ui.header.TopPanel;
 import com.devcoo.agencyflight.fe.ui.panel.dashboard.Dashboard;
 import com.vaadin.annotations.Theme;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @Component

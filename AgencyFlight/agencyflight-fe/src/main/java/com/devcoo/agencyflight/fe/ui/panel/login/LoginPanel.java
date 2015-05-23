@@ -25,7 +25,7 @@ import com.vaadin.ui.UI;
 @VaadinView(LoginPanel.NAME)
 public class LoginPanel extends AbstractLoginView {
 	ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
-	UserService userManager = (UserService) ctx.getBean("userServiceImp");
+	UserService userService= (UserService)ctx.getBean("userServiceImp");
 	WebContext context = new WebContext();
 	
 	private static final long serialVersionUID = 6901879027592109979L;
@@ -34,7 +34,7 @@ public class LoginPanel extends AbstractLoginView {
 	@Override
 	protected void signIn(String user, String password) {
 		if (!StringUtils.isEmpty(user) && !StringUtils.isEmpty(password)) {
-			List<User> list_log_user= userManager.findUser(user,password);
+			List<User> list_log_user= userService.findUser(user,password);
 			if (!list_log_user.isEmpty()) {
 				UI.getCurrent().getSession().setAttribute("isLogin", true);
 				context.setLog_user(list_log_user.get(0));
