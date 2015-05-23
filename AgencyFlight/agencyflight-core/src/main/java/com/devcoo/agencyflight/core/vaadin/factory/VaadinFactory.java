@@ -1,6 +1,7 @@
 package com.devcoo.agencyflight.core.vaadin.factory;
 
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
@@ -38,5 +39,9 @@ public class VaadinFactory {
 		Button btn = getButton(caption);
 		btn.addStyleName(ValoTheme.BUTTON_DANGER);
 		return btn;
+	}
+
+	public static Label getLabelHtml(String label) {
+		return new Label(label,ContentMode.HTML);
 	}
 }
