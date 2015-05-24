@@ -1,7 +1,7 @@
 package com.devcoo.agencyflight.fe.ui.footer;
 
+import com.devcoo.agencyflight.core.vaadin.constant.VaadinTheme;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
-import com.devcoo.agencyflight.fe.ui.constant.VaadinTheme;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
@@ -43,8 +43,7 @@ public class BottomPanel extends VerticalLayout {
 		addComponent(horizontalLayout);
 		addComponent(lblCopyRight);
 		addComponent(lblVersion);
-		setStyleName("layout-footer");
-		
+		addStyleName(VaadinTheme.LAYOUT_FOOTER);
 		
 		setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
 		setComponentAlignment(lblCopyRight, Alignment.MIDDLE_CENTER);

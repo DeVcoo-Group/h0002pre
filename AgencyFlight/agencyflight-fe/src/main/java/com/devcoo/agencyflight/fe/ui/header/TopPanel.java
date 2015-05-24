@@ -1,6 +1,6 @@
 package com.devcoo.agencyflight.fe.ui.header;
 
-import com.devcoo.agencyflight.fe.ui.constant.VaadinTheme;
+import com.devcoo.agencyflight.core.vaadin.constant.VaadinTheme;
 import com.devcoo.agencyflight.fe.ui.menu.FEMenu;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.HorizontalLayout;

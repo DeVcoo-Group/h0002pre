@@ -3,6 +3,7 @@ package com.devcoo.agencyflight.core.ui.layout;
 import javax.persistence.criteria.CriteriaBuilder;
 
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -32,6 +33,7 @@ public abstract class AbstractSearchLayout extends Panel implements ClickListene
 	private HorizontalLayout buildSearchAndResetLayout() {
 		btnSearch = VaadinFactory.getButtonPrimary("Search");
 		btnSearch.setIcon(FontAwesome.SEARCH);
+		btnSearch.setClickShortcut(KeyCode.ENTER);
 		btnReset = VaadinFactory.getButton("Reset");
 		btnReset.setIcon(FontAwesome.REFRESH);
 		btnReset.addClickListener(this);

@@ -1,6 +1,7 @@
 package com.devcoo.agencyflight.core.ui.login;
 
 import com.devcoo.agencyflight.core.ui.layout.AbstractLayout;
+import com.devcoo.agencyflight.core.vaadin.constant.VaadinTheme;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
@@ -27,7 +28,7 @@ public abstract class AbstractLoginView extends AbstractLayout {
         Component loginForm = buildLoginForm();
         addComponent(loginForm);
         setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
-        setStyleName("login-background");
+        setStyleName(VaadinTheme.LOGIN_BACKGROUND);
     }
 
     private Component buildLoginForm() {
