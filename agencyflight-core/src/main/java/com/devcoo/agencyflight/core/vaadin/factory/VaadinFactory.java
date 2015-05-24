@@ -16,6 +16,10 @@ public class VaadinFactory {
 		return new Label(caption);
 	}
 	
+	public static Label getLabelHtml(String label) {
+		return new Label(label, ContentMode.HTML);
+	}
+	
 	// ============== Button ================== //
 	public static Button getButton(String caption) {
 		Button btn = new Button(caption);
@@ -40,8 +44,10 @@ public class VaadinFactory {
 		btn.addStyleName(ValoTheme.BUTTON_DANGER);
 		return btn;
 	}
-
-	public static Label getLabelHtml(String label) {
-		return new Label(label,ContentMode.HTML);
+	
+	public static Button getButtonFriendly(String caption) {
+		Button btn = getButton(caption);
+		btn.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+		return btn;
 	}
 }

@@ -30,8 +30,8 @@ public abstract class AbstractUI extends UI implements ViewChangeListener {
 	@Override
 	protected void init(VaadinRequest request) {
 		content = new VerticalLayout();
-		content.setSizeFull();
 		Panel panel = new Panel();
+		panel.setSizeFull();
 		panel.setStyleName(ValoTheme.PANEL_BORDERLESS);
 		panel.setContent(content);
 		setContent(panel);
@@ -69,6 +69,7 @@ public abstract class AbstractUI extends UI implements ViewChangeListener {
 			if (this.bottomPanel != null) {
 				this.bottomPanel.setVisible(false);
 			}
+			content.setHeight(100, Unit.PERCENTAGE);
 			if (isLogIn()) {
 				Page.getCurrent().setUriFragment("!" + AFTER_LOG_IN_PANEL_NAME);
 				return false;
@@ -80,6 +81,7 @@ public abstract class AbstractUI extends UI implements ViewChangeListener {
 			if (this.bottomPanel != null) {
 				this.bottomPanel.setVisible(true);
 			}
+			content.setHeightUndefined();
 			if (!isLogIn()) {
 				Page.getCurrent().setUriFragment("!");
 				return false;

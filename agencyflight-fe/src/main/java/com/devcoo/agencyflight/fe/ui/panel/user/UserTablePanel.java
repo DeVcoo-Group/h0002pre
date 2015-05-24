@@ -28,12 +28,6 @@ public class UserTablePanel extends AbstractListLayout<User> {
 	}
 
 	@Override
-	public void setCaption(String caption) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void buildTableContainerDataSource(List<User> entities) {
 		// TODO Auto-generated method stub
 		
