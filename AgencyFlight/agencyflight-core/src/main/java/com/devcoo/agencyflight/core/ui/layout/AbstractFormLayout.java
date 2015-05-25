@@ -1,21 +1,25 @@
 package com.devcoo.agencyflight.core.ui.layout;
 
-import com.devcoo.agencyflight.core.std.StdEntity;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.VerticalLayout;
 
-public abstract class AbstractFormLayout extends VerticalLayout implements ClickListener {
-
+public abstract class AbstractFormLayout<Service> extends AbstractServiceLayout<Service> implements ClickListener {
+	
 	private static final long serialVersionUID = -7445312774424876403L;
+	
+	public static final int EDIT = 0;
+	public static final int NEW = 1;
 	
 	private Resource icon;
 	private AbstractTabsheet<?> tabsheet;
-	
-	public AbstractFormLayout() {
+	private String caption = "";
+	private int typePage = EDIT;
+		
+	public AbstractFormLayout(String serviceName) {
+		super(serviceName);
 		setMargin(true);
 		setSpacing(true);
 		
@@ -44,8 +48,7 @@ public abstract class AbstractFormLayout extends VerticalLayout implements Click
 	
 	public void buttonClick(ClickEvent event) {
 		if (validate()) {
-			StdEntity entity = getEntity();
-			// TODO save entity
+			save();
 			tabsheet.setNeedRefresh(Boolean.TRUE);
 		}
 	}
@@ -54,14 +57,31 @@ public abstract class AbstractFormLayout extends VerticalLayout implements Click
 		this.tabsheet = tabsheet;
 	}
 	
+	protected abstract void save();
+	
 	protected abstract Component initGUI();
 	
 	protected abstract void assignValues(Long entityId);
 	
 	protected abstract void reset();
 	
-	protected abstract StdEntity getEntity();
-	
 	protected abstract boolean validate();
+
+	public String getCaption() {
+		return caption;
+	}
+
+	public void setCaption(String caption) {
+		this.caption = caption;
+	}
+
+	public int getTypePage() {
+		return typePage;
+	}
+
+	public void setTypePage(int typePage) {
+		this.typePage = typePage;
+	}
+	
 
 }

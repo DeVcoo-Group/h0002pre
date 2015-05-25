@@ -19,7 +19,6 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Spring -->
-		<spring-framework.version>4.1.6.RELEASE</spring-framework.version>
 		<spring-framework.data.jpa.version>1.8.0.RELEASE</spring-framework.data.jpa.version>
 
 		<!-- Hibernate / JPA -->
@@ -75,7 +74,7 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
-
+	
 	</dependencies>
 
 </project>

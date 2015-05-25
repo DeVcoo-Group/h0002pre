@@ -7,7 +7,15 @@ public enum UserRole {
 	private int id;
     private String code;
 
-    private UserRole(int id, String code) {
+    public int getId() {
+		return id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	private UserRole(int id, String code) {
     	this.id = id;
         this.code = code;
     }
