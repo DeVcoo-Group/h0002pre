@@ -69,7 +69,7 @@ public abstract class AbstractListLayout<T extends StdEntity> extends VerticalLa
 		private static final long serialVersionUID = -6345612035764585791L;
 
 		public void buttonClick(ClickEvent event) {
-			tabsheet.EditEntity();
+			tabsheet.editEntity();
 		}
 	}
 	
@@ -77,7 +77,7 @@ public abstract class AbstractListLayout<T extends StdEntity> extends VerticalLa
 		private static final long serialVersionUID = 2239593442237027172L;
 
 		public void buttonClick(ClickEvent event) {
-			
+			tabsheet.deleteEntity();
 		}
 	}
 	

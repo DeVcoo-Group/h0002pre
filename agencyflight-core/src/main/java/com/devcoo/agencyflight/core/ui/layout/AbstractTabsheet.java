@@ -81,6 +81,8 @@ public abstract class AbstractTabsheet<T extends StdEntity> extends AbstractLayo
 	
 	protected abstract void addNewEntity();
 	
-	protected abstract void EditEntity();
+	protected abstract void editEntity();
+	
+	protected abstract void deleteEntity();
 
 }
