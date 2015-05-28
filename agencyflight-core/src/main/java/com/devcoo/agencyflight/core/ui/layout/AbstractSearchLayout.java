@@ -1,6 +1,6 @@
 package com.devcoo.agencyflight.core.ui.layout;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.Query;
 
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.vaadin.event.ShortcutAction.KeyCode;
@@ -58,7 +58,7 @@ public abstract class AbstractSearchLayout extends Panel implements ClickListene
 	
 	protected abstract Component initGUI();
 
-	public abstract CriteriaBuilder getRestrictions();
+	public abstract Query getRestrictions();
 	
 	public abstract void reset();
 

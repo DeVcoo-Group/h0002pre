@@ -1,6 +1,5 @@
 package com.devcoo.agencyflight.fe.ui.panel.user;
 
-import com.devcoo.agencyflight.core.context.MessageLabel;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.user.UserRole;
@@ -18,7 +17,7 @@ public class UserFormPanel extends AbstractFormLayout<UserService> {
 	}
 
 	private static final long serialVersionUID = 2334203444202798134L;
-	private User user = new User();
+	private User user;
 	private TextField txtUserName;
 	private TextField txtUserPassword;
 	private TextField txtConfirmPassword;
@@ -37,8 +36,8 @@ public class UserFormPanel extends AbstractFormLayout<UserService> {
 		
 		txtUserName.setRequired(true);
 		txtUserPassword.setRequired(true);
-		txtUserName.setRequiredError(MessageLabel.NOT_EMPTY_FILED);
-		txtUserPassword.setRequiredError(MessageLabel.NOT_EMPTY_FILED);
+		txtUserName.setRequiredError("test");
+//		txtUserPassword.setRequiredError(MessageLabel.NOT_EMPTY_FILED);
 		//txtConfirmPassword.addValidator(new CompositeValidator(txtUserPassword.equals(txtUserPassword), MessageLabel.MUST_THE_SAME_PASS_CONFIRM));
 		
 		
@@ -50,14 +49,16 @@ public class UserFormPanel extends AbstractFormLayout<UserService> {
 			cboUserRole.setItemCaption(role.getId(),role.getCode());
 		}
 		cboUserRole.setRequired(true);
-		cboUserRole.setRequiredError(MessageLabel.NOT_EMPTY_FILED);
+//		cboUserRole.setRequiredError(MessageLabel.NOT_EMPTY_FILED);
 		formLayout.addComponent(cboUserRole);
 		return formLayout;
 	}
 
 	@Override
-	protected void assignValues(Long entityId) {
-		
+	public void assignValues(Long entityId) {
+		if (entityId == null) {
+			user = new User();
+		}
 	}
 
 	@Override
@@ -72,8 +73,6 @@ public class UserFormPanel extends AbstractFormLayout<UserService> {
 
 	@Override
 	protected void save() {
-		if(getTypePage() == AbstractFormLayout.NEW)
-			user = new User();
 		user.setName(txtUserName.getValue());
 		user.setPassword(txtUserPassword.getValue());
 		user.setRole((Integer)cboUserRole.getValue());

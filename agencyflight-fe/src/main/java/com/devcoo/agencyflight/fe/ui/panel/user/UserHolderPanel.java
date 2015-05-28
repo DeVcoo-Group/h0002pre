@@ -7,11 +7,9 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import ru.xpoft.vaadin.VaadinView;
 
-import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.ui.layout.AbstractListLayout;
 import com.devcoo.agencyflight.core.ui.layout.AbstractTabsheet;
 import com.devcoo.agencyflight.core.user.User;
-import com.devcoo.agencyflight.core.user.UserService;
 import com.vaadin.ui.UI;
 
 @Component
@@ -22,8 +20,7 @@ public class UserHolderPanel extends AbstractTabsheet<User> {
 	private static final long serialVersionUID = -1435297102227846808L;
 	public static final String NAME = "fe.user";
 
-	private AbstractFormLayout<UserService> formLayout = new UserFormPanel(
-			"userServiceImp");
+	private UserFormPanel formLayout = new UserFormPanel("userServiceImp");
 
 	@Override
 	public void initSelectedTab(com.vaadin.ui.Component selectedTab) {
@@ -40,22 +37,24 @@ public class UserHolderPanel extends AbstractTabsheet<User> {
 	@Override
 	protected void addNewEntity() {
 		formLayout.setCaption("New User");
-		formLayout.setTypePage(AbstractFormLayout.NEW);
+		formLayout.assignValues(null);
 		addFormLayout(formLayout);
 	}
 
 	@Override
-	protected void editEntity() {
+	protected void editEntity(Long entityId) {
 		formLayout.setCaption("Edit User");
-		formLayout.setTypePage(AbstractFormLayout.EDIT);
+		formLayout.assignValues(entityId);
 		addFormLayout(formLayout);
 	}
 
 	@Override
-	protected void deleteEntity() {
+	protected void deleteEntity(Long entityId) {
 		ConfirmDialog.show(UI.getCurrent(), 
 				"Are you sure to delete this record?",
 				 new ConfirmDialog.Listener() {
+					private static final long serialVersionUID = -5275174088133774427L;
+
 					public void onClose(ConfirmDialog cfd) {
 						if(cfd.isConfirmed()) {
 							
