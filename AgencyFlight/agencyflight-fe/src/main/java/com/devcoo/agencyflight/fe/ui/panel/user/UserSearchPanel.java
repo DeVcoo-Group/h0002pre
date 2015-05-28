@@ -1,7 +1,7 @@
 package com.devcoo.agencyflight.fe.ui.panel.user;
 
 
-import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.Query;
 
 import com.devcoo.agencyflight.core.ui.layout.AbstractSearchLayout;
 import com.vaadin.ui.Component;
@@ -21,7 +21,7 @@ public class UserSearchPanel extends AbstractSearchLayout {
 	}
 
 	@Override
-	public CriteriaBuilder getRestrictions() {
+	public Query getRestrictions() {
 		// TODO Auto-generated method stub
 		return null;
 	}

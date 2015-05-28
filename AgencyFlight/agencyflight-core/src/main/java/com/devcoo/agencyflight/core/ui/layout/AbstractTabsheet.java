@@ -16,13 +16,13 @@ public abstract class AbstractTabsheet<T extends StdEntity> extends AbstractLayo
 	
 	private TabSheet tabsheet;
 	private AbstractListLayout<T> listLayout;
-	private List<AbstractFormLayout> formLayouts;
+	private List<AbstractFormLayout<?>> formLayouts;
 	private boolean needRefresh;
 	
 	public AbstractTabsheet() {
 		setMargin(true);
 		setSpacing(true);
-		formLayouts = new ArrayList<AbstractFormLayout>();
+		formLayouts = new ArrayList<AbstractFormLayout<?>>();
 		
 		tabsheet = new TabSheet();
 		tabsheet.setStyleName(ValoTheme.TABSHEET_FRAMED);
@@ -46,7 +46,7 @@ public abstract class AbstractTabsheet<T extends StdEntity> extends AbstractLayo
 		initSelectedTab(tabsheet.getSelectedTab());
 	}
 	
-	public void addFormLayout(AbstractFormLayout formLayout) {
+	public void addFormLayout(AbstractFormLayout<?> formLayout) {
 		if (!formLayouts.contains(formLayout)) {
 			formLayout.setMainPanel(this);
 			formLayouts.add(formLayout);
@@ -56,14 +56,18 @@ public abstract class AbstractTabsheet<T extends StdEntity> extends AbstractLayo
 		initSelectedTab(formLayout);
 	}
 	
+	public void selectListLayout() {
+		tabsheet.setSelectedTab(0);
+	}
+	
 	private void removeFormLayouts() {
-		for (AbstractFormLayout formLayout : formLayouts) {
+		for (AbstractFormLayout<?> formLayout : formLayouts) {
 			tabsheet.removeComponent(formLayout);
 		}
 		formLayouts.clear();
 	}
 	
-	private void addListLayout() {
+	protected void addListLayout() {
 		tabsheet.addTab(listLayout, listLayout.getCaption(), listLayout.getIcon());
 	}
 
@@ -81,8 +85,8 @@ public abstract class AbstractTabsheet<T extends StdEntity> extends AbstractLayo
 	
 	protected abstract void addNewEntity();
 	
-	protected abstract void editEntity();
+	protected abstract void editEntity(Long entityId);
 	
-	protected abstract void deleteEntity();
+	protected abstract void deleteEntity(Long entityId);
 
 }

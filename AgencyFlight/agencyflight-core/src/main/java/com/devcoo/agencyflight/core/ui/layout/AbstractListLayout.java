@@ -1,23 +1,33 @@
 package com.devcoo.agencyflight.core.ui.layout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.devcoo.agencyflight.core.std.StdEntity;
+import com.devcoo.agencyflight.core.ui.field.selelct.Column;
+import com.devcoo.agencyflight.core.ui.field.selelct.SimpleTable;
+import com.vaadin.data.Item;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
-public abstract class AbstractListLayout<T extends StdEntity> extends VerticalLayout {
+public abstract class AbstractListLayout<T extends StdEntity> extends VerticalLayout implements ItemClickListener {
 
 	private static final long serialVersionUID = -3764552665962371644L;
 	
 	private Resource icon;
 	private AbstractSearchLayout searchLayout;
 	private AbstractTabsheet<T> tabsheet;
+	private Item selectedItem;
+	private Long selectedItemId;
+	protected SimpleTable table;
 	
 	public AbstractListLayout() {
 		setMargin(true);
@@ -26,9 +36,9 @@ public abstract class AbstractListLayout<T extends StdEntity> extends VerticalLa
 		searchLayout = buildSearchPanel();
 		searchLayout.addSearchClickListener(new SearchClickListener());
 		addComponent(searchLayout);
-		// TODO create crudlayout
-		// TODO create searchpanel
 		addComponent(initGUI());
+		
+		table.addItemClickListener(this);
 	}
 
 	protected void buildDefaultCRUDBar() {
@@ -37,23 +47,34 @@ public abstract class AbstractListLayout<T extends StdEntity> extends VerticalLa
 		crudBar.addEditButtonClickListener(new EditButtonListener());
 		crudBar.addDeleteButtonClickListener(new DeleteButtonListener());
 		addComponent(crudBar, 0);
-		// TODO
 	}
 	
 	public abstract Component initGUI();
 	
 	public abstract AbstractSearchLayout buildSearchPanel();
 	
-	public abstract void buildTableContainerDataSource(List<T> entities); // TODO
+	protected void buildTableDataSource(List<T> entities) {
+		if (entities != null) {
+			for (T row : entities) {
+				renderRow(table.addItem(row.getId()), row);
+			}
+		} else {
+			Notification info = new Notification("Information", "Sorry, no item found.", Type.HUMANIZED_MESSAGE);
+			info.setDelayMsec(2000);
+			info.show(Page.getCurrent());
+		}
+	}
 	
-//	public abstract List<ColumnDefinitions> biuldColumnDefinitions(); // TODO
+	public abstract void renderRow(Item item, T entity);
+	
+	protected abstract List<Column> buildColumns();
 
 	private class SearchClickListener implements ClickListener {
 		private static final long serialVersionUID = 5002744533707652856L;
 
+		@SuppressWarnings("unchecked")
 		public void buttonClick(ClickEvent event) {
-			searchLayout.getRestrictions(); // TODO fetch data
-			buildTableContainerDataSource(new ArrayList<T>()); // TODO
+			buildTableDataSource(searchLayout.getRestrictions().getResultList());
 		}
 	}
 	
@@ -69,7 +90,13 @@ public abstract class AbstractListLayout<T extends StdEntity> extends VerticalLa
 		private static final long serialVersionUID = -6345612035764585791L;
 
 		public void buttonClick(ClickEvent event) {
-			tabsheet.editEntity();
+			if (selectedItemId == null) {
+				Notification info = new Notification("Information", "To edit, please select one item.", Type.HUMANIZED_MESSAGE);
+				info.setDelayMsec(2000);
+				info.show(Page.getCurrent());
+			} else {
+				tabsheet.editEntity(getSelectedItemId());
+			}
 		}
 	}
 	
@@ -77,7 +104,13 @@ public abstract class AbstractListLayout<T extends StdEntity> extends VerticalLa
 		private static final long serialVersionUID = 2239593442237027172L;
 
 		public void buttonClick(ClickEvent event) {
-			tabsheet.deleteEntity();
+			if (selectedItemId == null) {
+				Notification info = new Notification("Information", "To delete, please select one item.", Type.HUMANIZED_MESSAGE);
+				info.setDelayMsec(2000);
+				info.show(Page.getCurrent());
+			} else {
+				tabsheet.deleteEntity(getSelectedItemId());
+			}
 		}
 	}
 	
@@ -99,6 +132,19 @@ public abstract class AbstractListLayout<T extends StdEntity> extends VerticalLa
 	
 	public void setMainPanel(AbstractTabsheet<T> tabsheet) {
 		this.tabsheet = tabsheet;
+	}
+	
+	public Item getSelectedItem() {
+		return selectedItem;
+	}
+	
+	public Long getSelectedItemId() {
+		return selectedItemId;
+	}
+
+	public void itemClick(ItemClickEvent event) {
+		selectedItem = event.getItem();
+		selectedItemId = (Long) event.getItemId();
 	}
 	
 }
