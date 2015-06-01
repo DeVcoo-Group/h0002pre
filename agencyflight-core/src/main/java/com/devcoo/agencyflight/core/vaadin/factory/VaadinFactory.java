@@ -1,9 +1,12 @@
 package com.devcoo.agencyflight.core.vaadin.factory;
 
+import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.PasswordField;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class VaadinFactory {
@@ -49,5 +52,39 @@ public class VaadinFactory {
 		Button btn = getButton(caption);
 		btn.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		return btn;
+	}
+	
+	// ============== Textfield ================== //
+	public static TextField getTextField(String caption) {
+		return new TextField(caption);
+	}
+	
+	public static TextField getTextField(String caption, float width) {
+		TextField txt = getTextField(caption);
+		txt.setWidth(width, Unit.PIXELS);
+		return txt;
+	}
+	
+	public static TextField getTextField(String caption, float width, boolean required) {
+		TextField txt = getTextField(caption, width);
+		txt.setRequired(required);
+		return txt;
+	}
+	
+	// ============== Passwordfield ================== //
+	public static PasswordField getPasswordField(String caption) {
+		return new PasswordField(caption);
+	}
+	
+	public static PasswordField getPasswordField(String caption, float width) {
+		PasswordField txt = getPasswordField(caption);
+		txt.setWidth(width, Unit.PIXELS);
+		return txt;
+	}
+	
+	public static PasswordField getPasswordField(String caption, float width, boolean required) {
+		PasswordField txt = getPasswordField(caption, width);
+		txt.setRequired(required);
+		return txt;
 	}
 }
