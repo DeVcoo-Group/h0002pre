@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import ru.xpoft.vaadin.VaadinView;
 
 import com.devcoo.agencyflight.core.context.WebContext;
+import com.devcoo.agencyflight.core.std.StdEntity;
 import com.devcoo.agencyflight.core.ui.login.AbstractLoginView;
 import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.user.UserService;
@@ -24,6 +25,7 @@ import com.vaadin.ui.UI;
 @Scope("prototype")
 @VaadinView(LoginPanel.NAME)
 public class LoginPanel extends AbstractLoginView {
+	
 	ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
 	UserService userService= (UserService)ctx.getBean("userServiceImp");
 	WebContext context = new WebContext();

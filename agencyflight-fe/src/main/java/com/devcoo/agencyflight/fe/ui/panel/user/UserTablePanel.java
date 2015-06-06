@@ -8,11 +8,16 @@ import com.devcoo.agencyflight.core.ui.field.selelct.SimpleTable;
 import com.devcoo.agencyflight.core.ui.layout.AbstractListLayout;
 import com.devcoo.agencyflight.core.ui.layout.AbstractSearchLayout;
 import com.devcoo.agencyflight.core.user.User;
+import com.devcoo.agencyflight.core.user.UserService;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Table.Align;
 
-public class UserTablePanel extends AbstractListLayout<User> {
+public class UserTablePanel extends AbstractListLayout<UserService,User> {
+
+	public UserTablePanel() {
+		super("userServiceImp");
+	}
 
 	private static final long serialVersionUID = -9173680326980740480L;
 	
@@ -26,6 +31,7 @@ public class UserTablePanel extends AbstractListLayout<User> {
 		buildDefaultCRUDBar();
 		table = new SimpleTable("List Users");
 		table.addColumns(buildColumns());
+		buildTableDataSource(service.findAllActive().iterator());
 		return table;
 	}
 
@@ -37,9 +43,9 @@ public class UserTablePanel extends AbstractListLayout<User> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void renderRow(Item item, User entity) {
-		item.getItemProperty(ID).setValue(entity.getId());
+		item.getItemProperty(ID).setValue(String.valueOf(entity.getId()));
 		item.getItemProperty(USER_NAME).setValue(entity.getName());
-		item.getItemProperty(USER_ROlE).setValue(entity.getRole());
+		item.getItemProperty(USER_ROlE).setValue("");
 	}
 	
 	@Override
@@ -49,6 +55,11 @@ public class UserTablePanel extends AbstractListLayout<User> {
 		columns.add(new Column(USER_NAME, "User name", String.class, Align.LEFT, 150));
 		columns.add(new Column(USER_ROlE, "User role", String.class, Align.LEFT, 150));
 		return columns;
+	}
+
+	@Override
+	public User getEntity() {
+		return new User();
 	}
 
 }

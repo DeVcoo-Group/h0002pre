@@ -16,9 +16,7 @@ public class UserServiceImp extends StdServiceImp<UserDao, User>implements UserS
 		return dao.findByNameAndPassword(name, password);
 	}
 	@Transactional
-	@Override
-	public List<User> getAll() {
-		// TODO Auto-generated method stub
-		return dao.findAll();
+	public User find(Integer id) {
+		return dao.findOne(id);
 	}
 }

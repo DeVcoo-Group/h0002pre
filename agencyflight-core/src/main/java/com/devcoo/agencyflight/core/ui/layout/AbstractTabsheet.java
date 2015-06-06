@@ -4,25 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.devcoo.agencyflight.core.std.StdEntity;
+import com.devcoo.agencyflight.core.std.StdService;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.themes.ValoTheme;
 
-public abstract class AbstractTabsheet<T extends StdEntity> extends AbstractLayout implements SelectedTabChangeListener {
+public abstract class AbstractTabsheet<Service extends StdService<T>,T extends StdEntity> extends AbstractLayout implements SelectedTabChangeListener {
 
 	private static final long serialVersionUID = -9158216851730501261L;
 	
 	private TabSheet tabsheet;
-	private AbstractListLayout<T> listLayout;
-	private List<AbstractFormLayout<?>> formLayouts;
+	private AbstractListLayout<Service,T> listLayout;
+	private List<AbstractFormLayout<Service,T>> formLayouts;
 	private boolean needRefresh;
 	
 	public AbstractTabsheet() {
 		setMargin(true);
 		setSpacing(true);
-		formLayouts = new ArrayList<AbstractFormLayout<?>>();
+		formLayouts = getListAbstractFormLayout();
 		
 		tabsheet = new TabSheet();
 		tabsheet.setStyleName(ValoTheme.TABSHEET_FRAMED);
@@ -46,7 +47,7 @@ public abstract class AbstractTabsheet<T extends StdEntity> extends AbstractLayo
 		initSelectedTab(tabsheet.getSelectedTab());
 	}
 	
-	public void addFormLayout(AbstractFormLayout<?> formLayout) {
+	public void addFormLayout(AbstractFormLayout<Service,T> formLayout) {
 		if (!formLayouts.contains(formLayout)) {
 			formLayout.setMainPanel(this);
 			formLayouts.add(formLayout);
@@ -61,7 +62,7 @@ public abstract class AbstractTabsheet<T extends StdEntity> extends AbstractLayo
 	}
 	
 	private void removeFormLayouts() {
-		for (AbstractFormLayout<?> formLayout : formLayouts) {
+		for (AbstractFormLayout<Service, T> formLayout : formLayouts) {
 			tabsheet.removeComponent(formLayout);
 		}
 		formLayouts.clear();
@@ -81,12 +82,12 @@ public abstract class AbstractTabsheet<T extends StdEntity> extends AbstractLayo
 	
 	protected abstract void initSelectedTab(Component selectedTab);
 	
-	protected abstract AbstractListLayout<T> getListLayout();
+	protected abstract AbstractListLayout<Service,T> getListLayout();
 	
 	protected abstract void addNewEntity();
 	
-	protected abstract void editEntity(Long entityId);
+	protected abstract void editEntity(Integer entityId);
 	
-	protected abstract void deleteEntity(Long entityId);
+	protected abstract ArrayList<AbstractFormLayout<Service,T>> getListAbstractFormLayout();
 
 }

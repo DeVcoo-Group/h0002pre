@@ -29,11 +29,6 @@
 			<artifactId>spring-web</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addon</groupId>
-			<artifactId>confirmdialog</artifactId>
-			<version>2.1.2</version>
-		</dependency>
 	</dependencies>
 
 </project>
