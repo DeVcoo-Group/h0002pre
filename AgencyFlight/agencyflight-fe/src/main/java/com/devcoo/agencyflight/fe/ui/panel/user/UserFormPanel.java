@@ -13,7 +13,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
-public class UserFormPanel extends AbstractFormLayout<UserService> {
+public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 
 	public UserFormPanel(String serviceName) {
 		super("userServiceImp");
@@ -54,12 +54,18 @@ public class UserFormPanel extends AbstractFormLayout<UserService> {
 	}
 
 	@Override
-	public void assignValues(Long entityId) {
+	public void assignValues(Integer entityId) {
 		if (entityId == null) {
 			user = new User();
+			txtUserPassword.setVisible(true);
+			txtConfirmPassword.setVisible(true);
 			reset();
 		} else {
+			user = service.find(entityId);
 			txtUserName.setValue(user.getName());
+			txtConfirmPassword.setVisible(false);
+			txtUserPassword.setVisible(false);
+			cboUserRole.setValue(user.getRole());
 		}
 	}
 
@@ -89,6 +95,15 @@ public class UserFormPanel extends AbstractFormLayout<UserService> {
 	}
 
 	@Override
+	public User getEntity() {
+		return new User();
+	}
+	
+	public void delete(int id) {
+		entity = service.find(id);
+		service.delete(entity);
+	}
+	
 	protected void save() {
 		user.setName(txtUserName.getValue());
 		user.setPassword(txtUserPassword.getValue());
