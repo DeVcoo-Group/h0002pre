@@ -31,7 +31,7 @@ public class UserTablePanel extends AbstractListLayout<UserService,User> {
 		buildDefaultCRUDBar();
 		table = new SimpleTable("List Users");
 		table.addColumns(buildColumns());
-		buildTableDataSource(service.findAllActive().iterator());
+		refresh();
 		return table;
 	}
 

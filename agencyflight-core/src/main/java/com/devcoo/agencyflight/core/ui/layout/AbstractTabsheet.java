@@ -41,6 +41,7 @@ public abstract class AbstractTabsheet<Service extends StdService<T>,T extends S
 			removeFormLayouts();
 			if (isNeedRefresh()) {
 				listLayout.refresh();
+				setNeedRefresh(Boolean.FALSE);
 			}
 			addListLayout();
 		}

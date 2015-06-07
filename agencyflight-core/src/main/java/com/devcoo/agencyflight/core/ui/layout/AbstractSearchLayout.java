@@ -55,7 +55,9 @@ public abstract class AbstractSearchLayout<Service extends StdService<T>,T exten
 	}
 	
 	public void addSearchClickListener(ClickListener listener) {
-		btnSearch.addClickListener(listener);
+		if (btnSearch != null) {
+			btnSearch.addClickListener(listener);
+		}
 	}
 	
 	protected abstract Component initGUI();
