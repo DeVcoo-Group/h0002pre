@@ -2,11 +2,14 @@ package com.devcoo.agencyflight.core.ui.layout;
 
 import com.devcoo.agencyflight.core.std.StdEntity;
 import com.devcoo.agencyflight.core.std.StdService;
+import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Notification;
 
 public abstract class AbstractFormLayout<Service extends StdService<T>,T extends StdEntity> extends AbstractServiceLayout<Service,T> implements ClickListener {
 	
@@ -47,6 +50,9 @@ public abstract class AbstractFormLayout<Service extends StdService<T>,T extends
 		if (validate()) {
 			save();
 			tabsheet.setNeedRefresh(Boolean.TRUE);
+			Notification info = new Notification("Information", "Save successfully.", Type.HUMANIZED_MESSAGE);
+			info.setDelayMsec(2000);
+			info.show(Page.getCurrent());
 		}
 	}
 	

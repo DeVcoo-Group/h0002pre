@@ -55,11 +55,11 @@ public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 
 	@Override
 	public void assignValues(Integer entityId) {
+		reset();
 		if (entityId == null) {
 			user = new User();
 			txtUserPassword.setVisible(true);
 			txtConfirmPassword.setVisible(true);
-			reset();
 		} else {
 			user = service.find(entityId);
 			txtUserName.setValue(user.getName());
@@ -75,6 +75,10 @@ public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 		txtUserPassword.setValue("");
 		txtConfirmPassword.setValue("");
 		cboUserRole.setValue(null);
+		
+		txtUserName.setComponentError(null);
+		txtUserPassword.setComponentError(null);
+		cboUserRole.setComponentError(null);
 	}
 
 	@Override
@@ -84,8 +88,10 @@ public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 		if (!ValidationUtil.validateRequiredTextField(txtUserName)) {
 			valid = false;
 		}
-		if (!ValidationUtil.validateRequiredTextField(txtUserPassword)) {
-			valid = false;
+		if (this.user.getId() <= 0) {
+			if (!ValidationUtil.validateRequiredTextField(txtUserPassword)) {
+				valid = false;
+			}
 		}
 		if (!ValidationUtil.validateRequiredSelectField(cboUserRole)) {
 			valid = false;
@@ -99,14 +105,11 @@ public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 		return new User();
 	}
 	
-	public void delete(int id) {
-		entity = service.find(id);
-		service.delete(entity);
-	}
-	
 	protected void save() {
 		user.setName(txtUserName.getValue());
-		user.setPassword(txtUserPassword.getValue());
+		if (user.getId() <= 0) {
+			user.setPassword(txtUserPassword.getValue());
+		}
 		user.setRole((Integer)cboUserRole.getValue());
 		service.save(user);
 	}

@@ -59,15 +59,12 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 	public abstract AbstractSearchLayout<Service,T> buildSearchPanel();
 	
 	protected void buildTableDataSource(Iterator<T> entities) {
+		table.removeAllItems();
 		if (entities!=null) {
 			while (entities.hasNext()) {
 				T row = entities.next();
 				renderRow(table.addItem(row.getId()), row);
 			}
-		} else {
-			Notification info = new Notification("Information", "Sorry, no item found.", Type.HUMANIZED_MESSAGE);
-			info.setDelayMsec(2000);
-			info.show(Page.getCurrent());
 		}
 	}
 	
@@ -78,9 +75,8 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 	private class SearchClickListener implements ClickListener {
 		private static final long serialVersionUID = 5002744533707652856L;
 
-		@SuppressWarnings("unchecked")
 		public void buttonClick(ClickEvent event) {
-			//buildTableDataSource(searchLayout.getRestrictions().getResultList());
+			search();
 		}
 	}
 	
@@ -123,7 +119,7 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 								if(cfd.isConfirmed()) {
 									entity = service.find(getSelectedItemId());
 									service.delete(entity);
-									buildTableDataSource(service.findAllActive().iterator());
+									refresh();
 								}
 							}
 						}		
@@ -146,7 +142,24 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 	}
 	
 	public void refresh() {
-		// TODO
+		searchLayout.reset();
+		selectedItem = null;
+		selectedItemId = null;
+		Iterator<T> entities = service.findAllActive().iterator();
+		if (entities!=null) {
+			buildTableDataSource(entities);
+		}
+	}
+	
+	private void search() {
+		Iterator<T> entities = searchLayout.getRestrictions();
+		if (entities!=null && entities.hasNext()) {
+			buildTableDataSource(entities);
+		} else {
+			Notification info = new Notification("Information", "Sorry, no item found.", Type.HUMANIZED_MESSAGE);
+			info.setDelayMsec(2000);
+			info.show(Page.getCurrent());
+		}
 	}
 	
 	public void setMainPanel(AbstractTabsheet<Service,T> tabsheet) {
