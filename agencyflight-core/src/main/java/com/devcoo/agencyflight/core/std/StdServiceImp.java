@@ -32,6 +32,14 @@ public abstract class StdServiceImp<SampleRepository extends StdDao<T>, T extend
 		});
 	}
 	
+	public List<T> findAll(Specification<T> query) {
+		return dao.findAll(query);
+	}
+	
+	public T find(Specification<T> query) {
+		return dao.findOne(query);
+	}
+	
 	public T find(Integer id) {
 		return dao.findOne(id);
 	}

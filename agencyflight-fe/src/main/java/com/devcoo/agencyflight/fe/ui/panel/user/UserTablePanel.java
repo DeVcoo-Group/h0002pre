@@ -14,9 +14,9 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Table.Align;
 
 public class UserTablePanel extends AbstractListLayout<UserService,User> {
-
+	private static String serviceName = "userServiceImp";
 	public UserTablePanel() {
-		super("userServiceImp");
+		super(serviceName);
 	}
 
 	private static final long serialVersionUID = -9173680326980740480L;
@@ -36,7 +36,7 @@ public class UserTablePanel extends AbstractListLayout<UserService,User> {
 	}
 
 	@Override
-	public AbstractSearchLayout buildSearchPanel() {
+	public AbstractSearchLayout<UserService,User> buildSearchPanel() {
 		return new UserSearchPanel();
 	}
 	
