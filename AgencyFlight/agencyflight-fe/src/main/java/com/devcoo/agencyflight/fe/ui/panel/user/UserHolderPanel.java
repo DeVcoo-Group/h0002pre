@@ -50,7 +50,6 @@ public class UserHolderPanel extends AbstractTabsheet<UserService,User> {
 
 	@Override
 	protected ArrayList<AbstractFormLayout<UserService, User>> getListAbstractFormLayout() {
-		// TODO Auto-generated method stub
 		return new ArrayList<AbstractFormLayout<UserService,User>>();
 	}
 }

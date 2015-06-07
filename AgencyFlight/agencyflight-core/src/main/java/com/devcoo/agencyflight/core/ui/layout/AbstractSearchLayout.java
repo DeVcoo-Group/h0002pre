@@ -1,7 +1,9 @@
 package com.devcoo.agencyflight.core.ui.layout;
 
-import javax.persistence.Query;
+import java.util.Iterator;
 
+import com.devcoo.agencyflight.core.std.StdEntity;
+import com.devcoo.agencyflight.core.std.StdService;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
@@ -10,17 +12,17 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-public abstract class AbstractSearchLayout extends Panel implements ClickListener {
+public abstract class AbstractSearchLayout<Service extends StdService<T>,T extends StdEntity> extends AbstractServicePanel<Service, T> implements ClickListener {
 
 	private static final long serialVersionUID = -1530748963546870334L;
 
 	private Button btnSearch;
 	private Button btnReset;
 
-	public AbstractSearchLayout() {
+	public AbstractSearchLayout(String serviceName) {
+		super(serviceName);
 		setCaption("Search");
 		VerticalLayout content = new VerticalLayout();
 		content.setMargin(true);
@@ -58,7 +60,7 @@ public abstract class AbstractSearchLayout extends Panel implements ClickListene
 	
 	protected abstract Component initGUI();
 
-	public abstract Query getRestrictions();
+	public abstract Iterator<T> getRestrictions();
 	
 	public abstract void reset();
 

@@ -27,7 +27,7 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 	private static final long serialVersionUID = -3764552665962371644L;
 	
 	private Resource icon;
-	private AbstractSearchLayout searchLayout;
+	private AbstractSearchLayout<Service,T> searchLayout;
 	private AbstractTabsheet<Service,T> tabsheet;
 	private Item selectedItem;
 	private Integer selectedItemId;
@@ -56,7 +56,7 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 	
 	public abstract Component initGUI();
 	
-	public abstract AbstractSearchLayout buildSearchPanel();
+	public abstract AbstractSearchLayout<Service,T> buildSearchPanel();
 	
 	protected void buildTableDataSource(Iterator<T> entities) {
 		if (entities!=null) {
