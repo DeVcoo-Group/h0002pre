@@ -23,13 +23,6 @@ public class UserHolderPanel extends AbstractTabsheet<UserService,User> {
 	private UserFormPanel formLayout = new UserFormPanel("userServiceImp");
 
 	@Override
-	public void initSelectedTab(com.vaadin.ui.Component selectedTab) {
-		if (selectedTab == formLayout) {
-
-		}
-	}
-
-	@Override
 	public AbstractListLayout<UserService,User> getListLayout() {
 		return new UserTablePanel();
 	}

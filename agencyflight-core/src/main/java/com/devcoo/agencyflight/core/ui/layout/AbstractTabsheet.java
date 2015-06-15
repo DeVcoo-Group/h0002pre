@@ -81,7 +81,9 @@ public abstract class AbstractTabsheet<Service extends StdService<T>,T extends S
 		this.needRefresh = needRefresh;
 	}
 	
-	protected abstract void initSelectedTab(Component selectedTab);
+	protected void initSelectedTab(Component selectedTab) {
+		
+	}
 	
 	protected abstract AbstractListLayout<Service,T> getListLayout();
 	

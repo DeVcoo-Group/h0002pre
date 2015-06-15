@@ -56,5 +56,25 @@ public class ValidationUtil {
 		}
 		return valid;
 	}
+	
+	public static boolean validateConfirmPassword(AbstractTextField passwordField, AbstractTextField confirmField) {
+		return validateConfirmPassword(passwordField, confirmField, "Password not match!");
+	}
+	
+	public static boolean validateConfirmPassword(AbstractTextField passwordField, AbstractTextField confirmField, String errorMessage) {
+		boolean valid = false;
+		
+		if (!validateRequiredTextField(passwordField)) return valid;
+		if (!validateRequiredTextField(confirmField)) return valid;
+		if (passwordField.getValue().equals(confirmField.getValue())) valid = true;
+		
+		if (valid) {
+			confirmField.setComponentError(null);
+		} else {
+			confirmField.setComponentError(new UserError(errorMessage));
+		}
+		
+		return valid;
+	}
 
 }
