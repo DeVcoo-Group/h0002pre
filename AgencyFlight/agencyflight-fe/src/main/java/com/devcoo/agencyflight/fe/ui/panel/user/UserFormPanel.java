@@ -39,12 +39,9 @@ public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 		}
 		cboUserRole.setRequired(true);
 		
-		setCaption(getCaption());
+//		setCaption(getCaption());
 		FormLayout formLayout = new FormLayout();
 		formLayout.addComponent(new Label("User Form"));
-		
-		//txtConfirmPassword.addValidator(new CompositeValidator(txtUserPassword.equals(txtUserPassword), MessageLabel.MUST_THE_SAME_PASS_CONFIRM));
-		
 		formLayout.addComponent(txtUserName);
 		formLayout.addComponent(txtUserPassword);
 		formLayout.addComponent(txtConfirmPassword);
@@ -58,13 +55,9 @@ public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 		reset();
 		if (entityId == null) {
 			user = new User();
-			txtUserPassword.setVisible(true);
-			txtConfirmPassword.setVisible(true);
 		} else {
 			user = service.find(entityId);
 			txtUserName.setValue(user.getName());
-			txtConfirmPassword.setVisible(false);
-			txtUserPassword.setVisible(false);
 			cboUserRole.setValue(user.getRole());
 		}
 	}
@@ -78,18 +71,21 @@ public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 		
 		txtUserName.setComponentError(null);
 		txtUserPassword.setComponentError(null);
+		txtConfirmPassword.setComponentError(null);
 		cboUserRole.setComponentError(null);
 	}
 
 	@Override
 	protected boolean validate() {
 		boolean valid = true;
+		txtConfirmPassword.setComponentError(null);
 		
 		if (!ValidationUtil.validateRequiredTextField(txtUserName)) {
 			valid = false;
 		}
-		if (this.user.getId() <= 0) {
-			if (!ValidationUtil.validateRequiredTextField(txtUserPassword)) {
+		if (this.user.getId() <= 0 || (this.user.getId() > 0 && !"".equals(txtUserPassword.getValue()))) {
+			
+			if (!ValidationUtil.validateConfirmPassword(txtUserPassword, txtConfirmPassword)) {
 				valid = false;
 			}
 		}

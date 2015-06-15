@@ -6,7 +6,6 @@ import java.util.List;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
 import com.devcoo.agencyflight.core.ui.field.selelct.SimpleTable;
 import com.devcoo.agencyflight.core.ui.layout.AbstractListLayout;
-import com.devcoo.agencyflight.core.ui.layout.AbstractSearchLayout;
 import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.user.UserService;
 import com.vaadin.data.Item;
@@ -36,14 +35,14 @@ public class UserTablePanel extends AbstractListLayout<UserService,User> {
 	}
 
 	@Override
-	public AbstractSearchLayout<UserService,User> buildSearchPanel() {
+	public UserSearchPanel buildSearchPanel() {
 		return new UserSearchPanel();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void renderRow(Item item, User entity) {
-		item.getItemProperty(ID).setValue(String.valueOf(entity.getId()));
+		item.getItemProperty(ID).setValue(entity.getId());
 		item.getItemProperty(USER_NAME).setValue(entity.getName());
 		item.getItemProperty(USER_ROlE).setValue("");
 	}
@@ -51,7 +50,7 @@ public class UserTablePanel extends AbstractListLayout<UserService,User> {
 	@Override
 	protected List<Column> buildColumns() {
 		List<Column> columns = new ArrayList<Column>();
-		columns.add(new Column(ID, "Id", String.class, Align.LEFT, 100));
+		columns.add(new Column(ID, "Id", Integer.class, Align.RIGHT, 100));
 		columns.add(new Column(USER_NAME, "User name", String.class, Align.LEFT, 150));
 		columns.add(new Column(USER_ROlE, "User role", String.class, Align.LEFT, 150));
 		return columns;

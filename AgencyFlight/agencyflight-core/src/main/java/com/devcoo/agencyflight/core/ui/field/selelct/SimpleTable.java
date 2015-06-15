@@ -35,6 +35,7 @@ public class SimpleTable extends Table {
 		setColumnHeader(column.getPropertyId(), column.getColumnHeader());
 		setColumnAlignment(column.getPropertyId(), column.getAlign());
 		setColumnWidth(column.getPropertyId(), column.getWidth());
+		setColumnExpandRatio(column.getPropertyId(), 1);
 	}
 
 }
