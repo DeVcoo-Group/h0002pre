@@ -14,17 +14,17 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
 public class UserFormPanel extends AbstractFormLayout<UserService,User> {
-
-	public UserFormPanel(String serviceName) {
-		super("userServiceImp");
-	}
-
+	
 	private static final long serialVersionUID = 2334203444202798134L;
 	private User user;
 	private TextField txtUserName;
 	private PasswordField txtUserPassword;
 	private PasswordField txtConfirmPassword;
 	private ComboBox cboUserRole;
+
+	public UserFormPanel() {
+		super("userServiceImp");
+	}
 
 	@Override
 	public Component initGUI() {
@@ -39,7 +39,6 @@ public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 		}
 		cboUserRole.setRequired(true);
 		
-//		setCaption(getCaption());
 		FormLayout formLayout = new FormLayout();
 		formLayout.addComponent(new Label("User Form"));
 		formLayout.addComponent(txtUserName);

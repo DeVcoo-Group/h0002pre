@@ -17,7 +17,6 @@ import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.UI;
@@ -40,10 +39,14 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 		
 		searchLayout = buildSearchPanel();
 		searchLayout.addSearchClickListener(new SearchClickListener());
-		addComponent(searchLayout);
-		addComponent(initGUI());
 		
+		table = new SimpleTable("List");
+		table.addColumns(buildColumns());
 		table.addItemClickListener(this);
+		initGUI();
+		
+		addComponent(searchLayout);
+		addComponent(table);
 	}
 
 	protected void buildDefaultCRUDBar() {
@@ -54,9 +57,9 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 		addComponent(crudBar, 0);
 	}
 	
-	public abstract Component initGUI();
+	protected abstract void initGUI();
 	
-	public abstract AbstractSearchLayout<Service,T> buildSearchPanel();
+	protected abstract AbstractSearchLayout<Service,T> buildSearchPanel();
 	
 	protected void buildTableDataSource(Iterator<T> entities) {
 		table.removeAllItems();
@@ -68,7 +71,7 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 		}
 	}
 	
-	public abstract void renderRow(Item item, T entity);
+	protected abstract void renderRow(Item item, T entity);
 	
 	protected abstract List<Column> buildColumns();
 

@@ -1,15 +1,11 @@
 package com.devcoo.agencyflight.fe.ui.panel.user;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import ru.xpoft.vaadin.VaadinView;
 
-import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
-import com.devcoo.agencyflight.core.ui.layout.AbstractListLayout;
 import com.devcoo.agencyflight.core.ui.layout.AbstractTabsheet;
 import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.user.UserService;
@@ -20,10 +16,10 @@ import com.devcoo.agencyflight.core.user.UserService;
 public class UserHolderPanel extends AbstractTabsheet<UserService,User> {
 	private static final long serialVersionUID = -1435297102227846808L;
 	public static final String NAME = "fe.user";
-	private UserFormPanel formLayout = new UserFormPanel("userServiceImp");
+	private UserFormPanel formLayout = new UserFormPanel();
 
 	@Override
-	public AbstractListLayout<UserService,User> getListLayout() {
+	public UserTablePanel getListLayout() {
 		return new UserTablePanel();
 	}
 
@@ -41,8 +37,4 @@ public class UserHolderPanel extends AbstractTabsheet<UserService,User> {
 		addFormLayout(formLayout);
 	}
 
-	@Override
-	protected ArrayList<AbstractFormLayout<UserService, User>> getListAbstractFormLayout() {
-		return new ArrayList<AbstractFormLayout<UserService,User>>();
-	}
 }
