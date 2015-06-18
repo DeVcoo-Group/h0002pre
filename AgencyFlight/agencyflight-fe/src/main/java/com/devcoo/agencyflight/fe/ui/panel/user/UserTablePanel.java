@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
-import com.devcoo.agencyflight.core.ui.field.selelct.SimpleTable;
 import com.devcoo.agencyflight.core.ui.layout.AbstractListLayout;
 import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.user.UserService;
 import com.vaadin.data.Item;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Table.Align;
 
 public class UserTablePanel extends AbstractListLayout<UserService,User> {
@@ -25,23 +23,21 @@ public class UserTablePanel extends AbstractListLayout<UserService,User> {
 	private static final String USER_ROlE = "role";
 	
 	@Override
-	public Component initGUI() {
+	protected void initGUI() {
 		setCaption("Users");
 		buildDefaultCRUDBar();
-		table = new SimpleTable("List Users");
-		table.addColumns(buildColumns());
+		table.setCaption("List Users");
 		refresh();
-		return table;
 	}
 
 	@Override
-	public UserSearchPanel buildSearchPanel() {
+	protected UserSearchPanel buildSearchPanel() {
 		return new UserSearchPanel();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void renderRow(Item item, User entity) {
+	protected void renderRow(Item item, User entity) {
 		item.getItemProperty(ID).setValue(entity.getId());
 		item.getItemProperty(USER_NAME).setValue(entity.getName());
 		item.getItemProperty(USER_ROlE).setValue("");

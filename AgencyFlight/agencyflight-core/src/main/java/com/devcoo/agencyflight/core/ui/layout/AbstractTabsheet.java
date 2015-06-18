@@ -23,7 +23,7 @@ public abstract class AbstractTabsheet<Service extends StdService<T>,T extends S
 	public AbstractTabsheet() {
 		setMargin(true);
 		setSpacing(true);
-		formLayouts = getListAbstractFormLayout();
+		formLayouts = new ArrayList<AbstractFormLayout<Service,T>>();
 		
 		tabsheet = new TabSheet();
 		tabsheet.setStyleName(ValoTheme.TABSHEET_FRAMED);
@@ -90,7 +90,5 @@ public abstract class AbstractTabsheet<Service extends StdService<T>,T extends S
 	protected abstract void addNewEntity();
 	
 	protected abstract void editEntity(Integer entityId);
-	
-	protected abstract ArrayList<AbstractFormLayout<Service,T>> getListAbstractFormLayout();
 
 }

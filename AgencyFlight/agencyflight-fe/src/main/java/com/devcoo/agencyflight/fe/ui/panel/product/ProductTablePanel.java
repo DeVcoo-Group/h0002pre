@@ -6,11 +6,9 @@ import java.util.List;
 import com.devcoo.agencyflight.core.product.Product;
 import com.devcoo.agencyflight.core.product.ProductService;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
-import com.devcoo.agencyflight.core.ui.field.selelct.SimpleTable;
 import com.devcoo.agencyflight.core.ui.layout.AbstractListLayout;
 import com.devcoo.agencyflight.core.ui.layout.AbstractSearchLayout;
 import com.vaadin.data.Item;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Table.Align;
 
 public class ProductTablePanel extends AbstractListLayout<ProductService, Product> {
@@ -28,23 +26,21 @@ public class ProductTablePanel extends AbstractListLayout<ProductService, Produc
 	}
 
 	@Override
-	public Component initGUI() {
+	protected void initGUI() {
 		setCaption("Products");
 		buildDefaultCRUDBar();
-		table = new SimpleTable("List Products");
-		table.addColumns(buildColumns());
+		table.setCaption("List Products");
 		refresh();
-		return table;
 	}
 
 	@Override
-	public AbstractSearchLayout<ProductService, Product> buildSearchPanel() {
+	protected AbstractSearchLayout<ProductService, Product> buildSearchPanel() {
 		return new ProductSearchPanel();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void renderRow(Item item, Product entity) {
+	protected void renderRow(Item item, Product entity) {
 		item.getItemProperty(ID).setValue(entity.getId());
 		item.getItemProperty(CODE).setValue(entity.getCode());
 		item.getItemProperty(NAME).setValue(entity.getName());
