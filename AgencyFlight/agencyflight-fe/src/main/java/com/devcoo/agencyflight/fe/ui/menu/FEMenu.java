@@ -5,6 +5,7 @@ import com.devcoo.agencyflight.fe.ui.panel.customer.CustomerHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.dashboard.Dashboard;
 import com.devcoo.agencyflight.fe.ui.panel.login.LoginPanel;
 import com.devcoo.agencyflight.fe.ui.panel.product.ProductHolderPanel;
+import com.devcoo.agencyflight.fe.ui.panel.supplier.SupplierHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.user.UserHolderPanel;
 
 public class FEMenu extends AbstractMenuBar {
@@ -28,6 +29,7 @@ public class FEMenu extends AbstractMenuBar {
 		view.addItem("View", null);
 		
 		addItem("User", new MenuCommand(UserHolderPanel.NAME));
+		addItem("Suppliers", new MenuCommand(SupplierHolderPanel.NAME));
 		addItem("Payment", null);
 		addItem("Tool", null);
 		addItem("Report", null);
