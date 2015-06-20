@@ -4,11 +4,14 @@ import java.text.DecimalFormat;
 
 import com.devcoo.agencyflight.core.product.Product;
 import com.devcoo.agencyflight.core.product.ProductService;
+import com.devcoo.agencyflight.core.product.ProductType;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.util.ValidationUtil;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 public class ProductFormPanel extends AbstractFormLayout<ProductService, Product> {
@@ -19,6 +22,9 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 	private TextField txtName;
 	private TextField txtPrice;
 	private TextField txtServiceCharge;
+	private ComboBox cboProductType;
+	private TextArea taRequirement;
+	private TextField txtPeriod;
 	
 	private Product product;
 
@@ -36,15 +42,22 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 		formLayout.addComponent(txtName);
 		formLayout.addComponent(txtPrice);
 		formLayout.addComponent(txtServiceCharge);
+		formLayout.addComponent(cboProductType);
+		formLayout.addComponent(taRequirement);
+		formLayout.addComponent(txtPeriod);
 		
 		return formLayout;
 	}
 	
 	private void initControls() {
 		txtCode = VaadinFactory.getTextField("Product Code", 200, true);
-		txtName = VaadinFactory.getTextField("Product Name", 200, true);
+		txtName = VaadinFactory.getTextField("Product Name", 600, true);
 		txtPrice = VaadinFactory.getTextField("Price", 200, true);
 		txtServiceCharge = VaadinFactory.getTextField("Service Charge", 200);
+		cboProductType = VaadinFactory.getComboBoxFromEnum("Product Type", 200, true, ProductType.values());
+		taRequirement = VaadinFactory.getTextArea("Requirement", "400px", "200px", true);
+		txtPeriod = VaadinFactory.getTextField("Product Period", 200, true);
+		
 	}
 
 	@Override
@@ -86,6 +99,9 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 			valid = true;
 		}
 		if (!ValidationUtil.validateRequiredTextField(txtPrice)) {
+			valid = true;
+		}
+		if (!ValidationUtil.validateRequiredSelectField(cboProductType)) {
 			valid = true;
 		}
 		

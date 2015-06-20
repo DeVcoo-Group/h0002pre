@@ -1,11 +1,14 @@
 package com.devcoo.agencyflight.core.vaadin.factory;
 
+import com.devcoo.agencyflight.core.std.StdEnum;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -86,5 +89,23 @@ public class VaadinFactory {
 		PasswordField txt = getPasswordField(caption, width);
 		txt.setRequired(required);
 		return txt;
+	}
+	
+	public static ComboBox getComboBoxFromEnum(String caption, float width, boolean required, StdEnum[] enumerations) {
+		ComboBox cbo = new ComboBox(caption);
+		for (StdEnum typeEnum : enumerations) {
+			cbo.addItem(typeEnum.getId());
+			cbo.setItemCaption(typeEnum.getId(), typeEnum.getCode());
+		}
+		cbo.setRequired(required);
+		return cbo;
+	}
+	
+	public static TextArea getTextArea(String caption, String width,String height, boolean required) {
+		TextArea ta = new TextArea(caption);
+		ta.setWidth(width);
+		ta.setHeight(height);
+		ta.setRequired(required);
+		return ta;
 	}
 }

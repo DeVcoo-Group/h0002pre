@@ -34,8 +34,11 @@ public class SimpleTable extends Table {
 		addContainerProperty(column.getPropertyId(), column.getClazz(), null);
 		setColumnHeader(column.getPropertyId(), column.getColumnHeader());
 		setColumnAlignment(column.getPropertyId(), column.getAlign());
-		setColumnWidth(column.getPropertyId(), column.getWidth());
-		setColumnExpandRatio(column.getPropertyId(), 1);
+		if(column.getWidth()!= 0) {
+			setColumnWidth(column.getPropertyId(), column.getWidth());
+		} else {
+			setColumnExpandRatio(column.getPropertyId(), 1);
+		}
 	}
 
 }

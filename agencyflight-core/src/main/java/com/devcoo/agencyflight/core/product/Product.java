@@ -24,6 +24,15 @@ public class Product extends StdEntity {
 	
 	@Column(name = "service_charge")
 	private Double serviceCharge;
+	
+	@Column(name = "product_type")
+	private Integer productType;
+	
+	@Column(name = "requirement")
+	private String requirement;//What documents that customer need to provide to us
+	
+	@Column(name = "passportVisaPeriod")
+	private Integer passportVisaPeriod;//How many day for visa or passport delay or create
 
 	public String getCode() {
 		return code;
@@ -55,6 +64,30 @@ public class Product extends StdEntity {
 
 	public void setServiceCharge(Double serviceCharge) {
 		this.serviceCharge = serviceCharge;
+	}
+
+	public Integer getProductType() {
+		return productType;
+	}
+
+	public void setProductType(Integer productType) {
+		this.productType = productType;
+	}
+
+	public String getRequirement() {
+		return requirement;
+	}
+
+	public void setRequirement(String requirement) {
+		this.requirement = requirement;
+	}
+
+	public Integer getPassportVisaPeriod() {
+		return passportVisaPeriod;
+	}
+
+	public void setPassportVisaPeriod(Integer passportVisaPeriod) {
+		this.passportVisaPeriod = passportVisaPeriod;
 	}
 
 }
