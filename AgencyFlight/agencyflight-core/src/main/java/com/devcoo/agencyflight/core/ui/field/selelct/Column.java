@@ -8,8 +8,12 @@ public class Column {
 	private String columnHeader;
 	private Class<?> clazz;
 	private Align align;
-	private int width;
+	private int width=0;
 	private boolean visible;
+	
+	public Column(String propertyId, String columnHeader, Class<?> clazz, Align align) {
+		this(propertyId, columnHeader, clazz, align, 0, true);
+	}
 	
 	public Column(String propertyId, String columnHeader, Class<?> clazz, Align align, int width) {
 		this(propertyId, columnHeader, clazz, align, width, true);

@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface StdDao<T> extends JpaRepository<T, Integer>,JpaSpecificationExecutor<T>{
+	//public Page<T> findByActive(Boolean active);
 }
