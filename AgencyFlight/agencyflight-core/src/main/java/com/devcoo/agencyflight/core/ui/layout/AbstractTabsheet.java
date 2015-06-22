@@ -85,6 +85,8 @@ public abstract class AbstractTabsheet<Service extends StdService<T>,T extends S
 		
 	}
 	
+	protected void viewEntity(Integer entityId) { }
+	
 	protected abstract AbstractListLayout<Service,T> getListLayout();
 	
 	protected abstract void addNewEntity();

@@ -3,6 +3,7 @@ package com.devcoo.agencyflight.fe.ui.menu;
 import com.devcoo.agencyflight.core.ui.menu.AbstractMenuBar;
 import com.devcoo.agencyflight.fe.ui.panel.customer.CustomerHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.dashboard.Dashboard;
+import com.devcoo.agencyflight.fe.ui.panel.invoice.InvoiceHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.login.LoginPanel;
 import com.devcoo.agencyflight.fe.ui.panel.product.ProductHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.supplier.SupplierHolderPanel;
@@ -20,6 +21,7 @@ public class FEMenu extends AbstractMenuBar {
 		
 		MenuItem customers = addItem("Customers", null);
 		customers.addItem("Customer", new MenuCommand(CustomerHolderPanel.NAME));
+		customers.addItem("Invoice", new MenuCommand(InvoiceHolderPanel.NAME));
 		
 		MenuItem products = addItem("Products", null);
 		products.addItem("Product", new MenuCommand(ProductHolderPanel.NAME));
