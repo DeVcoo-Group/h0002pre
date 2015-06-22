@@ -93,16 +93,16 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 		boolean valid = true;
 		
 		if (!ValidationUtil.validateRequiredTextField(txtCode)) {
-			valid = true;
+			valid = false;
 		}
 		if (!ValidationUtil.validateRequiredTextField(txtName)) {
-			valid = true;
+			valid = false;
 		}
 		if (!ValidationUtil.validateRequiredTextField(txtPrice)) {
-			valid = true;
+			valid = false;
 		}
 		if (!ValidationUtil.validateRequiredSelectField(cboProductType)) {
-			valid = true;
+			valid = false;
 		}
 		
 		return valid;

@@ -13,9 +13,11 @@ public class ButtonBar extends HorizontalLayout {
 	private static final String BTN_EDIT = "Edit";
 	private static final String BTN_DELETE = "Delele";
 	private static final String BTN_SAVE = "Save";
+	private static final String BTN_VIEW = "View";
 	
 	private Button btnNew;
 	private Button btnEdit;
+	private Button btnView;
 	private Button btnDelete;
 	private Button btnSave;
 	
@@ -32,6 +34,12 @@ public class ButtonBar extends HorizontalLayout {
 	public void addEditButton(String caption) {
 		if (btnEdit == null) {
 			addButton(caption, BTN_EDIT);
+		}
+	}
+	
+	public void addViewButton(String caption) {
+		if (btnView == null) {
+			addButton(caption, BTN_VIEW);
 		}
 	}
 	
@@ -59,6 +67,10 @@ public class ButtonBar extends HorizontalLayout {
 			btnEdit = VaadinFactory.getButton(caption);
 			btnEdit.setIcon(FontAwesome.EDIT);
 			addComponent(btnEdit);
+		} else if (BTN_VIEW.equals(type)) {
+			btnView = VaadinFactory.getButtonDanger(caption);
+			btnView.setIcon(FontAwesome.EYE);
+			addComponent(btnView);
 		} else if (BTN_DELETE.equals(type)) {
 			btnDelete = VaadinFactory.getButton(caption);
 			btnDelete.setIcon(FontAwesome.TRASH_O);
@@ -67,7 +79,7 @@ public class ButtonBar extends HorizontalLayout {
 			btnSave = VaadinFactory.getButtonPrimary(caption);
 			btnSave.setIcon(FontAwesome.SAVE);
 			addComponent(btnSave);
-		} else {
+		}else {
 			addButton(VaadinFactory.getButton(caption));
 		}
 	}
@@ -93,6 +105,12 @@ public class ButtonBar extends HorizontalLayout {
 	public void addEditButtonClickListener(ClickListener listener) {
 		if (btnEdit != null) {
 			btnEdit.addClickListener(listener);
+		}
+	}
+	
+	public void addViewButtonClickListener(ClickListener listener) {
+		if (btnView != null) {
+			btnView.addClickListener(listener);
 		}
 	}
 	

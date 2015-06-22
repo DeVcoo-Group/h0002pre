@@ -83,7 +83,7 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 		}
 	}
 	
-	private class NewButtonListener implements ClickListener {
+	protected class NewButtonListener implements ClickListener {
 		private static final long serialVersionUID = 409666159411013956L;
 
 		public void buttonClick(ClickEvent event) {
@@ -91,7 +91,7 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 		}
 	}
 	
-	private class EditButtonListener implements ClickListener {
+	protected class EditButtonListener implements ClickListener {
 		private static final long serialVersionUID = -6345612035764585791L;
 
 		public void buttonClick(ClickEvent event) {
@@ -105,7 +105,23 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 		}
 	}
 	
-	private class DeleteButtonListener implements ClickListener {
+	protected class ViewButtonListener implements ClickListener {
+		private static final long serialVersionUID = 7967501371658690291L;
+		public ViewButtonListener() { }
+
+		@Override
+		public void buttonClick(ClickEvent event) {
+			if (selectedItemId == null) {
+				Notification info = new Notification("Information", "To view, please select one item.", Type.HUMANIZED_MESSAGE);
+				info.setDelayMsec(2000);
+				info.show(Page.getCurrent());
+			} else {
+				tabsheet.viewEntity(getSelectedItemId());
+			}
+		}
+	}
+	
+	protected class DeleteButtonListener implements ClickListener {
 		private static final long serialVersionUID = 2239593442237027172L;
 
 		public void buttonClick(ClickEvent event) {
