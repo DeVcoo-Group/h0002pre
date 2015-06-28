@@ -36,6 +36,7 @@ public class CustomerSearchPanel extends AbstractSearchLayout<CustomerService, C
 		intiControls();
 		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
+		horizontalLayout.setSpacing(true);
 		
 		FormLayout formLayout = new FormLayout();
 		formLayout.addComponent(txtFirstName);

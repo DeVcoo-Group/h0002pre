@@ -9,6 +9,7 @@ import ru.xpoft.vaadin.VaadinView;
 import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractTabsheet;
+import com.devcoo.agencyflight.fe.ui.panel.invoice.customer.InvoiceCustomerFormPanel;
 
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
@@ -18,6 +19,7 @@ public class InvoiceHolderPanel extends AbstractTabsheet<InvoiceService, Invoice
 	private static final long serialVersionUID = 67491144499007131L;
 	public static final String NAME = "fe.invoice";
 	
+	private InvoiceCustomerFormPanel invoiceCustomerFormPanel = new InvoiceCustomerFormPanel();
 	private InvoiceFormPanel formPanel;
 
 	@Override
@@ -27,7 +29,9 @@ public class InvoiceHolderPanel extends AbstractTabsheet<InvoiceService, Invoice
 
 	@Override
 	protected void addNewEntity() {
-		// Add new invoice, not allow here
+		invoiceCustomerFormPanel.setCaption("New Invoice");
+		invoiceCustomerFormPanel.assignValues(null);
+		addFormLayout(invoiceCustomerFormPanel);
 	}
 
 	@Override

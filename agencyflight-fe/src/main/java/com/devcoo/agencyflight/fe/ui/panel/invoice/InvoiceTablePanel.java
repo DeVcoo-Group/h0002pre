@@ -7,7 +7,6 @@ import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
 import com.devcoo.agencyflight.core.ui.layout.AbstractListLayout;
-import com.devcoo.agencyflight.core.ui.layout.ButtonBar;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Table.Align;
 
@@ -28,7 +27,7 @@ public class InvoiceTablePanel extends AbstractListLayout<InvoiceService, Invoic
 	@Override
 	protected void initGUI() {
 		setCaption("Invoices");
-		addComponent(createViewBar(), 0);
+		buildDefaultCRUDBar();
 		table.setCaption("List Invoices");
 		refresh();
 	}
@@ -57,13 +56,6 @@ public class InvoiceTablePanel extends AbstractListLayout<InvoiceService, Invoic
 		columns.add(new Column(EMPLOYEE, "Employee", String.class, Align.LEFT, 200));
 		columns.add(new Column(AMOUNT_RECEIVE, "Amount receive", Double.class, Align.RIGHT, 200));
 		return columns;
-	}
-	
-	private ButtonBar createViewBar() {
-		ButtonBar bar = new ButtonBar();
-		bar.addViewButton(null);
-		bar.addViewButtonClickListener(new ViewButtonListener());
-		return bar;
 	}
 
 	@Override

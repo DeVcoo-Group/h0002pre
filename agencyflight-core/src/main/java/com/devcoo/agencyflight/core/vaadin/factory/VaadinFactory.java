@@ -98,13 +98,14 @@ public class VaadinFactory {
 			cbo.setItemCaption(typeEnum.getId(), typeEnum.getCode());
 		}
 		cbo.setRequired(required);
+		cbo.setWidth(width, Unit.PIXELS);
 		return cbo;
 	}
 	
-	public static TextArea getTextArea(String caption, String width,String height, boolean required) {
+	public static TextArea getTextArea(String caption, float width, float height, boolean required) {
 		TextArea ta = new TextArea(caption);
-		ta.setWidth(width);
-		ta.setHeight(height);
+		ta.setWidth(width, Unit.PIXELS);
+		ta.setHeight(height, Unit.PIXELS);
 		ta.setRequired(required);
 		return ta;
 	}
