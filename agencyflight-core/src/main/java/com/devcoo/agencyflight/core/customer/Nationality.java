@@ -1,6 +1,8 @@
 package com.devcoo.agencyflight.core.customer;
 
-public enum Nationality {
+import com.devcoo.agencyflight.core.std.StdEnum;
+
+public enum Nationality implements StdEnum {
 	CAMBODIAN(1, "Cambodia"),
 	CHINESE(2, "Chinese");
 	

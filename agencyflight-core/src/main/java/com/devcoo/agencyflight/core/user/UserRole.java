@@ -1,6 +1,8 @@
 package com.devcoo.agencyflight.core.user;
 
-public enum UserRole {
+import com.devcoo.agencyflight.core.std.StdEnum;
+
+public enum UserRole implements StdEnum{
 	ADMINISTRATOR(0,"Administrator"),
 	MANAGER(1,"Manager"),
 	Staff(2,"Staff");
