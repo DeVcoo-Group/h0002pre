@@ -65,7 +65,7 @@ public class SupplierSearchPanel extends AbstractSearchLayout<SupplierService, S
 
 		@Override
 		public Predicate toPredicate(Root<Supplier> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-			String strCode = "%" + txtName.getValue() + "%";
+			String strCode = "%" + txtName.getValue().toLowerCase() + "%";
 			Expression<String> code = root.get("name");
 			return cb.like(cb.lower(code), strCode);
 		}

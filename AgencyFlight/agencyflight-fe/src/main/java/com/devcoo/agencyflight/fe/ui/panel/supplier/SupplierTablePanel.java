@@ -45,7 +45,7 @@ public class SupplierTablePanel extends AbstractListLayout<SupplierService, Supp
 	protected List<Column> buildColumns() {
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column(ID, "Id", Integer.class, Align.RIGHT, 100));
-		columns.add(new Column(NAME, "Supplier Code", String.class, Align.LEFT, 150));
+		columns.add(new Column(NAME, "Supplier Name", String.class, Align.LEFT));
 		return columns;
 	}
 

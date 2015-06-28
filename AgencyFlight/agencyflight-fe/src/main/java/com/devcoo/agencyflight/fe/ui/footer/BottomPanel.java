@@ -26,10 +26,10 @@ public class BottomPanel extends VerticalLayout {
 	}
 	
 	private void initGUI() {
-		imgLogo = new Image(null, new ThemeResource("images/logo.jpg"));
+		imgLogo = new Image(null, new ThemeResource("images/logo.png"));
 		imgLogo.setHeight(45, Unit.PIXELS);
 		lblDesignAndBuild = VaadinFactory.getLabelHtml("Designed and built by ");
-		lblCopyRight = VaadinFactory.getLabelHtml("Copyright &#x00a9; DevCoo Group. All rights reserved.");
+		lblCopyRight = VaadinFactory.getLabelHtml("Copyright &#x00a9; DeVcoo Group. All rights reserved.");
 		lblCopyRight.setSizeUndefined();
 		lblVersion = VaadinFactory.getLabelHtml("Version 0.0.1");
 		lblVersion.setSizeUndefined();

@@ -21,7 +21,7 @@ public class TopPanel extends VerticalLayout {
 	}
 	
 	private void initGUI() {
-		imgLogo = new Image(null, new ThemeResource("images/logo.jpg"));
+		imgLogo = new Image(null, new ThemeResource("images/logo.png"));
 		imgLogo.setHeight(45, Unit.PIXELS);
 		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();

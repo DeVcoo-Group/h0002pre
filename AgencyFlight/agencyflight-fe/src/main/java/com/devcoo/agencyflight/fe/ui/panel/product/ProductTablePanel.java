@@ -5,9 +5,11 @@ import java.util.List;
 
 import com.devcoo.agencyflight.core.product.Product;
 import com.devcoo.agencyflight.core.product.ProductService;
+import com.devcoo.agencyflight.core.product.ProductType;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
 import com.devcoo.agencyflight.core.ui.layout.AbstractListLayout;
 import com.devcoo.agencyflight.core.ui.layout.AbstractSearchLayout;
+import com.devcoo.agencyflight.core.util.Tools;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Table.Align;
 
@@ -46,7 +48,7 @@ public class ProductTablePanel extends AbstractListLayout<ProductService, Produc
 		item.getItemProperty(CODE).setValue(entity.getCode());
 		item.getItemProperty(NAME).setValue(entity.getName());
 		item.getItemProperty(PRICE).setValue(entity.getPrice());
-		item.getItemProperty(PRODUCT_TYPE).setValue("");
+		item.getItemProperty(PRODUCT_TYPE).setValue(Tools.getEnumToString(entity.getProductType(), ProductType.values()));
 		item.getItemProperty(SERVICE_CHARGE).setValue(entity.getServiceCharge());
 	}
 
