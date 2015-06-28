@@ -7,6 +7,8 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -91,6 +93,7 @@ public class VaadinFactory {
 		return txt;
 	}
 	
+	// ============== ComboBox ================== //
 	public static ComboBox getComboBoxFromEnum(String caption, float width, boolean required, StdEnum[] enumerations) {
 		ComboBox cbo = new ComboBox(caption);
 		for (StdEnum typeEnum : enumerations) {
@@ -102,6 +105,7 @@ public class VaadinFactory {
 		return cbo;
 	}
 	
+	// ============== TextArea ================== //
 	public static TextArea getTextArea(String caption, float width, float height, boolean required) {
 		TextArea ta = new TextArea(caption);
 		ta.setWidth(width, Unit.PIXELS);
@@ -109,4 +113,16 @@ public class VaadinFactory {
 		ta.setRequired(required);
 		return ta;
 	}
+	
+	// ============== TextArea ================== //
+	public static Notification getNotification(String title, String msg, Type type) {
+		return getNotification(title, msg, type, 2500);
+	}
+	
+	public static Notification getNotification(String title, String msg, Type type, int delay) {
+		Notification info = new Notification(title, msg, type);
+		info.setDelayMsec(delay);
+		return info;
+	}
+	
 }

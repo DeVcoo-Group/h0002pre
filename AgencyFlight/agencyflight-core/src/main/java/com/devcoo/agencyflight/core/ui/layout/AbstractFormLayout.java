@@ -2,6 +2,7 @@ package com.devcoo.agencyflight.core.ui.layout;
 
 import com.devcoo.agencyflight.core.std.StdEntity;
 import com.devcoo.agencyflight.core.std.StdService;
+import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
@@ -50,8 +51,7 @@ public abstract class AbstractFormLayout<Service extends StdService<T>,T extends
 		if (validate()) {
 			save();
 			tabsheet.setNeedRefresh(Boolean.TRUE);
-			Notification info = new Notification("Information", "Save successfully.", Type.HUMANIZED_MESSAGE);
-			info.setDelayMsec(2000);
+			Notification info = VaadinFactory.getNotification("Information", "Save successfully.", Type.HUMANIZED_MESSAGE);
 			info.show(Page.getCurrent());
 		}
 	}

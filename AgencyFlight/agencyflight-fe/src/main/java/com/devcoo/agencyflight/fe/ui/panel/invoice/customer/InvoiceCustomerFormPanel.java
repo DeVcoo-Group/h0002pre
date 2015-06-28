@@ -5,10 +5,14 @@ import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.ui.layout.customer.BaseCustomerFormPanel;
+import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
 public class InvoiceCustomerFormPanel extends AbstractFormLayout<InvoiceService, Invoice> {
@@ -75,8 +79,18 @@ public class InvoiceCustomerFormPanel extends AbstractFormLayout<InvoiceService,
 
 	@Override
 	protected boolean validate() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean valid = true;
+		if (chkOldCustomer.getValue()) {
+			if (tablePanel.getSelectedItemId() == null) {
+				valid = false;
+				String msg = "To create invoice, please select one customer or add new customer.";
+				Notification info = VaadinFactory.getNotification("Information", msg, Type.HUMANIZED_MESSAGE);
+				info.show(Page.getCurrent());
+			}
+		} else {
+			valid = customerForm.validate();
+		}
+		return valid;
 	}
 	
 	@Override
