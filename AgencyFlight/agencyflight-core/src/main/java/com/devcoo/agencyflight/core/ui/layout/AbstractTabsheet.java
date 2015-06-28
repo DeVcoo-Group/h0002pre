@@ -55,7 +55,7 @@ public abstract class AbstractTabsheet<Service extends StdService<T>,T extends S
 			tabsheet.addTab(formLayout, formLayout.getCaption(), formLayout.getIcon());
 		}
 		tabsheet.setSelectedTab(formLayout);
-		initSelectedTab(formLayout);
+//		initSelectedTab(formLayout);
 	}
 	
 	public void selectListLayout() {

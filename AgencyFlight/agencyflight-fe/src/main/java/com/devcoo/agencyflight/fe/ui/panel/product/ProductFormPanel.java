@@ -43,19 +43,19 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 		formLayout.addComponent(txtPrice);
 		formLayout.addComponent(txtServiceCharge);
 		formLayout.addComponent(cboProductType);
-		formLayout.addComponent(taRequirement);
 		formLayout.addComponent(txtPeriod);
+		formLayout.addComponent(taRequirement);
 		
 		return formLayout;
 	}
 	
 	private void initControls() {
 		txtCode = VaadinFactory.getTextField("Product Code", 200, true);
-		txtName = VaadinFactory.getTextField("Product Name", 600, true);
+		txtName = VaadinFactory.getTextField("Product Name", 200, true);
 		txtPrice = VaadinFactory.getTextField("Price", 200, true);
 		txtServiceCharge = VaadinFactory.getTextField("Service Charge", 200);
 		cboProductType = VaadinFactory.getComboBoxFromEnum("Product Type", 200, true, ProductType.values());
-		taRequirement = VaadinFactory.getTextArea("Requirement", "400px", "200px", true);
+		taRequirement = VaadinFactory.getTextArea("Requirement", 400, 200, true);
 		txtPeriod = VaadinFactory.getTextField("Product Period", 200, true);
 		
 	}
