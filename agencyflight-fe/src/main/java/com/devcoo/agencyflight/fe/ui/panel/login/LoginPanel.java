@@ -16,8 +16,6 @@ import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.user.UserService;
 import com.devcoo.agencyflight.fe.ui.MainUI;
 import com.vaadin.server.Page;
-import com.vaadin.shared.Position;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
 @Component
@@ -43,15 +41,6 @@ public class LoginPanel extends AbstractLoginView {
 				Page.getCurrent().setUriFragment("!" + MainUI.AFTER_LOG_IN_PANEL_NAME);
 			}
 		}
-		
-		String msg = "<span>Welcome " + user + " with password: " + password + " to the agency flight</span>";
-		Notification notification = new Notification("Welcome to Agency flight");
-        notification.setDescription(msg);
-        notification.setHtmlContentAllowed(true);
-        notification.setDelayMsec(3000);
-        notification.setStyleName("tray dark small closable login-help");
-        notification.setPosition(Position.BOTTOM_CENTER);
-        notification.show(Page.getCurrent());
 	}
 
 }

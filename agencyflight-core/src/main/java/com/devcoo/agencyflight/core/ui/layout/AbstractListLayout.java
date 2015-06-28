@@ -9,6 +9,7 @@ import com.devcoo.agencyflight.core.std.StdEntity;
 import com.devcoo.agencyflight.core.std.StdService;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
 import com.devcoo.agencyflight.core.ui.field.selelct.SimpleTable;
+import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.vaadin.data.Item;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
@@ -96,8 +97,7 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 
 		public void buttonClick(ClickEvent event) {
 			if (selectedItemId == null) {
-				Notification info = new Notification("Information", "To edit, please select one item.", Type.HUMANIZED_MESSAGE);
-				info.setDelayMsec(2000);
+				Notification info = VaadinFactory.getNotification("Information", "To edit, please select one item.", Type.HUMANIZED_MESSAGE);
 				info.show(Page.getCurrent());
 			} else {
 				tabsheet.editEntity(getSelectedItemId());
@@ -112,8 +112,7 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 		@Override
 		public void buttonClick(ClickEvent event) {
 			if (selectedItemId == null) {
-				Notification info = new Notification("Information", "To view, please select one item.", Type.HUMANIZED_MESSAGE);
-				info.setDelayMsec(2000);
+				Notification info = VaadinFactory.getNotification("Information", "To view, please select one item.", Type.HUMANIZED_MESSAGE);
 				info.show(Page.getCurrent());
 			} else {
 				tabsheet.viewEntity(getSelectedItemId());
@@ -126,8 +125,7 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 
 		public void buttonClick(ClickEvent event) {
 			if (selectedItemId == null) {
-				Notification info = new Notification("Information", "To delete, please select one item.", Type.HUMANIZED_MESSAGE);
-				info.setDelayMsec(2000);
+				Notification info = VaadinFactory.getNotification("Information", "To delete, please select one item.", Type.HUMANIZED_MESSAGE);
 				info.show(Page.getCurrent());
 			} else {
 				ConfirmDialog.show(UI.getCurrent(), 
