@@ -115,6 +115,10 @@ public class VaadinFactory {
 	}
 	
 	// ============== TextArea ================== //
+	public static Notification getNotification(String title, String msg) {
+		return getNotification(title, msg, Type.HUMANIZED_MESSAGE, 2500);
+	}
+	
 	public static Notification getNotification(String title, String msg, Type type) {
 		return getNotification(title, msg, type, 2500);
 	}

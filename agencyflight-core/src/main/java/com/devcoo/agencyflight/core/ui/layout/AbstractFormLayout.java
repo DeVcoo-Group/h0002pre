@@ -60,6 +60,10 @@ public abstract class AbstractFormLayout<Service extends StdService<T>,T extends
 		this.tabsheet = tabsheet;
 	}
 	
+	public AbstractTabsheet<Service, T> getMainPanel() {
+		return this.tabsheet;
+	}
+	
 	protected abstract void save();
 	
 	protected abstract Component initGUI();

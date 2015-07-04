@@ -6,21 +6,21 @@ import org.springframework.stereotype.Component;
 
 import ru.xpoft.vaadin.VaadinView;
 
-import com.devcoo.agencyflight.core.invoice.Invoice;
-import com.devcoo.agencyflight.core.invoice.InvoiceService;
+import com.devcoo.agencyflight.core.invoice.InvoiceVisa;
+import com.devcoo.agencyflight.core.invoice.InvoiceVisaService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractTabsheet;
 import com.devcoo.agencyflight.fe.ui.panel.invoice.customer.InvoiceCustomerFormPanel;
 
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @VaadinView(InvoiceHolderPanel.NAME)
-public class InvoiceHolderPanel extends AbstractTabsheet<InvoiceService, Invoice> {
+public class InvoiceHolderPanel extends AbstractTabsheet<InvoiceVisaService, InvoiceVisa> {
 
 	private static final long serialVersionUID = 67491144499007131L;
 	public static final String NAME = "fe.invoice";
 	
 	private InvoiceCustomerFormPanel invoiceCustomerFormPanel = new InvoiceCustomerFormPanel();
-	private InvoiceFormPanel formPanel;
+	private InvoiceFormPanel formPanel = new InvoiceFormPanel();
 
 	@Override
 	protected InvoiceTablePanel getListLayout() {
@@ -29,14 +29,26 @@ public class InvoiceHolderPanel extends AbstractTabsheet<InvoiceService, Invoice
 
 	@Override
 	protected void addNewEntity() {
+		invoiceCustomerFormPanel.reset();
 		invoiceCustomerFormPanel.setCaption("New Invoice");
 		invoiceCustomerFormPanel.assignValues(null);
 		addFormLayout(invoiceCustomerFormPanel);
 	}
+	
+	public void addInvoiceTab(Integer customerId) {
+		removeFormLayout(invoiceCustomerFormPanel);
+		formPanel.setCaption("New Invoice");
+		formPanel.reset();
+		formPanel.assignValues(null, customerId);
+		addFormLayout(formPanel);
+	}
 
 	@Override
 	protected void editEntity(Integer entityId) {
-		// Edit invoice, not allow here
+		formPanel.setCaption("New Invoice");
+		formPanel.reset();
+		formPanel.assignValues(entityId);
+		addFormLayout(formPanel);
 	}
 	
 	@Override
