@@ -3,14 +3,14 @@ package com.devcoo.agencyflight.fe.ui.panel.invoice;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.devcoo.agencyflight.core.invoice.Invoice;
-import com.devcoo.agencyflight.core.invoice.InvoiceService;
+import com.devcoo.agencyflight.core.invoice.InvoiceVisa;
+import com.devcoo.agencyflight.core.invoice.InvoiceVisaService;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
 import com.devcoo.agencyflight.core.ui.layout.AbstractListLayout;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Table.Align;
 
-public class InvoiceTablePanel extends AbstractListLayout<InvoiceService, Invoice> {
+public class InvoiceTablePanel extends AbstractListLayout<InvoiceVisaService, InvoiceVisa> {
 
 	private static final long serialVersionUID = 1940622554822134460L;
 	
@@ -21,7 +21,7 @@ public class InvoiceTablePanel extends AbstractListLayout<InvoiceService, Invoic
 	private static final String AMOUNT_RECEIVE = "amountReceive";
 
 	public InvoiceTablePanel() {
-		super("invoiceServiceImp");
+		super("invoiceVisaServiceImp");
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class InvoiceTablePanel extends AbstractListLayout<InvoiceService, Invoic
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void renderRow(Item item, Invoice entity) {
+	protected void renderRow(Item item, InvoiceVisa entity) {
 		item.getItemProperty(ID).setValue(entity.getId());
 		item.getItemProperty(CODE).setValue(entity.getCode());
 		item.getItemProperty(CUSTOMER).setValue(entity.getCustomer().getFirstName() + entity.getCustomer().getLastName());
@@ -59,7 +59,7 @@ public class InvoiceTablePanel extends AbstractListLayout<InvoiceService, Invoic
 	}
 
 	@Override
-	public Invoice getEntity() {
+	public InvoiceVisa getEntity() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -13,7 +13,7 @@ import com.devcoo.agencyflight.core.user.User;
 
 @Entity
 @Table(name = "invoices")
-public class Invoice extends StdEntity {
+public class InvoiceVisa extends StdEntity {
 
 	private static final long serialVersionUID = -1503906552312944843L;
 	
@@ -29,7 +29,7 @@ public class Invoice extends StdEntity {
 	private User employee;
 	
 	@Column(name = "amount_receive")
-	private Double amountReceive;	// Amount receive from customer, no exchange
+	private Double amountReceive;	// Amount receive from customer, include exchange
 
 	public String getCode() {
 		return code;

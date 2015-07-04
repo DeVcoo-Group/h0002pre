@@ -7,6 +7,6 @@ import com.devcoo.agencyflight.core.std.StdServiceImp;
 
 @Service
 @Transactional
-public class InvoiceServiceImp extends StdServiceImp<InvoiceDao, Invoice> implements InvoiceService {
+public class InvoiceVisaServiceImp extends StdServiceImp<InvoiceVisaDao, InvoiceVisa> implements InvoiceVisaService {
 
 }

@@ -69,6 +69,13 @@ public abstract class AbstractTabsheet<Service extends StdService<T>,T extends S
 		formLayouts.clear();
 	}
 	
+	public void removeFormLayout(AbstractFormLayout<Service, T> formLayout) {
+		if (formLayouts.contains(formLayout)) {
+			tabsheet.removeComponent(formLayout);
+			formLayouts.remove(formLayout);
+		}
+	}
+	
 	protected void addListLayout() {
 		tabsheet.addTab(listLayout, listLayout.getCaption(), listLayout.getIcon());
 	}

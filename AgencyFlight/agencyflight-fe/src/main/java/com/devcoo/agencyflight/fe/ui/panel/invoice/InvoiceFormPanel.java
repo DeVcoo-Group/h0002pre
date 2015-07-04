@@ -2,15 +2,26 @@ package com.devcoo.agencyflight.fe.ui.panel.invoice;
 
 import java.text.DecimalFormat;
 
-import com.devcoo.agencyflight.core.invoice.Invoice;
-import com.devcoo.agencyflight.core.invoice.InvoiceService;
+import com.devcoo.agencyflight.core.context.WebContext;
+import com.devcoo.agencyflight.core.customer.Customer;
+import com.devcoo.agencyflight.core.customer.CustomerService;
+import com.devcoo.agencyflight.core.invoice.InvoiceVisa;
+import com.devcoo.agencyflight.core.invoice.InvoiceVisaService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
+import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
-public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice> {
+public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, InvoiceVisa> {
 
 	private static final long serialVersionUID = 7155913963716727055L;
 	
@@ -20,30 +31,29 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	private TextField txtEmployee;
 	private TextField txtAmountReceive;
 	
-	private Invoice invoice;
+	private InvoiceVisa invoiceVisa;
+	private Integer customerId;
+	private CustomerService customerService = (CustomerService) ctx.getBean("customerServiceImp");
 
 	public InvoiceFormPanel() {
-		super("invoiceServiceImp");
+		super("invoiceVisaServiceImp");
 	}
 
 	@Override
 	protected void save() {
-		
+		invoiceVisa.setCode(txtCode.getValue());
+		service.save(invoiceVisa);
 	}
 
 	@Override
 	protected Component initGUI() {
 		initControls();
+		setEnabledControls(false);
 		
-		FormLayout formLayout = new FormLayout();
-		formLayout.addComponent(VaadinFactory.getLabel("Customer Invoice Detail"));
-		formLayout.addComponent(txtCode);
-		formLayout.addComponent(txtAmountReceive);
-		formLayout.addComponent(txtCustomerFirstName);
-		formLayout.addComponent(txtCustomerLastName);
-		formLayout.addComponent(txtEmployee);
+		VerticalLayout verticalLayout = new VerticalLayout();
+		verticalLayout.addComponent(buildInvoiceDetailPanel());
 		
-		return formLayout;
+		return verticalLayout;
 	}
 	
 	private void initControls() {
@@ -53,40 +63,96 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 		txtEmployee = VaadinFactory.getTextField("Employee", 200);
 		txtAmountReceive = VaadinFactory.getTextField("Amount receive", 200);
 	}
+	
+	private Panel buildInvoiceDetailPanel() {
+		HorizontalLayout horizontalLayout = new HorizontalLayout();
+		horizontalLayout.setSpacing(true);
+		horizontalLayout.setMargin(true);
+		
+		FormLayout formLayout = new FormLayout();
+		formLayout.addComponent(txtCode);
+		formLayout.addComponent(txtCustomerFirstName);
+		horizontalLayout.addComponent(formLayout);
+		
+		formLayout = new FormLayout();
+		formLayout.addComponent(txtEmployee);
+		formLayout.addComponent(txtCustomerLastName);
+		horizontalLayout.addComponent(formLayout);
+		
+		formLayout = new FormLayout();
+		formLayout.addComponent(txtAmountReceive);
+		horizontalLayout.addComponent(formLayout);
+		
+		Panel panel = new Panel("Customer Invoice Detail");
+		panel.setContent(horizontalLayout);
+		return panel;
+	}
 
 	@Override
 	protected void assignValues(Integer entityId) {
-		reset();
 		if (entityId == null) {
-			invoice = new Invoice();
+			invoiceVisa = new InvoiceVisa();
+			if (this.customerId != null) {
+				Customer customer = customerService.find(this.customerId);
+				invoiceVisa.setCustomer(customer);
+				WebContext context = (WebContext) UI.getCurrent().getSession().getAttribute(WebContext.WEB_CONTEXT);
+				User employee = context.getLog_user();
+				invoiceVisa.setEmployee(employee);
+			} else {
+				String msg = "To create invoice, a customer must be exist";
+				Notification info = VaadinFactory.getNotification("Error", msg, Type.ERROR_MESSAGE);
+				info.show(Page.getCurrent());
+			}
 		} else {
-			invoice = service.find(entityId);
-			txtCode.setValue(invoice.getCode());
-			txtCustomerFirstName.setValue(invoice.getCustomer().getFirstName());
-			txtCustomerLastName.setValue(invoice.getCustomer().getLastName());
-			txtEmployee.setValue(invoice.getEmployee().getName());
+			invoiceVisa = service.find(entityId);
+			txtCode.setValue(invoiceVisa.getCode());
 			DecimalFormat df = new DecimalFormat("#0.00");
-			txtAmountReceive.setValue(df.format(invoice.getAmountReceive()));
+			Double amountReceive = invoiceVisa.getAmountReceive();
+			if (amountReceive == null) {
+				amountReceive = 0d;
+			}
+			txtAmountReceive.setValue(df.format(amountReceive));
 		}
+		txtCustomerFirstName.setValue(invoiceVisa.getCustomer().getFirstName());
+		txtCustomerLastName.setValue(invoiceVisa.getCustomer().getLastName());
+		txtEmployee.setValue(invoiceVisa.getEmployee().getName());
+	}
+	
+	public void assignValues(Integer entityId, Integer customerId) {
+		this.customerId = customerId;
+		assignValues(entityId);
+	}
+	
+	protected void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
 	}
 
 	@Override
 	protected void reset() {
+		this.customerId = null;
 		txtCode.setValue("");
 		txtCustomerFirstName.setValue("");
 		txtCustomerLastName.setValue("");
 		txtEmployee.setValue("");
 		txtAmountReceive.setValue("");
 	}
-
-	@Override
-	protected boolean validate() {
-		// TODO Auto-generated method stub
-		return false;
+	
+	private void setEnabledControls(boolean enabled) {
+//		txtCode.setEnabled(enabled);
+		txtCustomerFirstName.setEnabled(enabled);
+		txtCustomerLastName.setEnabled(enabled);
+		txtEmployee.setEnabled(enabled);
+		txtAmountReceive.setEnabled(enabled);
 	}
 
 	@Override
-	public Invoice getEntity() {
+	protected boolean validate() {
+		
+		return true;
+	}
+
+	@Override
+	public InvoiceVisa getEntity() {
 		// TODO Auto-generated method stub
 		return null;
 	}
