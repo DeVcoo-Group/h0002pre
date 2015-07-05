@@ -3,9 +3,9 @@ package com.devcoo.agencyflight.fe.ui.panel.product;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.devcoo.agencyflight.core.product.Product;
-import com.devcoo.agencyflight.core.product.ProductService;
-import com.devcoo.agencyflight.core.product.ProductType;
+import com.devcoo.agencyflight.core.product.visa.ProductType;
+import com.devcoo.agencyflight.core.product.visa.Visa;
+import com.devcoo.agencyflight.core.product.visa.VisaService;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
 import com.devcoo.agencyflight.core.ui.layout.AbstractListLayout;
 import com.devcoo.agencyflight.core.ui.layout.AbstractSearchLayout;
@@ -13,7 +13,7 @@ import com.devcoo.agencyflight.core.util.Tools;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Table.Align;
 
-public class ProductTablePanel extends AbstractListLayout<ProductService, Product> {
+public class ProductTablePanel extends AbstractListLayout<VisaService, Visa> {
 
 	private static final long serialVersionUID = 1534966245011508976L;
 	
@@ -25,7 +25,7 @@ public class ProductTablePanel extends AbstractListLayout<ProductService, Produc
 	private static String SERVICE_CHARGE = "serviceCharge";
 
 	public ProductTablePanel() {
-		super("productServiceImp");
+		super("visaServiceImp");
 	}
 
 	@Override
@@ -37,13 +37,13 @@ public class ProductTablePanel extends AbstractListLayout<ProductService, Produc
 	}
 
 	@Override
-	protected AbstractSearchLayout<ProductService, Product> buildSearchPanel() {
+	protected AbstractSearchLayout<VisaService, Visa> buildSearchPanel() {
 		return new ProductSearchPanel();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void renderRow(Item item, Product entity) {
+	protected void renderRow(Item item, Visa entity) {
 		item.getItemProperty(ID).setValue(entity.getId());
 		item.getItemProperty(CODE).setValue(entity.getCode());
 		item.getItemProperty(NAME).setValue(entity.getName());
@@ -65,7 +65,7 @@ public class ProductTablePanel extends AbstractListLayout<ProductService, Produc
 	}
 
 	@Override
-	public Product getEntity() {
+	public Visa getEntity() {
 		// TODO Auto-generated method stub
 		return null;
 	}

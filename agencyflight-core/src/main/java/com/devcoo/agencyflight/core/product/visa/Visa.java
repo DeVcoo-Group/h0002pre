@@ -1,4 +1,4 @@
-package com.devcoo.agencyflight.core.product;
+package com.devcoo.agencyflight.core.product.visa;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,8 +7,8 @@ import javax.persistence.Table;
 import com.devcoo.agencyflight.core.std.StdEntity;
 
 @Entity
-@Table(name="products")
-public class Product extends StdEntity {
+@Table(name="visa")
+public class Visa extends StdEntity {
 
 	/** */
 	private static final long serialVersionUID = 2353681075201545704L;

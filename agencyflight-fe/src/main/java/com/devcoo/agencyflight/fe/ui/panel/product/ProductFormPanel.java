@@ -2,9 +2,9 @@ package com.devcoo.agencyflight.fe.ui.panel.product;
 
 import java.text.DecimalFormat;
 
-import com.devcoo.agencyflight.core.product.Product;
-import com.devcoo.agencyflight.core.product.ProductService;
-import com.devcoo.agencyflight.core.product.ProductType;
+import com.devcoo.agencyflight.core.product.visa.ProductType;
+import com.devcoo.agencyflight.core.product.visa.Visa;
+import com.devcoo.agencyflight.core.product.visa.VisaService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.util.ValidationUtil;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
@@ -14,7 +14,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class ProductFormPanel extends AbstractFormLayout<ProductService, Product> {
+public class ProductFormPanel extends AbstractFormLayout<VisaService, Visa> {
 
 	private static final long serialVersionUID = 2368702953447696338L;
 	
@@ -26,10 +26,10 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 	private TextArea taRequirement;
 	private TextField txtPeriod;
 	
-	private Product product;
+	private Visa product;
 
 	public ProductFormPanel() {
-		super("productServiceImp");
+		super("visaServiceImp");
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 	protected void assignValues(Integer entityId) {
 		reset();
 		if (entityId == null) {
-			product = new Product();
+			product = new Visa();
 		} else {
 			product = service.find(entityId);
 			txtCode.setValue(product.getCode());
@@ -118,7 +118,7 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 	}
 
 	@Override
-	public Product getEntity() {
+	public Visa getEntity() {
 		// TODO Auto-generated method stub
 		return null;
 	}

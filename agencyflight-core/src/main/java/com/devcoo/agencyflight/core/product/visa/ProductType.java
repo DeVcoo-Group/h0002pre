@@ -1,4 +1,4 @@
-package com.devcoo.agencyflight.core.product;
+package com.devcoo.agencyflight.core.product.visa;
 
 import com.devcoo.agencyflight.core.std.StdEnum;
 
