@@ -1,5 +1,6 @@
 package com.devcoo.agencyflight.fe.ui.menu;
 
+import com.devcoo.agencyflight.core.context.WebContext;
 import com.devcoo.agencyflight.core.ui.menu.AbstractMenuBar;
 import com.devcoo.agencyflight.fe.ui.panel.customer.CustomerHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.dashboard.Dashboard;
@@ -8,6 +9,9 @@ import com.devcoo.agencyflight.fe.ui.panel.login.LoginPanel;
 import com.devcoo.agencyflight.fe.ui.panel.product.ProductHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.supplier.SupplierHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.user.UserHolderPanel;
+import com.vaadin.server.Page;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.MenuBar.MenuItem;
 
 public class FEMenu extends AbstractMenuBar {
 	
@@ -17,7 +21,14 @@ public class FEMenu extends AbstractMenuBar {
 		MenuItem file = addItem("File", null);
 		file.addItem("Dashboard", new MenuCommand(Dashboard.NAME));
 		file.addItem("Login", new MenuCommand(LoginPanel.NAME));
-		file.addItem("Exit", null);
+		file.addItem("Exit",new Command() {
+			@Override
+			public void menuSelected(MenuItem selectedItem) {
+				UI.getCurrent().getSession().setAttribute("isLogin", false);
+				((WebContext) UI.getCurrent().getSession().getAttribute(WebContext.WEB_CONTEXT)).setLog_user(null);
+				Page.getCurrent().setUriFragment("!");
+			}
+		});
 		
 		MenuItem customers = addItem("Customers", null);
 		customers.addItem("Customer", new MenuCommand(CustomerHolderPanel.NAME));
