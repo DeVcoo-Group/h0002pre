@@ -1,9 +1,9 @@
 package com.devcoo.agencyflight.core.product.visa;
 
-import com.devcoo.agencyflight.core.std.StdEnum;
+import com.devcoo.agencyflight.core.std.StdField;
 
 
-public enum ProductType implements StdEnum{
+public enum ProductType implements StdField {
 	AIRTICKET(1, "Air-Ticket"),
 	PASSPORT_VISA(2, "Passport and Visa"),
 	TOUR(3,"Tour"),
@@ -23,5 +23,10 @@ public enum ProductType implements StdEnum{
 	
 	public String getCode() {
 		return this.code;
+	}
+
+	@Override
+	public String getDisplayName() {
+		return getCode();
 	}
 }

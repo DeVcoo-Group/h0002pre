@@ -1,8 +1,8 @@
 package com.devcoo.agencyflight.core.document;
 
-import com.devcoo.agencyflight.core.std.StdEnum;
+import com.devcoo.agencyflight.core.std.StdField;
 
-public enum DocumentType implements StdEnum {
+public enum DocumentType implements StdField {
 	PASSPORT(1, "Passport");
 	
 	private int id;
@@ -18,9 +18,13 @@ public enum DocumentType implements StdEnum {
 		return this.id;
 	}
 
-	@Override
 	public String getCode() {
 		return this.code;
+	}
+
+	@Override
+	public String getDisplayName() {
+		return getCode();
 	}
 
 }

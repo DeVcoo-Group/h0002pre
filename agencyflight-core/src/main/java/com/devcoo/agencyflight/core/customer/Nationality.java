@@ -1,8 +1,8 @@
 package com.devcoo.agencyflight.core.customer;
 
-import com.devcoo.agencyflight.core.std.StdEnum;
+import com.devcoo.agencyflight.core.std.StdField;
 
-public enum Nationality implements StdEnum {
+public enum Nationality implements StdField {
 	CAMBODIAN(1, "Cambodia"),
 	CHINESE(2, "Chinese");
 	
@@ -20,6 +20,11 @@ public enum Nationality implements StdEnum {
 	
 	public String getCode() {
 		return this.code;
+	}
+
+	@Override
+	public String getDisplayName() {
+		return getCode();
 	}
 
 }

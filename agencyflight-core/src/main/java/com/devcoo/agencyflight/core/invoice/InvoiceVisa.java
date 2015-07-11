@@ -1,10 +1,14 @@
 package com.devcoo.agencyflight.core.invoice;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.devcoo.agencyflight.core.customer.Customer;
@@ -12,7 +16,7 @@ import com.devcoo.agencyflight.core.std.StdEntity;
 import com.devcoo.agencyflight.core.user.User;
 
 @Entity
-@Table(name = "invoices")
+@Table(name = "invoiceVisa")
 public class InvoiceVisa extends StdEntity {
 
 	private static final long serialVersionUID = -1503906552312944843L;
@@ -30,6 +34,9 @@ public class InvoiceVisa extends StdEntity {
 	
 	@Column(name = "amount_receive")
 	private Double amountReceive;	// Amount receive from customer, include exchange
+	
+	@OneToMany(mappedBy = "invoice", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	private List<InvoiceVisaArticle> articles;
 
 	public String getCode() {
 		return code;
@@ -61,6 +68,14 @@ public class InvoiceVisa extends StdEntity {
 
 	public void setAmountReceive(Double amountReceive) {
 		this.amountReceive = amountReceive;
+	}
+
+	public List<InvoiceVisaArticle> getArticles() {
+		return articles;
+	}
+
+	public void setArticles(List<InvoiceVisaArticle> articles) {
+		this.articles = articles;
 	}
 
 }

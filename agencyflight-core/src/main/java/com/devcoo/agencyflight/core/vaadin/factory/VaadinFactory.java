@@ -1,6 +1,8 @@
 package com.devcoo.agencyflight.core.vaadin.factory;
 
-import com.devcoo.agencyflight.core.std.StdEnum;
+import java.util.List;
+
+import com.devcoo.agencyflight.core.std.StdField;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -94,11 +96,22 @@ public class VaadinFactory {
 	}
 	
 	// ============== ComboBox ================== //
-	public static ComboBox getComboBoxFromEnum(String caption, float width, boolean required, StdEnum[] enumerations) {
+	public static ComboBox getComboBoxFromEnum(String caption, float width, boolean required, StdField[] fields) {
 		ComboBox cbo = new ComboBox(caption);
-		for (StdEnum typeEnum : enumerations) {
+		for (StdField typeEnum : fields) {
 			cbo.addItem(typeEnum.getId());
-			cbo.setItemCaption(typeEnum.getId(), typeEnum.getCode());
+			cbo.setItemCaption(typeEnum.getId(), typeEnum.getDisplayName());
+		}
+		cbo.setRequired(required);
+		cbo.setWidth(width, Unit.PIXELS);
+		return cbo;
+	}
+	
+	public static <T extends StdField> ComboBox getComboBox(String caption, float width, boolean required, List<T> fields) {
+		ComboBox cbo = new ComboBox(caption);
+		for (StdField typeEnum : fields) {
+			cbo.addItem(typeEnum.getId());
+			cbo.setItemCaption(typeEnum.getId(), typeEnum.getDisplayName());
 		}
 		cbo.setRequired(required);
 		cbo.setWidth(width, Unit.PIXELS);

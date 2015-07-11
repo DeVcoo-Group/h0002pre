@@ -88,6 +88,12 @@ public class ButtonBar extends HorizontalLayout {
 		addComponent(btn);
 	}
 	
+	public Button addButton(String caption) {
+		Button btn = VaadinFactory.getButton(caption);
+		addComponent(btn);
+		return btn;
+	}
+	
 	public static ButtonBar buildDefaultCrudBar() {
 		ButtonBar buttonBar = new ButtonBar();
 		buttonBar.addNewButton(null);
