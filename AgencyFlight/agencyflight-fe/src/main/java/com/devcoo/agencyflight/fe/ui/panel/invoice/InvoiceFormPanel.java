@@ -1,6 +1,7 @@
 package com.devcoo.agencyflight.fe.ui.panel.invoice;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 
 import com.devcoo.agencyflight.core.context.WebContext;
 import com.devcoo.agencyflight.core.customer.Customer;
@@ -10,6 +11,7 @@ import com.devcoo.agencyflight.core.invoice.InvoiceVisaService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
+import com.devcoo.agencyflight.fe.ui.panel.invoice.artical.InvoiceVisaArticleTablePanel;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
@@ -34,6 +36,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, Inv
 	private InvoiceVisa invoiceVisa;
 	private Integer customerId;
 	private CustomerService customerService = (CustomerService) ctx.getBean("customerServiceImp");
+	private InvoiceVisaArticleTablePanel articleTablePanel;
 
 	public InvoiceFormPanel() {
 		super("invoiceVisaServiceImp");
@@ -51,7 +54,9 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, Inv
 		setEnabledControls(false);
 		
 		VerticalLayout verticalLayout = new VerticalLayout();
+		verticalLayout.setSpacing(true);
 		verticalLayout.addComponent(buildInvoiceDetailPanel());
+		verticalLayout.addComponent(articleTablePanel);
 		
 		return verticalLayout;
 	}
@@ -62,6 +67,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, Inv
 		txtCustomerLastName = VaadinFactory.getTextField("Customer last name", 200);
 		txtEmployee = VaadinFactory.getTextField("Employee", 200);
 		txtAmountReceive = VaadinFactory.getTextField("Amount receive", 200);
+		articleTablePanel = new InvoiceVisaArticleTablePanel();
 	}
 	
 	private Panel buildInvoiceDetailPanel() {
@@ -94,10 +100,13 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, Inv
 			invoiceVisa = new InvoiceVisa();
 			if (this.customerId != null) {
 				Customer customer = customerService.find(this.customerId);
+				invoiceVisa.setCode(new Date() + "");
 				invoiceVisa.setCustomer(customer);
 				WebContext context = (WebContext) UI.getCurrent().getSession().getAttribute(WebContext.WEB_CONTEXT);
 				User employee = context.getLog_user();
 				invoiceVisa.setEmployee(employee);
+				service.save(invoiceVisa);
+				entityId = invoiceVisa.getId();
 			} else {
 				String msg = "To create invoice, a customer must be exist";
 				Notification info = VaadinFactory.getNotification("Error", msg, Type.ERROR_MESSAGE);
@@ -116,6 +125,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, Inv
 		txtCustomerFirstName.setValue(invoiceVisa.getCustomer().getFirstName());
 		txtCustomerLastName.setValue(invoiceVisa.getCustomer().getLastName());
 		txtEmployee.setValue(invoiceVisa.getEmployee().getName());
+		articleTablePanel.assignValues(entityId);
 	}
 	
 	public void assignValues(Integer entityId, Integer customerId) {

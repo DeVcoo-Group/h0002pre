@@ -1,8 +1,8 @@
 package com.devcoo.agencyflight.core.user;
 
-import com.devcoo.agencyflight.core.std.StdEnum;
+import com.devcoo.agencyflight.core.std.StdField;
 
-public enum UserRole implements StdEnum{
+public enum UserRole implements StdField{
 	ADMINISTRATOR(0,"Administrator"),
 	MANAGER(1,"Manager"),
 	Staff(2,"Staff");
@@ -21,4 +21,9 @@ public enum UserRole implements StdEnum{
     	this.id = id;
         this.code = code;
     }
+
+	@Override
+	public String getDisplayName() {
+		return getCode();
+	}
 }

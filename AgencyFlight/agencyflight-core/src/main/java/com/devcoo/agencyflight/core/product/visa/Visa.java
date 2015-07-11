@@ -5,10 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.devcoo.agencyflight.core.std.StdEntity;
+import com.devcoo.agencyflight.core.std.StdField;
 
 @Entity
 @Table(name="visa")
-public class Visa extends StdEntity {
+public class Visa extends StdEntity implements StdField {
 
 	/** */
 	private static final long serialVersionUID = 2353681075201545704L;
@@ -88,6 +89,11 @@ public class Visa extends StdEntity {
 
 	public void setPassportVisaPeriod(Integer passportVisaPeriod) {
 		this.passportVisaPeriod = passportVisaPeriod;
+	}
+
+	@Override
+	public String getDisplayName() {
+		return getName();
 	}
 
 }
