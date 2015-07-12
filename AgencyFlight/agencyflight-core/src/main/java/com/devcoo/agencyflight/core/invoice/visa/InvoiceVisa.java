@@ -1,4 +1,4 @@
-package com.devcoo.agencyflight.core.invoice;
+package com.devcoo.agencyflight.core.invoice.visa;
 
 import java.util.List;
 

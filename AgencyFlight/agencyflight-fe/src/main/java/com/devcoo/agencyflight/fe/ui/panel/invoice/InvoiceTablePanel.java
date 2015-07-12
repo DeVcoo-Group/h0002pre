@@ -3,8 +3,8 @@ package com.devcoo.agencyflight.fe.ui.panel.invoice;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.devcoo.agencyflight.core.invoice.InvoiceVisa;
-import com.devcoo.agencyflight.core.invoice.InvoiceVisaService;
+import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisa;
+import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisaService;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
 import com.devcoo.agencyflight.core.ui.layout.AbstractListLayout;
 import com.vaadin.data.Item;
@@ -51,7 +51,7 @@ public class InvoiceTablePanel extends AbstractListLayout<InvoiceVisaService, In
 	protected List<Column> buildColumns() {
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column(ID, "Id", Integer.class, Align.LEFT, 100));
-		columns.add(new Column(CODE, "Invoice Code", String.class, Align.LEFT, 200));
+		columns.add(new Column(CODE, "Invoice Code", String.class, Align.LEFT));
 		columns.add(new Column(CUSTOMER, "Customer Name", String.class, Align.LEFT, 200));
 		columns.add(new Column(EMPLOYEE, "Employee", String.class, Align.LEFT, 200));
 		columns.add(new Column(AMOUNT_RECEIVE, "Amount receive", Double.class, Align.RIGHT, 200));

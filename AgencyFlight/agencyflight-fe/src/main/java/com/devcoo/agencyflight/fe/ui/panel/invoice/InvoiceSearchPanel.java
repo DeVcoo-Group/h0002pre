@@ -2,8 +2,8 @@ package com.devcoo.agencyflight.fe.ui.panel.invoice;
 
 import java.util.Iterator;
 
-import com.devcoo.agencyflight.core.invoice.InvoiceVisa;
-import com.devcoo.agencyflight.core.invoice.InvoiceVisaService;
+import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisa;
+import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisaService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractSearchLayout;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.vaadin.ui.Component;

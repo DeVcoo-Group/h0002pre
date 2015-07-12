@@ -1,4 +1,4 @@
-package com.devcoo.agencyflight.core.invoice;
+package com.devcoo.agencyflight.core.invoice.visa;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +32,9 @@ public class InvoiceVisaArticle extends StdEntity {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "visa_id", nullable = false)
 	private Visa visa;
+	
+	@Column(name = "remove")
+	private Boolean remove;
 
 //	public String getCode() {
 //		return code;
@@ -71,6 +74,14 @@ public class InvoiceVisaArticle extends StdEntity {
 
 	public void setVisa(Visa visa) {
 		this.visa = visa;
+	}
+
+	public Boolean isRemove() {
+		return remove;
+	}
+
+	public void setRemove(Boolean remove) {
+		this.remove = remove;
 	}
 
 }
