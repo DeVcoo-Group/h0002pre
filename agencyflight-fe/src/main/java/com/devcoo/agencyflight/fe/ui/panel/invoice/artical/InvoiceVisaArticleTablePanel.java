@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.devcoo.agencyflight.core.invoice.InvoiceVisa;
-import com.devcoo.agencyflight.core.invoice.InvoiceVisaArticle;
-import com.devcoo.agencyflight.core.invoice.InvoiceVisaService;
+import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisa;
+import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisaArticle;
+import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisaService;
 import com.devcoo.agencyflight.core.product.visa.Visa;
 import com.devcoo.agencyflight.core.product.visa.VisaService;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
@@ -15,13 +15,17 @@ import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.ui.layout.ButtonBar;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.vaadin.data.Item;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table.Align;
 import com.vaadin.ui.TextField;
@@ -37,12 +41,13 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 	
 	private ComboBox cbProduct;
 	private TextField txtPrice;
-	private List<InvoiceVisaArticle> articles;
+//	private List<InvoiceVisaArticle> articles;
 	private List<Visa> visas;
 	private VisaService visaService;
 	private InvoiceVisa invoice;
 	private SimpleTable tbArticles;
 	private ButtonBar crudBar;
+	private Integer selectedItemId;
 
 	public InvoiceVisaArticleTablePanel() {
 		super("invoiceVisaServiceImp");
@@ -79,13 +84,29 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 		article.setName("Product name");
 		article.setPrice(0.0);
 		article.setVisa(visaService.find(1));
+		article.setRemove(false);
 		invoice.getArticles().add(article);
 		invoice = service.saveAndFlush(invoice);
 		buildTableDataSource(invoice.getArticles().iterator());
 	}
 	
 	private void remove() {
-		
+		if (selectedItemId == null) {
+			String msg = "To remove, please select one item.";
+			Notification notification = VaadinFactory.getNotification("Information", msg);
+			notification.show(Page.getCurrent());
+		} else {
+			Iterator<InvoiceVisaArticle> articles = invoice.getArticles().iterator();
+			while (articles.hasNext()) {
+				InvoiceVisaArticle article = articles.next();
+				if (article.getId() == selectedItemId) {
+					article.setRemove(true);
+					break;
+				}
+			}
+			invoice = service.saveAndFlush(invoice);
+			buildTableDataSource(invoice.getArticles().iterator());
+		}
 	}
 
 	@Override
@@ -116,19 +137,21 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 		txtPrice = VaadinFactory.getTextField("Product Price");
 		tbArticles = new SimpleTable("Visa items list");
 		tbArticles.addColumns(buildColumns());
+		tbArticles.addItemClickListener(new ItemClickListener() {
+			private static final long serialVersionUID = 1420186978126567856L;
+			@Override
+			public void itemClick(ItemClickEvent event) {
+				selectedItemId = (Integer) event.getItemId();
+			}
+		});
 	}
 
 	@Override
 	public void assignValues(Integer entityId) {
 		if (entityId != null) {
 			invoice = service.find(entityId);
-			articles = invoice.getArticles();
-			buildTableDataSource(articles.iterator());
+			buildTableDataSource(invoice.getArticles().iterator());
 		}
-	}
-	
-	public void assignValues(InvoiceVisa invoice) {
-		
 	}
 	
 	protected void buildTableDataSource(Iterator<InvoiceVisaArticle> entities) {
@@ -136,7 +159,9 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 		if (entities != null) {
 			while (entities.hasNext()) {
 				InvoiceVisaArticle row = entities.next();
-				renderRow(tbArticles.addItem(row.getId()), row);
+				if (row.isRemove() == null || !row.isRemove()) {
+					renderRow(tbArticles.addItem(row.getId()), row);
+				}
 			}
 		}
 	}
@@ -166,14 +191,6 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 	protected boolean validate() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-	
-	public List<InvoiceVisaArticle> getArticles() {
-		return articles;
-	}
-
-	public void setArticles(List<InvoiceVisaArticle> articles) {
-		this.articles = articles;
 	}
 
 	@Override

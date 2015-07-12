@@ -2,8 +2,8 @@ package com.devcoo.agencyflight.fe.ui.panel.invoice.customer;
 
 import com.devcoo.agencyflight.core.customer.Customer;
 import com.devcoo.agencyflight.core.customer.CustomerService;
-import com.devcoo.agencyflight.core.invoice.InvoiceVisa;
-import com.devcoo.agencyflight.core.invoice.InvoiceVisaService;
+import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisa;
+import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisaService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.ui.layout.ButtonBar;
 import com.devcoo.agencyflight.core.ui.layout.customer.BaseCustomerFormPanel;

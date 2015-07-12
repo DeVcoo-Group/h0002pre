@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 import ru.xpoft.vaadin.VaadinView;
 
-import com.devcoo.agencyflight.core.invoice.InvoiceVisa;
-import com.devcoo.agencyflight.core.invoice.InvoiceVisaService;
+import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisa;
+import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisaService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractTabsheet;
 import com.devcoo.agencyflight.fe.ui.panel.invoice.customer.InvoiceCustomerFormPanel;
 

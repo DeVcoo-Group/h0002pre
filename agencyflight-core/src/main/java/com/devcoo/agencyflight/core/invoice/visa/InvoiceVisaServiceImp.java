@@ -1,4 +1,4 @@
-package com.devcoo.agencyflight.core.invoice;
+package com.devcoo.agencyflight.core.invoice.visa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
