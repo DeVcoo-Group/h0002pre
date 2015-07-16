@@ -96,7 +96,7 @@ public class VaadinFactory {
 	}
 	
 	// ============== ComboBox ================== //
-	public static ComboBox getComboBoxFromEnum(String caption, float width, boolean required, StdField[] fields) {
+	public static ComboBox getComboBox(String caption, float width, boolean required, StdField[] fields) {
 		ComboBox cbo = new ComboBox(caption);
 		for (StdField typeEnum : fields) {
 			cbo.addItem(typeEnum.getId());

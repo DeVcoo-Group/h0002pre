@@ -173,6 +173,7 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 		if (entities!=null && entities.hasNext()) {
 			buildTableDataSource(entities);
 		} else {
+			table.removeAllItems();
 			Notification info = new Notification("Information", "Sorry, no item found.", Type.HUMANIZED_MESSAGE);
 			info.setDelayMsec(2000);
 			info.show(Page.getCurrent());
