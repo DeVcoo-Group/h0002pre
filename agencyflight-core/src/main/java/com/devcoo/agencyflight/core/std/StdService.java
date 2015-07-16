@@ -13,5 +13,5 @@ public interface StdService<T extends StdEntity>{
 	public T find(Specification<T> query);
 	public List<T> findAll(Specification<T> query);
 	public List<T> findAll();
-	public List<T> findAllActive();
+	public List<T> findAllNotDelete();
 }

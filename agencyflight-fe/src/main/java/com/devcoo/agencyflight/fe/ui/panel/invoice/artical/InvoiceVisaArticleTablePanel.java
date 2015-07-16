@@ -132,7 +132,7 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 	
 	private void initControls() {
 		visaService = (VisaService) ctx.getBean("visaServiceImp");
-		visas = visaService.findAllActive();
+		visas = visaService.findAllNotDelete();
 		cbProduct = VaadinFactory.getComboBox("Product", 200, true, visas);
 		txtPrice = VaadinFactory.getTextField("Product Price");
 		tbArticles = new SimpleTable("Visa items list");

@@ -162,7 +162,7 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 		searchLayout.reset();
 		selectedItem = null;
 		selectedItemId = null;
-		Iterator<T> entities = service.findAllActive().iterator();
+		Iterator<T> entities = service.findAllNotDelete().iterator();
 		if (entities!=null) {
 			buildTableDataSource(entities);
 		}
