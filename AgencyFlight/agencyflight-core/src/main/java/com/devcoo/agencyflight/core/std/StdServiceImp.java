@@ -22,12 +22,12 @@ public abstract class StdServiceImp<SampleRepository extends StdDao<T>, T extend
 	public List<T> findAll() {
 		return dao.findAll();
 	}
-	public List<T> findAllActive() {
+	public List<T> findAllNotDelete() {
 		return dao.findAll(new Specification<T>() {
 			@Override
 			public Predicate toPredicate(Root<T> root, CriteriaQuery<?> cq,
 					CriteriaBuilder cb) {
-				return cb.equal(root.get("active"), true);
+				return cb.equal(root.get("delete"), false);
 			}
 		});
 	}
@@ -47,7 +47,7 @@ public abstract class StdServiceImp<SampleRepository extends StdDao<T>, T extend
 	public void save(T entity) {
 		entity.setModifyDate(new Date());
 		entity.setCreateDate(new Date());
-		entity.setActive(true);
+		entity.setDelete(false);
 		entity.setLastModifier(getLogUser());
 		dao.save(entity);
 	}
@@ -59,7 +59,7 @@ public abstract class StdServiceImp<SampleRepository extends StdDao<T>, T extend
 	}
 	
 	public void delete(T entity) {
-		entity.setActive(false);
+		entity.setDelete(true);
 		entity.setLastModifier(getLogUser());
 		dao.save(entity);
 	}

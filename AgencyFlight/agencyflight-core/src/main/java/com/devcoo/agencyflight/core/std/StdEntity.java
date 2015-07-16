@@ -22,8 +22,8 @@ public class StdEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
 	private int id;
-	@Column(name="active")
-	private Boolean active;
+	@Column(name="delete")
+	private Boolean delete;
 	@Column(name="createDate")
 	private Date createDate;
 	@Column(name="modifyDate")
@@ -38,11 +38,11 @@ public class StdEntity implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Boolean getActive() {
-		return active;
+	public Boolean isDelete() {
+		return delete;
 	}
-	public void setActive(Boolean active) {
-		this.active = active;
+	public void setDelete(Boolean delete) {
+		this.delete = delete;
 	}
 	public Date getCreateDate() {
 		return createDate;
