@@ -54,7 +54,7 @@ public class ProductFormPanel extends AbstractFormLayout<VisaService, Visa> {
 		txtName = VaadinFactory.getTextField("Product Name", 200, true);
 		txtPrice = VaadinFactory.getTextField("Price", 200, true);
 		txtServiceCharge = VaadinFactory.getTextField("Service Charge", 200);
-		cboProductType = VaadinFactory.getComboBoxFromEnum("Product Type", 200, true, ProductType.values());
+		cboProductType = VaadinFactory.getComboBox("Product Type", 200, true, ProductType.values());
 		taRequirement = VaadinFactory.getTextArea("Requirement", 400, 200, true);
 		txtPeriod = VaadinFactory.getTextField("Product Period", 200, true);
 		

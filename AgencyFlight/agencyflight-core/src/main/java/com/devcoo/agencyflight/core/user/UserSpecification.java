@@ -1,5 +1,8 @@
 package com.devcoo.agencyflight.core.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
@@ -9,24 +12,42 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 public class UserSpecification implements Specification<User> {
-	private String searchText = "";
+	
+	private String name;
+	private Integer role;
+	
 	@Override
-	public Predicate toPredicate(Root<User> root, CriteriaQuery<?> cq,
-			CriteriaBuilder cb) {
-		Predicate p = cq.getRestriction();
-		if(!searchText.isEmpty())
-		{
-			String t_searchText = "%"+ searchText.toLowerCase() + "%";
-			Expression<String> userName= root.get("name");
-			return cb.like(cb.lower(userName), t_searchText);
+	public Predicate toPredicate(Root<User> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		predicates.add(cb.isFalse(root.get("delete")));
+		
+		if (name != null && !name.isEmpty()) {
+			Expression<String> exName = root.get("name");
+			predicates.add(cb.like(cb.lower(exName), name));
 		}
-		return p;
+		
+		if (role != null) {
+			Expression<Integer> exRole = root.get("role");
+			predicates.add(cb.equal(exRole, role));
+		}
+		
+		return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 	}
-	public String getSearchText() {
-		return searchText;
+
+	public String getName() {
+		return name;
 	}
-	public void setSearchText(String searchText) {
-		this.searchText = searchText;
+
+	public void setName(String name) {
+		this.name = "%"+ name.toLowerCase() + "%";
+	}
+
+	public Integer getRole() {
+		return role;
+	}
+
+	public void setRole(Integer role) {
+		this.role = role;
 	}
 	
 }
