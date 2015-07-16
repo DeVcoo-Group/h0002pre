@@ -64,10 +64,4 @@ public class ProductTablePanel extends AbstractListLayout<VisaService, Visa> {
 		return columns;
 	}
 
-	@Override
-	public Visa getEntity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

@@ -65,10 +65,4 @@ public class InvoiceSearchPanel extends AbstractSearchLayout<InvoiceVisaService,
 		txtEmployee.setValue("");
 	}
 
-	@Override
-	public InvoiceVisa getEntity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

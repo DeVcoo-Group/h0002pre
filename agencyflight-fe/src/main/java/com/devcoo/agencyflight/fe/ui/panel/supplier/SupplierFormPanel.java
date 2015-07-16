@@ -66,10 +66,4 @@ public class SupplierFormPanel extends AbstractFormLayout<SupplierService, Suppl
 		return valid;
 	}
 
-	@Override
-	public Supplier getEntity() {
-		// TODO Auto-generated method stub
-		return new Supplier();
-	}
-
 }

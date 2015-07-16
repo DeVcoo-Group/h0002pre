@@ -11,7 +11,6 @@ import com.devcoo.agencyflight.fe.ui.panel.supplier.SupplierHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.user.UserHolderPanel;
 import com.vaadin.server.Page;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.MenuBar.MenuItem;
 
 public class FEMenu extends AbstractMenuBar {
 	
@@ -22,6 +21,7 @@ public class FEMenu extends AbstractMenuBar {
 		file.addItem("Dashboard", new MenuCommand(Dashboard.NAME));
 		file.addItem("Login", new MenuCommand(LoginPanel.NAME));
 		file.addItem("Exit",new Command() {
+			private static final long serialVersionUID = -191961032486477315L;
 			@Override
 			public void menuSelected(MenuItem selectedItem) {
 				UI.getCurrent().getSession().setAttribute("isLogin", false);

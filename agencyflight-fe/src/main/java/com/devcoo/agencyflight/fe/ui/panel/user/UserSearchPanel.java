@@ -40,10 +40,4 @@ public class UserSearchPanel extends AbstractSearchLayout<UserService, User> {
 		// TODO to reset component
 	}
 
-	@Override
-	public User getEntity() {
-		// TODO Auto-generated method stub
-		return new User();
-	}
-
 }

@@ -49,10 +49,4 @@ public class CustomerFormPanel extends AbstractFormLayout<CustomerService, Custo
 		return customerForm.validate();
 	}
 
-	@Override
-	public Customer getEntity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

@@ -58,10 +58,4 @@ public class InvoiceTablePanel extends AbstractListLayout<InvoiceVisaService, In
 		return columns;
 	}
 
-	@Override
-	public InvoiceVisa getEntity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
