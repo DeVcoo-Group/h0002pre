@@ -94,11 +94,6 @@ public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 		
 		return valid;
 	}
-
-	@Override
-	public User getEntity() {
-		return new User();
-	}
 	
 	protected void save() {
 		user.setName(txtUserName.getValue());

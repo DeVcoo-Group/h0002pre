@@ -47,10 +47,4 @@ public abstract class BaseCustomerTablePanel extends AbstractListLayout<Customer
 		return columns;
 	}
 	
-	@Override
-	public Customer getEntity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }

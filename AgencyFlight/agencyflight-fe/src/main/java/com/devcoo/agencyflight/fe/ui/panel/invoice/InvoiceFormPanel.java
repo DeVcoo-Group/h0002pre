@@ -161,10 +161,4 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, Inv
 		return true;
 	}
 
-	@Override
-	public InvoiceVisa getEntity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

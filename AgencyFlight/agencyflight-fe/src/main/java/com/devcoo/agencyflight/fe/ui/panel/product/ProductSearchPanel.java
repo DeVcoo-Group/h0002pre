@@ -55,11 +55,6 @@ public class ProductSearchPanel extends AbstractSearchLayout<VisaService, Visa> 
 		txtCode.setValue("");
 		txtName.setValue("");
 	}
-
-	@Override
-	public Visa getEntity() {
-		return null;
-	}
 	
 	private class ProductSpecification implements Specification<Visa> {
 

@@ -55,11 +55,6 @@ public class SupplierSearchPanel extends AbstractSearchLayout<SupplierService, S
 	public void reset() {
 		txtName.setValue("");
 	}
-
-	@Override
-	public Supplier getEntity() {
-		return new Supplier();
-	}
 	
 	private class SupplierSpecification implements Specification<Supplier> {
 

@@ -29,7 +29,6 @@ public class UserTablePanel extends AbstractListLayout<UserService,User> {
 		setCaption("Users");
 		buildDefaultCRUDBar();
 		table.setCaption("List Users");
-		refresh();
 	}
 
 	@Override
@@ -52,11 +51,6 @@ public class UserTablePanel extends AbstractListLayout<UserService,User> {
 		columns.add(new Column(USER_NAME, "User name", String.class, Align.LEFT));
 		columns.add(new Column(USER_ROlE, "User role", String.class, Align.LEFT, 150));
 		return columns;
-	}
-
-	@Override
-	public User getEntity() {
-		return new User();
 	}
 
 }

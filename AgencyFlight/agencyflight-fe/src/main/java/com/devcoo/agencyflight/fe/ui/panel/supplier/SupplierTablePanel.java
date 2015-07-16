@@ -49,10 +49,4 @@ public class SupplierTablePanel extends AbstractListLayout<SupplierService, Supp
 		return columns;
 	}
 
-	@Override
-	public Supplier getEntity() {
-		// TODO Auto-generated method stub
-		return new Supplier();
-	}
-
 }

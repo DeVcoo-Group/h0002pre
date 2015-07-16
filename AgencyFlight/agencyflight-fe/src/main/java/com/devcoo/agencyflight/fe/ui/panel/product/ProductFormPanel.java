@@ -117,10 +117,4 @@ public class ProductFormPanel extends AbstractFormLayout<VisaService, Visa> {
 		service.save(product);
 	}
 
-	@Override
-	public Visa getEntity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

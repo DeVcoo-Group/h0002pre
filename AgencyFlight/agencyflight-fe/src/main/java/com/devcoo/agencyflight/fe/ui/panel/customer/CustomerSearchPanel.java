@@ -67,12 +67,6 @@ public class CustomerSearchPanel extends AbstractSearchLayout<CustomerService, C
 		txtFirstName.setValue("");
 		txtLastName.setValue("");
 	}
-
-	@Override
-	public Customer getEntity() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	private class CustomerSpecification implements Specification<Customer> {
 
