@@ -78,4 +78,9 @@ public class InvoiceVisa extends StdEntity {
 		this.articles = articles;
 	}
 
+	@Override
+	public String getDisplayName() {
+		return getCode();
+	}
+
 }
