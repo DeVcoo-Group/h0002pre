@@ -44,7 +44,6 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 //	private List<InvoiceVisaArticle> articles;
 	private List<Visa> visas;
 	private VisaService visaService;
-	private InvoiceVisa invoice;
 	private SimpleTable tbArticles;
 	private ButtonBar crudBar;
 	private Integer selectedItemId;
@@ -80,14 +79,15 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 	@Override
 	protected void save() {
 		InvoiceVisaArticle article = new InvoiceVisaArticle();
-		article.setInvoice(invoice);
+		article.setInvoice(entity);
 		article.setName("Product name");
 		article.setPrice(0.0);
 		article.setVisa(visaService.find(1));
 		article.setRemove(false);
-		invoice.getArticles().add(article);
-		invoice = service.saveAndFlush(invoice);
-		buildTableDataSource(invoice.getArticles().iterator());
+		article.setDelete(false);
+		entity.getArticles().add(article);
+		entity = service.saveAndFlush(entity);
+		buildTableDataSource(entity.getArticles().iterator());
 	}
 	
 	private void remove() {
@@ -96,7 +96,7 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 			Notification notification = VaadinFactory.getNotification("Information", msg);
 			notification.show(Page.getCurrent());
 		} else {
-			Iterator<InvoiceVisaArticle> articles = invoice.getArticles().iterator();
+			Iterator<InvoiceVisaArticle> articles = entity.getArticles().iterator();
 			while (articles.hasNext()) {
 				InvoiceVisaArticle article = articles.next();
 				if (article.getId() == selectedItemId) {
@@ -104,8 +104,8 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 					break;
 				}
 			}
-			invoice = service.saveAndFlush(invoice);
-			buildTableDataSource(invoice.getArticles().iterator());
+			entity = service.saveAndFlush(entity);
+			buildTableDataSource(entity.getArticles().iterator());
 		}
 	}
 
@@ -149,8 +149,8 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 	@Override
 	public void assignValues(Integer entityId) {
 		if (entityId != null) {
-			invoice = service.find(entityId);
-			buildTableDataSource(invoice.getArticles().iterator());
+			entity = service.find(entityId);
+			buildTableDataSource(entity.getArticles().iterator());
 		}
 	}
 	

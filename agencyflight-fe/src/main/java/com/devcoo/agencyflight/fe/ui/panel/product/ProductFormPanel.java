@@ -25,8 +25,6 @@ public class ProductFormPanel extends AbstractFormLayout<VisaService, Visa> {
 	private ComboBox cboProductType;
 	private TextArea taRequirement;
 	private TextField txtPeriod;
-	
-	private Visa product;
 
 	public ProductFormPanel() {
 		super("visaServiceImp");
@@ -64,15 +62,15 @@ public class ProductFormPanel extends AbstractFormLayout<VisaService, Visa> {
 	protected void assignValues(Integer entityId) {
 		reset();
 		if (entityId == null) {
-			product = new Visa();
+			entity = new Visa();
 		} else {
-			product = service.find(entityId);
-			txtCode.setValue(product.getCode());
-			txtName.setValue(product.getName());
+			entity = service.find(entityId);
+			txtCode.setValue(entity.getCode());
+			txtName.setValue(entity.getName());
 			
 			DecimalFormat df = new DecimalFormat("#0.00");
-			txtPrice.setValue(df.format(product.getPrice()));
-			txtServiceCharge.setValue(df.format(product.getServiceCharge()));
+			txtPrice.setValue(df.format(entity.getPrice()));
+			txtServiceCharge.setValue(df.format(entity.getServiceCharge()));
 		}
 	}
 
@@ -110,11 +108,11 @@ public class ProductFormPanel extends AbstractFormLayout<VisaService, Visa> {
 	
 	@Override
 	protected void save() {
-		product.setCode(txtCode.getValue());
-		product.setName(txtName.getValue());
-		product.setPrice(Double.valueOf(txtPrice.getValue()));
-		product.setServiceCharge(Double.valueOf(txtServiceCharge.getValue()));
-		service.save(product);
+		entity.setCode(txtCode.getValue());
+		entity.setName(txtName.getValue());
+		entity.setPrice(Double.valueOf(txtPrice.getValue()));
+		entity.setServiceCharge(Double.valueOf(txtServiceCharge.getValue()));
+		service.save(entity);
 	}
 
 }

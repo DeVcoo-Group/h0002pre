@@ -11,7 +11,6 @@ public class CustomerFormPanel extends AbstractFormLayout<CustomerService, Custo
 	private static final long serialVersionUID = -7906468708276408546L;
 	
 	private BaseCustomerFormPanel customerForm;
-	private Customer customer;
 
 	public CustomerFormPanel() {
 		super("customerServiceImp");
@@ -19,7 +18,7 @@ public class CustomerFormPanel extends AbstractFormLayout<CustomerService, Custo
 
 	@Override
 	protected void save() {
-		service.save(customerForm.getCustomerInfo(customer));
+		service.save(customerForm.getCustomerInfo(entity));
 	}
 
 	@Override
@@ -32,10 +31,10 @@ public class CustomerFormPanel extends AbstractFormLayout<CustomerService, Custo
 	protected void assignValues(Integer entityId) {
 		reset();
 		if (entityId == null) {
-			customer = new Customer();
+			entity = new Customer();
 		} else {
-			customer = service.find(entityId);
-			customerForm.assignValues(customer);
+			entity = service.find(entityId);
+			customerForm.assignValues(entity);
 		}
 	}
 

@@ -33,7 +33,6 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, Inv
 	private TextField txtEmployee;
 	private TextField txtAmountReceive;
 	
-	private InvoiceVisa invoiceVisa;
 	private Integer customerId;
 	private CustomerService customerService = (CustomerService) ctx.getBean("customerServiceImp");
 	private InvoiceVisaArticleTablePanel articleTablePanel;
@@ -44,8 +43,8 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, Inv
 
 	@Override
 	protected void save() {
-		invoiceVisa.setCode(txtCode.getValue());
-		service.save(invoiceVisa);
+		entity.setCode(txtCode.getValue());
+		service.save(entity);
 	}
 
 	@Override
@@ -97,34 +96,34 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, Inv
 	@Override
 	protected void assignValues(Integer entityId) {
 		if (entityId == null) {
-			invoiceVisa = new InvoiceVisa();
+			entity = new InvoiceVisa();
 			if (this.customerId != null) {
 				Customer customer = customerService.find(this.customerId);
-				invoiceVisa.setCode(new Date() + "");
-				invoiceVisa.setCustomer(customer);
+				entity.setCode(new Date() + "");
+				entity.setCustomer(customer);
 				WebContext context = (WebContext) UI.getCurrent().getSession().getAttribute(WebContext.WEB_CONTEXT);
 				User employee = context.getLog_user();
-				invoiceVisa.setEmployee(employee);
-				service.save(invoiceVisa);
-				entityId = invoiceVisa.getId();
+				entity.setEmployee(employee);
+				service.save(entity);
+				entityId = entity.getId();
 			} else {
 				String msg = "To create invoice, a customer must be exist";
 				Notification info = VaadinFactory.getNotification("Error", msg, Type.ERROR_MESSAGE);
 				info.show(Page.getCurrent());
 			}
 		} else {
-			invoiceVisa = service.find(entityId);
-			txtCode.setValue(invoiceVisa.getCode());
+			entity = service.find(entityId);
+			txtCode.setValue(entity.getCode());
 			DecimalFormat df = new DecimalFormat("#0.00");
-			Double amountReceive = invoiceVisa.getAmountReceive();
+			Double amountReceive = entity.getAmountReceive();
 			if (amountReceive == null) {
 				amountReceive = 0d;
 			}
 			txtAmountReceive.setValue(df.format(amountReceive));
 		}
-		txtCustomerFirstName.setValue(invoiceVisa.getCustomer().getFirstName());
-		txtCustomerLastName.setValue(invoiceVisa.getCustomer().getLastName());
-		txtEmployee.setValue(invoiceVisa.getEmployee().getName());
+		txtCustomerFirstName.setValue(entity.getCustomer().getFirstName());
+		txtCustomerLastName.setValue(entity.getCustomer().getLastName());
+		txtEmployee.setValue(entity.getEmployee().getName());
 		articleTablePanel.assignValues(entityId);
 	}
 	

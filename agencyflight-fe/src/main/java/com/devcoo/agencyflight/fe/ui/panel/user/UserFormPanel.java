@@ -16,7 +16,6 @@ import com.vaadin.ui.TextField;
 public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 	
 	private static final long serialVersionUID = 2334203444202798134L;
-	private User user;
 	private TextField txtUserName;
 	private PasswordField txtUserPassword;
 	private PasswordField txtConfirmPassword;
@@ -53,11 +52,11 @@ public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 	public void assignValues(Integer entityId) {
 		reset();
 		if (entityId == null) {
-			user = new User();
+			entity = new User();
 		} else {
-			user = service.find(entityId);
-			txtUserName.setValue(user.getName());
-			cboUserRole.setValue(user.getRole());
+			entity = service.find(entityId);
+			txtUserName.setValue(entity.getName());
+			cboUserRole.setValue(entity.getRole());
 		}
 	}
 
@@ -82,7 +81,7 @@ public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 		if (!ValidationUtil.validateRequiredTextField(txtUserName)) {
 			valid = false;
 		}
-		if (this.user.getId() <= 0 || (this.user.getId() > 0 && !"".equals(txtUserPassword.getValue()))) {
+		if (this.entity.getId() <= 0 || (this.entity.getId() > 0 && !"".equals(txtUserPassword.getValue()))) {
 			
 			if (!ValidationUtil.validateConfirmPassword(txtUserPassword, txtConfirmPassword)) {
 				valid = false;
@@ -96,12 +95,12 @@ public class UserFormPanel extends AbstractFormLayout<UserService,User> {
 	}
 	
 	protected void save() {
-		user.setName(txtUserName.getValue());
-		if (user.getId() <= 0) {
-			user.setPassword(txtUserPassword.getValue());
+		entity.setName(txtUserName.getValue());
+		if (entity.getId() <= 0) {
+			entity.setPassword(txtUserPassword.getValue());
 		}
-		user.setRole((Integer)cboUserRole.getValue());
-		service.save(user);
+		entity.setRole((Integer)cboUserRole.getValue());
+		service.save(entity);
 	}
 
 }
