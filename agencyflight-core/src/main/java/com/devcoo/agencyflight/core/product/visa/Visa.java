@@ -5,11 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.devcoo.agencyflight.core.std.StdEntity;
-import com.devcoo.agencyflight.core.std.StdField;
 
 @Entity
 @Table(name="visa")
-public class Visa extends StdEntity implements StdField {
+public class Visa extends StdEntity {
 
 	/** */
 	private static final long serialVersionUID = 2353681075201545704L;

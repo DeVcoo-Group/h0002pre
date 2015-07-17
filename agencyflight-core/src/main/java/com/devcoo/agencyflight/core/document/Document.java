@@ -26,4 +26,9 @@ public class Document extends StdEntity {
 	@Column(name = "document_type")
 	private int documentType;
 
+	@Override
+	public String getDisplayName() {
+		return code; // Need to update this
+	}
+
 }

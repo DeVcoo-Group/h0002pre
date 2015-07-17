@@ -19,7 +19,7 @@ public class UserSpecification implements Specification<User> {
 	@Override
 	public Predicate toPredicate(Root<User> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
 		List<Predicate> predicates = new ArrayList<Predicate>();
-		predicates.add(cb.isFalse(root.get("delete")));
+		predicates.add(cb.isFalse(root.<Boolean>get("delete")));
 		
 		if (name != null && !name.isEmpty()) {
 			Expression<String> exName = root.get("name");

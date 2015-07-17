@@ -15,14 +15,14 @@ import javax.persistence.MappedSuperclass;
 import com.devcoo.agencyflight.core.user.User;
 
 @MappedSuperclass
-public class StdEntity implements Serializable {
+public abstract class StdEntity implements StdField, Serializable {
 	
 	private static final long serialVersionUID = -3327595028866832476L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
 	private int id;
-	@Column(name="delete")
+	@Column(name="delete", nullable = false)
 	private Boolean delete;
 	@Column(name="createDate")
 	private Date createDate;
@@ -62,7 +62,5 @@ public class StdEntity implements Serializable {
 	public void setLastModifier(User lastModifier) {
 		this.lastModifier = lastModifier;
 	}
-	
-	
 	
 }

@@ -45,4 +45,9 @@ public class Supplier extends StdEntity {
 		this.email = email;
 	}
 
+	@Override
+	public String getDisplayName() {
+		return getName();
+	}
+
 }

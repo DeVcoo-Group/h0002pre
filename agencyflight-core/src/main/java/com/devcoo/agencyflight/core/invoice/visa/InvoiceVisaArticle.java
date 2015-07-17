@@ -84,4 +84,9 @@ public class InvoiceVisaArticle extends StdEntity {
 		this.remove = remove;
 	}
 
+	@Override
+	public String getDisplayName() {
+		return getName();
+	}
+
 }

@@ -46,5 +46,10 @@ public class User extends StdEntity implements Serializable {
 	public void setRole(Integer role) {
 		this.role = role;
 	}
+
+	@Override
+	public String getDisplayName() {
+		return getName();
+	}
 	
 }

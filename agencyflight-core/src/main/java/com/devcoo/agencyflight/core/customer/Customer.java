@@ -80,4 +80,9 @@ public class Customer extends StdEntity {
 		this.nationality = nationality;
 	}
 
+	@Override
+	public String getDisplayName() {
+		return getLastName() + " " + getFirstName();
+	}
+
 }
