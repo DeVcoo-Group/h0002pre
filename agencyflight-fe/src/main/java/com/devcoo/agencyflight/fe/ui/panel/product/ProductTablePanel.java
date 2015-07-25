@@ -33,7 +33,6 @@ public class ProductTablePanel extends AbstractListLayout<VisaService, Visa> {
 		setCaption("Products");
 		buildDefaultCRUDBar();
 		table.setCaption("List Products");
-		refresh();
 	}
 
 	@Override

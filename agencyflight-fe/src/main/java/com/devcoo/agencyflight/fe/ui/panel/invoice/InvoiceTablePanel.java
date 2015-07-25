@@ -29,7 +29,6 @@ public class InvoiceTablePanel extends AbstractListLayout<InvoiceVisaService, In
 		setCaption("Invoices");
 		buildDefaultCRUDBar();
 		table.setCaption("List Invoices");
-		refresh();
 	}
 
 	@Override

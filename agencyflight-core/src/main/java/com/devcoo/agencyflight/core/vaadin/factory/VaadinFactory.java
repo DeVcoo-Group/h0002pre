@@ -63,17 +63,16 @@ public class VaadinFactory {
 	
 	// ============== Textfield ================== //
 	public static TextField getTextField(String caption) {
-		return new TextField(caption);
+		return getTextField(caption, 200, false);
 	}
 	
 	public static TextField getTextField(String caption, float width) {
-		TextField txt = getTextField(caption);
-		txt.setWidth(width, Unit.PIXELS);
-		return txt;
+		return getTextField(caption, width, false);
 	}
 	
 	public static TextField getTextField(String caption, float width, boolean required) {
-		TextField txt = getTextField(caption, width);
+		TextField txt = new TextField(caption);
+		txt.setWidth(width, Unit.PIXELS);
 		txt.setRequired(required);
 		return txt;
 	}

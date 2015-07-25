@@ -26,7 +26,6 @@ public class SupplierTablePanel extends AbstractListLayout<SupplierService, Supp
 		setCaption("Suppliers");
 		buildDefaultCRUDBar();
 		table.setCaption("List Suppliers");
-		refresh();
 	}
 
 	@Override

@@ -15,7 +15,6 @@ public class CustomerTablePanel extends BaseCustomerTablePanel {
 		setCaption("Customers");
 		buildDefaultCRUDBar();
 		table.setCaption("List Customers");
-		refresh();
 	}
 
 	@Override
