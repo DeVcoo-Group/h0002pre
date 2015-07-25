@@ -24,12 +24,13 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table.Align;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisaService, InvoiceVisa> {
 	
@@ -41,11 +42,12 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 	
 	private ComboBox cbProduct;
 	private TextField txtPrice;
-//	private List<InvoiceVisaArticle> articles;
-	private List<Visa> visas;
-	private VisaService visaService;
 	private SimpleTable tbArticles;
 	private ButtonBar crudBar;
+	private Window window;
+	
+	private List<Visa> visas;
+	private VisaService visaService;
 	private Integer selectedItemId;
 
 	public InvoiceVisaArticleTablePanel() {
@@ -62,7 +64,7 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 			private static final long serialVersionUID = -1927041419615320662L;
 			@Override
 			public void buttonClick(ClickEvent event) {
-				save();
+				UI.getCurrent().addWindow(window);
 			}
 		});
 		Button btnRemove = crudBar.addButton("Remove");
@@ -112,29 +114,19 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 	@Override
 	protected Component initGUI() {
 		initControls();
-		
-		HorizontalLayout horizontalLayout = new HorizontalLayout();
-		horizontalLayout.setSpacing(true);
-		horizontalLayout.addComponent(cbProduct);
-		horizontalLayout.addComponent(txtPrice);
+		buildPopup();
 		
 		VerticalLayout verticalLayout = new VerticalLayout();
 		verticalLayout.setSpacing(true);
-		verticalLayout.setMargin(true);
 		verticalLayout.addComponent(crudBar);
-		verticalLayout.addComponent(horizontalLayout);
 		verticalLayout.addComponent(tbArticles);
-		
-		Panel panel = new Panel("Invoice items");
-		panel.setContent(verticalLayout);
-		return panel;
+
+		return verticalLayout;
 	}
 	
 	private void initControls() {
 		visaService = (VisaService) ctx.getBean("visaServiceImp");
 		visas = visaService.findAllNotDelete();
-		cbProduct = VaadinFactory.getComboBox("Product", 200, true, visas);
-		txtPrice = VaadinFactory.getTextField("Product Price");
 		tbArticles = new SimpleTable("Visa items list");
 		tbArticles.addColumns(buildColumns());
 		tbArticles.addItemClickListener(new ItemClickListener() {
@@ -144,6 +136,49 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 				selectedItemId = (Integer) event.getItemId();
 			}
 		});
+	}
+	
+	private void buildPopup() {
+		ButtonBar buttonBar = new ButtonBar();
+		Button btnSave = buttonBar.addButton("Save");
+		btnSave.setIcon(FontAwesome.SAVE);
+		btnSave.addClickListener(new ClickListener() {
+			private static final long serialVersionUID = -123690668575982206L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				save();
+			}
+		});
+		Button btnCancel = buttonBar.addButton("Cancel");
+		btnCancel.setIcon(FontAwesome.TIMES);
+		btnCancel.addClickListener(new ClickListener() {
+			private static final long serialVersionUID = 1161076330966336365L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				window.close();
+			}
+		});
+		
+		cbProduct = VaadinFactory.getComboBox("Product", 200, true, visas);
+		txtPrice = VaadinFactory.getTextField("Product Price");
+		
+		FormLayout formLayout = new FormLayout();
+		formLayout.addComponent(cbProduct);
+		formLayout.addComponent(txtPrice);
+		
+		VerticalLayout verticalLayout = new VerticalLayout();
+		verticalLayout.setSpacing(true);
+		verticalLayout.setMargin(true);
+		verticalLayout.addComponent(buttonBar);
+		verticalLayout.addComponent(formLayout);
+		
+		window = new Window("Add new item");
+		window.setWidth(380, Unit.PIXELS);
+		window.setHeight(230, Unit.PIXELS);
+		window.setModal(true);
+		window.setContent(verticalLayout);
 	}
 
 	@Override
