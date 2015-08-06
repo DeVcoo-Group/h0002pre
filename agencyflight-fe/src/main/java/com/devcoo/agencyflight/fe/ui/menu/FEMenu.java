@@ -2,11 +2,14 @@ package com.devcoo.agencyflight.fe.ui.menu;
 
 import com.devcoo.agencyflight.core.context.WebContext;
 import com.devcoo.agencyflight.core.ui.menu.AbstractMenuBar;
+import com.devcoo.agencyflight.fe.ui.panel.country.CountryHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.customer.CustomerHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.dashboard.Dashboard;
 import com.devcoo.agencyflight.fe.ui.panel.invoice.InvoiceHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.login.LoginPanel;
 import com.devcoo.agencyflight.fe.ui.panel.product.ProductHolderPanel;
+import com.devcoo.agencyflight.fe.ui.panel.product.visa.period.PeriodHolderPanel;
+import com.devcoo.agencyflight.fe.ui.panel.product.visa.type.VisaTypeHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.supplier.SupplierHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.user.UserHolderPanel;
 import com.vaadin.server.Page;
@@ -36,6 +39,8 @@ public class FEMenu extends AbstractMenuBar {
 		
 		MenuItem products = addItem("Products", null);
 		products.addItem("Product", new MenuCommand(ProductHolderPanel.NAME));
+		products.addItem("Visa Period", new MenuCommand(PeriodHolderPanel.NAME));
+		products.addItem("Visa type", new MenuCommand(VisaTypeHolderPanel.NAME));
 		
 		MenuItem view = addItem("View", null);
 		view.addItem("Edit", null);
@@ -46,7 +51,8 @@ public class FEMenu extends AbstractMenuBar {
 		addItem("Payment", null);
 		addItem("Tool", null);
 		addItem("Report", null);
-		addItem("Setting", null);
+		MenuItem settings = addItem("Setting", null);
+		settings.addItem("Country", new MenuCommand(CountryHolderPanel.NAME));
 		addItem("About", null);
 	}
 

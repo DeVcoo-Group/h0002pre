@@ -1,4 +1,4 @@
-package com.devcoo.agencyflight.core.product.visa;
+package com.devcoo.agencyflight.core.product;
 
 import com.devcoo.agencyflight.core.std.StdField;
 

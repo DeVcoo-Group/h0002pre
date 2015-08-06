@@ -6,14 +6,14 @@ import org.springframework.stereotype.Component;
 
 import ru.xpoft.vaadin.VaadinView;
 
-import com.devcoo.agencyflight.core.product.visa.Visa;
-import com.devcoo.agencyflight.core.product.visa.VisaService;
+import com.devcoo.agencyflight.core.product.Product;
+import com.devcoo.agencyflight.core.product.ProductService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractTabsheet;
 
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @VaadinView(ProductHolderPanel.NAME)
-public class ProductHolderPanel extends AbstractTabsheet<VisaService, Visa> {
+public class ProductHolderPanel extends AbstractTabsheet<ProductService, Product> {
 
 	private static final long serialVersionUID = 3624545660010948422L;
 	public static final String NAME = "fe.product";

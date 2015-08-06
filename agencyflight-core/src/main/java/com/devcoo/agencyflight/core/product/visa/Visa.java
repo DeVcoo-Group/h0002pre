@@ -2,97 +2,71 @@ package com.devcoo.agencyflight.core.product.visa;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.devcoo.agencyflight.core.country.Country;
+import com.devcoo.agencyflight.core.product.visa.period.Period;
+import com.devcoo.agencyflight.core.product.visa.type.VisaType;
 import com.devcoo.agencyflight.core.std.StdEntity;
 
 @Entity
-@Table(name="visa")
+@Table(name = "visas")
 public class Visa extends StdEntity {
 
-	/** */
-	private static final long serialVersionUID = 2353681075201545704L;
+	private static final long serialVersionUID = -581850811903543205L;
 	
-	@Column(name = "code", nullable = false, unique = true)
-	private String code;
+	@ManyToOne
+	@JoinColumn(name = "period")
+	private Period period;
 	
-	@Column(name = "name", nullable = false)
-	private String name;
+	@ManyToOne
+	@JoinColumn(name = "visa_type", nullable = false)
+	private VisaType visaType;
 	
-	@Column(name = "price", nullable = false)
-	private Double price;
+	@ManyToOne
+	@JoinColumn(name = "nationality")
+	private Country nationality;
 	
-	@Column(name = "service_charge")
-	private Double serviceCharge;
+	@Column(name = "find_fee")
+	private Double findFee;
+
+	public Period getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(Period period) {
+		this.period = period;
+	}
+
+	public VisaType getVisaType() {
+		return visaType;
+	}
+
+	public void setVisaType(VisaType visaType) {
+		this.visaType = visaType;
+	}
+
+	public Country getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(Country nationality) {
+		this.nationality = nationality;
+	}
+
+	public Double getFindFee() {
+		return findFee;
+	}
+
+	public void setFindFee(Double findFee) {
+		this.findFee = findFee;
+	}
 	
-	@Column(name = "product_type")
-	private Integer productType;
-	
-	@Column(name = "requirement")
-	private String requirement;//What documents that customer need to provide to us
-	
-	@Column(name = "passportVisaPeriod")
-	private Integer passportVisaPeriod;//How many day for visa or passport delay or create
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-	public Double getServiceCharge() {
-		return serviceCharge;
-	}
-
-	public void setServiceCharge(Double serviceCharge) {
-		this.serviceCharge = serviceCharge;
-	}
-
-	public Integer getProductType() {
-		return productType;
-	}
-
-	public void setProductType(Integer productType) {
-		this.productType = productType;
-	}
-
-	public String getRequirement() {
-		return requirement;
-	}
-
-	public void setRequirement(String requirement) {
-		this.requirement = requirement;
-	}
-
-	public Integer getPassportVisaPeriod() {
-		return passportVisaPeriod;
-	}
-
-	public void setPassportVisaPeriod(Integer passportVisaPeriod) {
-		this.passportVisaPeriod = passportVisaPeriod;
-	}
-
 	@Override
 	public String getDisplayName() {
-		return getName();
+		return "";
 	}
 
 }

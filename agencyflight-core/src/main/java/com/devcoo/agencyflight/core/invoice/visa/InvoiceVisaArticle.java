@@ -7,7 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.devcoo.agencyflight.core.product.visa.Visa;
+import com.devcoo.agencyflight.core.product.Product;
 import com.devcoo.agencyflight.core.std.StdEntity;
 
 @Entity
@@ -31,7 +31,7 @@ public class InvoiceVisaArticle extends StdEntity {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "visa_id", nullable = false)
-	private Visa visa;
+	private Product visa;
 	
 	@Column(name = "remove")
 	private Boolean remove;
@@ -68,11 +68,11 @@ public class InvoiceVisaArticle extends StdEntity {
 		this.invoice = invoice;
 	}
 
-	public Visa getVisa() {
+	public Product getVisa() {
 		return visa;
 	}
 
-	public void setVisa(Visa visa) {
+	public void setVisa(Product visa) {
 		this.visa = visa;
 	}
 

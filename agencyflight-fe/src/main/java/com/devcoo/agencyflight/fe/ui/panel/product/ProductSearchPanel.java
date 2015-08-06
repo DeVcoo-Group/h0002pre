@@ -10,15 +10,15 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.devcoo.agencyflight.core.product.visa.Visa;
-import com.devcoo.agencyflight.core.product.visa.VisaService;
+import com.devcoo.agencyflight.core.product.Product;
+import com.devcoo.agencyflight.core.product.ProductService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractSearchLayout;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
 
-public class ProductSearchPanel extends AbstractSearchLayout<VisaService, Visa> {
+public class ProductSearchPanel extends AbstractSearchLayout<ProductService, Product> {
 
 	private static final long serialVersionUID = -8424091792187952568L;
 	
@@ -26,7 +26,7 @@ public class ProductSearchPanel extends AbstractSearchLayout<VisaService, Visa> 
 	private TextField txtName;
 
 	public ProductSearchPanel() {
-		super("visaServiceImp");
+		super("productServiceImp");
 	}
 
 	@Override
@@ -41,12 +41,12 @@ public class ProductSearchPanel extends AbstractSearchLayout<VisaService, Visa> 
 	}
 	
 	private void initControls() {
-		txtCode = VaadinFactory.getTextField("Product Code", 200);
-		txtName = VaadinFactory.getTextField("Product Name", 200);
+		txtCode = VaadinFactory.getTextField("Product Code");
+		txtName = VaadinFactory.getTextField("Product Name");
 	}
 
 	@Override
-	public Iterator<Visa> getRestrictions() {
+	public Iterator<Product> getRestrictions() {
 		return service.findAll(new ProductSpecification()).iterator();
 	}
 
@@ -56,10 +56,10 @@ public class ProductSearchPanel extends AbstractSearchLayout<VisaService, Visa> 
 		txtName.setValue("");
 	}
 	
-	private class ProductSpecification implements Specification<Visa> {
+	private class ProductSpecification implements Specification<Product> {
 
 		@Override
-		public Predicate toPredicate(Root<Visa> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+		public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
 
 			String strCode = "%" + txtCode.getValue() + "%";
 			Expression<String> productCode = root.get("code");
