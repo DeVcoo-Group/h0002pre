@@ -7,8 +7,8 @@ import java.util.List;
 import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisa;
 import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisaArticle;
 import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisaService;
-import com.devcoo.agencyflight.core.product.visa.Visa;
-import com.devcoo.agencyflight.core.product.visa.VisaService;
+import com.devcoo.agencyflight.core.product.Product;
+import com.devcoo.agencyflight.core.product.ProductService;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
 import com.devcoo.agencyflight.core.ui.field.selelct.SimpleTable;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
@@ -46,8 +46,8 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 	private ButtonBar crudBar;
 	private Window window;
 	
-	private List<Visa> visas;
-	private VisaService visaService;
+	private List<Product> visas;
+	private ProductService visaService;
 	private Integer selectedItemId;
 
 	public InvoiceVisaArticleTablePanel() {
@@ -125,7 +125,7 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 	}
 	
 	private void initControls() {
-		visaService = (VisaService) ctx.getBean("visaServiceImp");
+		visaService = (ProductService) ctx.getBean("productServiceImp");
 		visas = visaService.findAllNotDelete();
 		tbArticles = new SimpleTable("Visa items list");
 		tbArticles.addColumns(buildColumns());

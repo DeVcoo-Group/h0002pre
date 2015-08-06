@@ -14,7 +14,7 @@ public class User extends StdEntity implements Serializable {
 	
 	private static final long serialVersionUID = 8397670116185326543L;
 
-	@Column(name = "name", nullable = false)
+	@Column(name = "name", nullable = false, unique = true)
 	private String name;
 
 	@Column(name = "password")

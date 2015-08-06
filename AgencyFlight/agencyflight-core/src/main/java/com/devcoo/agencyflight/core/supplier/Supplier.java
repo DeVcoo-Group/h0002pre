@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import com.devcoo.agencyflight.core.std.StdEntity;
 
 @Entity
-@Table(name="supplier")
+@Table(name="suppliers")
 public class Supplier extends StdEntity {
 	
 	private static final long serialVersionUID = 8700699310917294214L;

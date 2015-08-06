@@ -39,7 +39,9 @@ public class UserSpecification implements Specification<User> {
 	}
 
 	public void setName(String name) {
-		this.name = "%"+ name.toLowerCase() + "%";
+		if (name != null) {
+			this.name = "%"+ name.toLowerCase() + "%";
+		}
 	}
 
 	public Integer getRole() {
