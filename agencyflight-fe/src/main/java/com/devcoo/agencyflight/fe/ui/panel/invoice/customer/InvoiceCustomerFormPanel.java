@@ -1,5 +1,6 @@
 package com.devcoo.agencyflight.fe.ui.panel.invoice.customer;
 
+import com.devcoo.agencyflight.core.country.CountryService;
 import com.devcoo.agencyflight.core.customer.Customer;
 import com.devcoo.agencyflight.core.customer.CustomerService;
 import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisa;
@@ -85,7 +86,7 @@ public class InvoiceCustomerFormPanel extends AbstractFormLayout<InvoiceVisaServ
 				}
 			}
 		});
-		customerForm = new BaseCustomerFormPanel();
+		customerForm = new BaseCustomerFormPanel((CountryService) ctx.getBean("countryServiceImp"));
 		tablePanel = new InvoiceCustomerTablePanel();
 	}
 

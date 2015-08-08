@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.devcoo.agencyflight.core.report.ReportWriter;
-import com.devcoo.agencyflight.core.util.Tools;
 
 public class ReportCustomerList extends ReportWriter {
 	private List<Customer> listCustomer = new ArrayList<Customer>();
@@ -26,7 +25,11 @@ public class ReportCustomerList extends ReportWriter {
 			row.add(customer.getCode());
 			row.add(customer.getFirstName());
 			row.add(customer.getLastName());
-			row.add(Tools.getEnumToString(customer.getNationality(), Nationality.values()));
+			String nationality = "";
+			if (customer.getNationality() != null) {
+				nationality = customer.getNationality().getDisplayName();
+			}
+			row.add(nationality);
 			rows.add(row);
 		}
 		//need

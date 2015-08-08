@@ -1,5 +1,6 @@
 package com.devcoo.agencyflight.fe.ui.panel.customer;
 
+import com.devcoo.agencyflight.core.country.CountryService;
 import com.devcoo.agencyflight.core.customer.Customer;
 import com.devcoo.agencyflight.core.customer.CustomerService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
@@ -23,7 +24,7 @@ public class CustomerFormPanel extends AbstractFormLayout<CustomerService, Custo
 
 	@Override
 	protected Component initGUI() {
-		customerForm = new BaseCustomerFormPanel();
+		customerForm = new BaseCustomerFormPanel((CountryService) ctx.getBean("countryServiceImp"));
 		return customerForm;
 	}
 	
