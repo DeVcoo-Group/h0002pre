@@ -2,10 +2,14 @@ package com.devcoo.agencyflight.core.customer;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.devcoo.agencyflight.core.country.Country;
 import com.devcoo.agencyflight.core.std.StdEntity;
 
 @Entity
@@ -29,8 +33,9 @@ public class Customer extends StdEntity {
 	@Column(name = "birth_place")
 	private String birthPlace;
 	
-	@Column(name = "nationality")
-	private Integer nationality;
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "nationality")
+	private Country nationality;
 
 	public String getCode() {
 		return code;
@@ -72,11 +77,11 @@ public class Customer extends StdEntity {
 		this.birthPlace = birthPlace;
 	}
 
-	public Integer getNationality() {
+	public Country getNationality() {
 		return nationality;
 	}
 
-	public void setNationality(Integer nationality) {
+	public void setNationality(Country nationality) {
 		this.nationality = nationality;
 	}
 
