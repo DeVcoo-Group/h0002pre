@@ -8,7 +8,7 @@
 		<!-- <class>com.devcoo.agencyflight.core.model.User</class> -->
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<properties>
-			<property name="hibernate.temp.use_jdbc_metadata_defaults">true</property>
+			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="true" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="update"/>
 		</properties>

@@ -12,8 +12,7 @@ import com.devcoo.agencyflight.core.std.StdServiceImp;
 public class UserServiceImp extends StdServiceImp<UserDao, User> implements UserService {
 	@Transactional
 	@Override
-	public List<User> findUser(String name, String password) {	
-		//return userDao.findByNameAndPassword(name, password);
+	public List<User> findUser(String name, String password) {
 		return dao.findByNameAndPassword(name, password);
 	}
 	@Transactional
