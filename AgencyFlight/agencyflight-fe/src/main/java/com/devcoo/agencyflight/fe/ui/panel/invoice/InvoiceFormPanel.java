@@ -6,12 +6,12 @@ import java.util.Date;
 import com.devcoo.agencyflight.core.context.WebContext;
 import com.devcoo.agencyflight.core.customer.Customer;
 import com.devcoo.agencyflight.core.customer.CustomerService;
-import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisa;
-import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisaService;
+import com.devcoo.agencyflight.core.invoice.Invoice;
+import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
-import com.devcoo.agencyflight.fe.ui.panel.invoice.artical.InvoiceVisaArticleTablePanel;
+import com.devcoo.agencyflight.fe.ui.panel.invoice.artical.InvoiceArticleTablePanel;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
@@ -23,7 +23,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, InvoiceVisa> {
+public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice> {
 
 	private static final long serialVersionUID = 7155913963716727055L;
 	
@@ -35,10 +35,10 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, Inv
 	
 	private Integer customerId;
 	private CustomerService customerService = (CustomerService) ctx.getBean("customerServiceImp");
-	private InvoiceVisaArticleTablePanel articleTablePanel;
+	private InvoiceArticleTablePanel articleTablePanel;
 
 	public InvoiceFormPanel() {
-		super("invoiceVisaServiceImp");
+		super("invoiceServiceImp");
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, Inv
 		txtCustomerLastName = VaadinFactory.getTextField("Customer last name", 200);
 		txtEmployee = VaadinFactory.getTextField("Employee", 200);
 		txtAmountReceive = VaadinFactory.getTextField("Amount receive", 200);
-		articleTablePanel = new InvoiceVisaArticleTablePanel();
+		articleTablePanel = new InvoiceArticleTablePanel();
 	}
 	
 	private Panel buildInvoiceDetailPanel() {
@@ -96,7 +96,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceVisaService, Inv
 	@Override
 	protected void assignValues(Integer entityId) {
 		if (entityId == null) {
-			entity = new InvoiceVisa();
+			entity = new Invoice();
 			if (this.customerId != null) {
 				Customer customer = customerService.find(this.customerId);
 				entity.setCode(new Date() + "");

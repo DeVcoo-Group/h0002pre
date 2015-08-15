@@ -47,10 +47,10 @@ public class CountryTablePanel extends AbstractListLayout<CountryService, Countr
 	@Override
 	protected List<Column> buildColumns() {
 		List<Column> columns = new ArrayList<Column>();
-		columns.add(new Column(ID, "Id", Integer.class, Align.LEFT, 50));
+		columns.add(new Column(ID, "Id", Integer.class, Align.LEFT, 100));
 		columns.add(new Column(NAME, "Country", String.class, Align.LEFT));
-		columns.add(new Column(CODE2, "Country code 2", String.class, Align.LEFT, 150));
-		columns.add(new Column(CODE3, "Country code 3", String.class, Align.LEFT, 150));
+		columns.add(new Column(CODE2, "Country code 2", String.class, Align.LEFT, 200));
+		columns.add(new Column(CODE3, "Country code 3", String.class, Align.LEFT, 200));
 		return columns;
 	}
 

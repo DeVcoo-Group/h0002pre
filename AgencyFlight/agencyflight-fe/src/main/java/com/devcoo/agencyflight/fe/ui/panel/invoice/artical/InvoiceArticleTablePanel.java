@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisa;
-import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisaArticle;
-import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisaService;
+import com.devcoo.agencyflight.core.invoice.Invoice;
+import com.devcoo.agencyflight.core.invoice.InvoiceService;
+import com.devcoo.agencyflight.core.invoice.article.InvoiceArticle;
 import com.devcoo.agencyflight.core.product.Product;
 import com.devcoo.agencyflight.core.product.ProductService;
+import com.devcoo.agencyflight.core.product.ProductType;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
 import com.devcoo.agencyflight.core.ui.field.selelct.SimpleTable;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.ui.layout.ButtonBar;
+import com.devcoo.agencyflight.core.util.NumberUtil;
+import com.devcoo.agencyflight.core.util.Tools;
+import com.devcoo.agencyflight.core.util.ValidationUtil;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.vaadin.data.Item;
 import com.vaadin.event.ItemClickEvent;
@@ -32,26 +36,29 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisaService, InvoiceVisa> {
+public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService, Invoice> {
 	
 	private static final long serialVersionUID = -1541944952619789149L;
 	
 	private static final String ID = "id";
 	private static final String PRODUCT = "product";
+	private static final String PRODUCT_TYPE = "productType";
+	private static final String UNIT = "unit";
 	private static final String PRICE = "price";
 	
-	private ComboBox cbProduct;
+	private ComboBox cboProduct;
+	private TextField txtUnit;
 	private TextField txtPrice;
 	private SimpleTable tbArticles;
 	private ButtonBar crudBar;
 	private Window window;
 	
-	private List<Product> visas;
-	private ProductService visaService;
+	private List<Product> products;
+	private ProductService productService;
 	private Integer selectedItemId;
 
-	public InvoiceVisaArticleTablePanel() {
-		super("invoiceVisaServiceImp");
+	public InvoiceArticleTablePanel() {
+		super("invoiceServiceImp");
 		setMargin(false);
 	}
 
@@ -80,12 +87,13 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 	
 	@Override
 	protected void save() {
-		InvoiceVisaArticle article = new InvoiceVisaArticle();
+		InvoiceArticle article = new InvoiceArticle();
 		article.setInvoice(entity);
-		article.setName("Product name");
-		article.setPrice(0.0);
-		article.setVisa(visaService.find(1));
-		article.setRemove(false);
+		Product product = productService.find((Integer) cboProduct.getValue());
+		article.setName(product.getName());
+		article.setPrice(NumberUtil.getDouble(txtPrice));
+		article.setUnit(NumberUtil.getInteger(txtUnit));
+		article.setProduct(product);
 		article.setDelete(false);
 		entity.getArticles().add(article);
 		entity = service.saveAndFlush(entity);
@@ -98,11 +106,11 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 			Notification notification = VaadinFactory.getNotification("Information", msg);
 			notification.show(Page.getCurrent());
 		} else {
-			Iterator<InvoiceVisaArticle> articles = entity.getArticles().iterator();
+			Iterator<InvoiceArticle> articles = entity.getArticles().iterator();
 			while (articles.hasNext()) {
-				InvoiceVisaArticle article = articles.next();
+				InvoiceArticle article = articles.next();
 				if (article.getId() == selectedItemId) {
-					article.setRemove(true);
+					article.setDelete(true);
 					break;
 				}
 			}
@@ -125,8 +133,8 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 	}
 	
 	private void initControls() {
-		visaService = (ProductService) ctx.getBean("productServiceImp");
-		visas = visaService.findAllNotDelete();
+		productService = (ProductService) ctx.getBean("productServiceImp");
+		products = productService.findAllNotDelete();
 		tbArticles = new SimpleTable("Visa items list");
 		tbArticles.addColumns(buildColumns());
 		tbArticles.addItemClickListener(new ItemClickListener() {
@@ -147,7 +155,10 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				save();
+				if (validate()) {
+					save();
+					window.close();
+				}
 			}
 		});
 		Button btnCancel = buttonBar.addButton("Cancel");
@@ -161,11 +172,13 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 			}
 		});
 		
-		cbProduct = VaadinFactory.getComboBox("Product", 200, true, visas);
+		cboProduct = VaadinFactory.getComboBox("Product", 200, true, products);
+		txtUnit = VaadinFactory.getTextField("Unit");
 		txtPrice = VaadinFactory.getTextField("Product Price");
 		
 		FormLayout formLayout = new FormLayout();
-		formLayout.addComponent(cbProduct);
+		formLayout.addComponent(cboProduct);
+		formLayout.addComponent(txtUnit);
 		formLayout.addComponent(txtPrice);
 		
 		VerticalLayout verticalLayout = new VerticalLayout();
@@ -176,7 +189,7 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 		
 		window = new Window("Add new item");
 		window.setWidth(380, Unit.PIXELS);
-		window.setHeight(230, Unit.PIXELS);
+		window.setHeight(260, Unit.PIXELS);
 		window.setModal(true);
 		window.setContent(verticalLayout);
 	}
@@ -189,12 +202,12 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 		}
 	}
 	
-	protected void buildTableDataSource(Iterator<InvoiceVisaArticle> entities) {
+	protected void buildTableDataSource(Iterator<InvoiceArticle> entities) {
 		tbArticles.removeAllItems();
 		if (entities != null) {
 			while (entities.hasNext()) {
-				InvoiceVisaArticle row = entities.next();
-				if (row.isRemove() == null || !row.isRemove()) {
+				InvoiceArticle row = entities.next();
+				if (row.isDelete() == null || !row.isDelete()) {
 					renderRow(tbArticles.addItem(row.getId()), row);
 				}
 			}
@@ -202,30 +215,53 @@ public class InvoiceVisaArticleTablePanel extends AbstractFormLayout<InvoiceVisa
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected void renderRow(Item item, InvoiceVisaArticle entity) {
+	protected void renderRow(Item item, InvoiceArticle entity) {
 		item.getItemProperty(ID).setValue(entity.getId());
 		item.getItemProperty(PRODUCT).setValue(entity.getName());
-		item.getItemProperty(PRICE).setValue(entity.getPrice());
+		item.getItemProperty(PRODUCT_TYPE).setValue(Tools.getEnumToString(entity.getProduct().getProductType(), ProductType.values()));
+		item.getItemProperty(UNIT).setValue(entity.getUnit());
+		item.getItemProperty(PRICE).setValue(NumberUtil.formatCurrency(entity.getPrice()));
 	}
 	
 	protected List<Column> buildColumns() {
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column(ID, "Id", Integer.class, Align.RIGHT, 100));
 		columns.add(new Column(PRODUCT, "Product", String.class, Align.LEFT));
-		columns.add(new Column(PRICE, "Price", Double.class, Align.RIGHT, 150));
+		columns.add(new Column(PRODUCT_TYPE, "Product type", String.class, Align.LEFT, 200));
+		columns.add(new Column(UNIT, "Unit", Integer.class, Align.RIGHT, 200));
+		columns.add(new Column(PRICE, "Price", String.class, Align.RIGHT, 200));
 		return columns;
 	}
 
 	@Override
 	protected void reset() {
-		// TODO Auto-generated method stub
-		
+		cboProduct.setValue(null);
+		txtUnit.setValue("");
+		txtPrice.setValue("");
+		cboProduct.setComponentError(null);
+		txtUnit.setComponentError(null);
+		txtPrice.setComponentError(null);
 	}
 
 	@Override
 	protected boolean validate() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean valid = true;
+		
+		if (!ValidationUtil.validateRequiredSelectField(cboProduct)) {
+			valid = false;
+		}
+		if (!ValidationUtil.validateRequiredTextField(txtUnit)) {
+			valid = false;
+		} else if (!ValidationUtil.validateIntegerField(txtUnit)) {
+			valid = false;
+		}
+		if (!ValidationUtil.validateRequiredTextField(txtPrice)) {
+			valid = false;
+		} else if (!ValidationUtil.validateDoubleField(txtPrice)) {
+			valid = false;
+		}
+		
+		return valid;
 	}
 	
 }

@@ -25,6 +25,7 @@ public class CountryFormPanel extends AbstractFormLayout<CountryService, Country
 	protected Component initGUI() {
 		initControls();
 		FormLayout formLayout = new FormLayout();
+		formLayout.addComponent(VaadinFactory.getLabel("Country Detail"));
 		formLayout.addComponent(txtName);
 		formLayout.addComponent(txtCode2);
 		formLayout.addComponent(txtCode3);

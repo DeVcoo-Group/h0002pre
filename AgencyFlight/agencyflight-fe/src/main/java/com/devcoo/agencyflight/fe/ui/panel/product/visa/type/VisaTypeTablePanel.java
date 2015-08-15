@@ -45,8 +45,8 @@ public class VisaTypeTablePanel extends AbstractListLayout<VisaTypeService, Visa
 	@Override
 	protected List<Column> buildColumns() {
 		List<Column> columns = new ArrayList<Column>();
-		columns.add(new Column(ID, "Id", Integer.class, Align.LEFT, 50));
-		columns.add(new Column(CODE, "Visa type Code", String.class, Align.LEFT, 150));
+		columns.add(new Column(ID, "Id", Integer.class, Align.LEFT, 100));
+		columns.add(new Column(CODE, "Visa type Code", String.class, Align.LEFT, 250));
 		columns.add(new Column(DESCRIPTION, "Visa type description", String.class, Align.LEFT));
 		return columns;
 	}

@@ -9,6 +9,7 @@ import com.devcoo.agencyflight.core.product.ProductType;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
 import com.devcoo.agencyflight.core.ui.layout.AbstractListLayout;
 import com.devcoo.agencyflight.core.ui.layout.AbstractSearchLayout;
+import com.devcoo.agencyflight.core.util.NumberUtil;
 import com.devcoo.agencyflight.core.util.Tools;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Table.Align;
@@ -46,20 +47,20 @@ public class ProductTablePanel extends AbstractListLayout<ProductService, Produc
 		item.getItemProperty(ID).setValue(entity.getId());
 		item.getItemProperty(CODE).setValue(entity.getCode());
 		item.getItemProperty(NAME).setValue(entity.getName());
-		item.getItemProperty(PRICE).setValue(entity.getPrice());
+		item.getItemProperty(PRICE).setValue(NumberUtil.formatCurrency(entity.getPrice()));
 		item.getItemProperty(PRODUCT_TYPE).setValue(Tools.getEnumToString(entity.getProductType(), ProductType.values()));
-		item.getItemProperty(SUPPLIER).setValue(entity.getSupplier().getName());
+		item.getItemProperty(SUPPLIER).setValue(entity.getSupplier() != null ? entity.getSupplier().getName() : "");
 	}
 
 	@Override
 	protected List<Column> buildColumns() {
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(new Column(ID, "Id", Integer.class, Align.LEFT, 50));
-		columns.add(new Column(CODE, "Product Code", String.class, Align.LEFT, 150));
+		columns.add(new Column(CODE, "Product Code", String.class, Align.LEFT, 200));
 		columns.add(new Column(NAME, "Product Name", String.class, Align.LEFT));
-		columns.add(new Column(PRODUCT_TYPE, "Product Type", String.class, Align.LEFT, 100));
-		columns.add(new Column(PRICE, "Price", Double.class, Align.RIGHT, 90));
-		columns.add(new Column(SUPPLIER, "Supplier", String.class, Align.LEFT, 150));
+		columns.add(new Column(PRODUCT_TYPE, "Product Type", String.class, Align.LEFT, 200));
+		columns.add(new Column(PRICE, "Price", String.class, Align.RIGHT, 150));
+		columns.add(new Column(SUPPLIER, "Supplier", String.class, Align.LEFT, 200));
 		return columns;
 	}
 

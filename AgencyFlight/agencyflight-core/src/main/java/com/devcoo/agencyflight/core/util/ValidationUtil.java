@@ -76,5 +76,63 @@ public class ValidationUtil {
 		
 		return valid;
 	}
+	
+	public static boolean validateDoubleField(AbstractTextField textField) {
+		String fieldName = "Field";
+		if (textField != null) {
+			fieldName = textField.getCaption();
+		}
+		return  validateDoubleField(textField, fieldName + " should be a decimal value!");
+	}
+	
+	public static boolean validateDoubleField(AbstractTextField textField, String errorMessage) {
+		boolean valid = false;
+		if (textField != null) {
+			String value = textField.getValue();
+			if (value == null || value.isEmpty()) {
+				textField.setComponentError(null);
+				return true;
+			}
+			try {
+				Double.valueOf(value);
+				valid = true;
+			} catch (NumberFormatException e) { }
+			if (!valid) {
+				textField.setComponentError(new UserError(errorMessage));
+			} else {
+				textField.setComponentError(null);
+			}
+		}
+		return valid;
+	}
+	
+	public static boolean validateIntegerField(AbstractTextField textField) {
+		String fieldName = "Field";
+		if (textField != null) {
+			fieldName = textField.getCaption();
+		}
+		return  validateIntegerField(textField, fieldName + " should be an integer value!");
+	}
+	
+	public static boolean validateIntegerField(AbstractTextField textField, String errorMessage) {
+		boolean valid = false;
+		if (textField != null) {
+			String value = textField.getValue();
+			if (value == null || value.isEmpty()) {
+				textField.setComponentError(null);
+				return true;
+			}
+			try {
+				Integer.valueOf(value);
+				valid = true;
+			} catch (NumberFormatException e) { }
+			if (!valid) {
+				textField.setComponentError(new UserError(errorMessage));
+			} else {
+				textField.setComponentError(null);
+			}
+		}
+		return valid;
+	}
 
 }

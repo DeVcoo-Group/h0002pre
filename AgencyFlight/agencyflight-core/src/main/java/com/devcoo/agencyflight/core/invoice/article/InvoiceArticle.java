@@ -1,18 +1,18 @@
-package com.devcoo.agencyflight.core.invoice.visa;
+package com.devcoo.agencyflight.core.invoice.article;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.product.Product;
 import com.devcoo.agencyflight.core.std.StdEntity;
 
 @Entity
-@Table(name = "invoiceVisaArticles")
-public class InvoiceVisaArticle extends StdEntity {
+@Table(name = "invoice_articles")
+public class InvoiceArticle extends StdEntity {
 
 	private static final long serialVersionUID = -1219281060518919149L;
 	
@@ -25,16 +25,16 @@ public class InvoiceVisaArticle extends StdEntity {
 	@Column(name = "price", nullable = false)
 	private Double price;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@Column(name = "unit", nullable = false)
+	private Integer unit;
+	
+	@ManyToOne
 	@JoinColumn(name = "invoice_id", nullable = false)
-	private InvoiceVisa invoice;
+	private Invoice invoice;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "visa_id", nullable = false)
-	private Product visa;
-	
-	@Column(name = "remove")
-	private Boolean remove;
+	@ManyToOne
+	@JoinColumn(name = "product_id", nullable = false)
+	private Product product;
 
 //	public String getCode() {
 //		return code;
@@ -60,28 +60,28 @@ public class InvoiceVisaArticle extends StdEntity {
 		this.price = price;
 	}
 
-	public InvoiceVisa getInvoice() {
+	public Integer getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Integer unit) {
+		this.unit = unit;
+	}
+
+	public Invoice getInvoice() {
 		return invoice;
 	}
 
-	public void setInvoice(InvoiceVisa invoice) {
+	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
 	}
 
-	public Product getVisa() {
-		return visa;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setVisa(Product visa) {
-		this.visa = visa;
-	}
-
-	public Boolean isRemove() {
-		return remove;
-	}
-
-	public void setRemove(Boolean remove) {
-		this.remove = remove;
+	public void setProduct(Product Product) {
+		this.product = Product;
 	}
 
 	@Override

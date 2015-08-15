@@ -6,15 +6,15 @@ import org.springframework.stereotype.Component;
 
 import ru.xpoft.vaadin.VaadinView;
 
-import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisa;
-import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisaService;
+import com.devcoo.agencyflight.core.invoice.Invoice;
+import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractTabsheet;
 import com.devcoo.agencyflight.fe.ui.panel.invoice.customer.InvoiceCustomerFormPanel;
 
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @VaadinView(InvoiceHolderPanel.NAME)
-public class InvoiceHolderPanel extends AbstractTabsheet<InvoiceVisaService, InvoiceVisa> {
+public class InvoiceHolderPanel extends AbstractTabsheet<InvoiceService, Invoice> {
 
 	private static final long serialVersionUID = 67491144499007131L;
 	public static final String NAME = "fe.invoice";

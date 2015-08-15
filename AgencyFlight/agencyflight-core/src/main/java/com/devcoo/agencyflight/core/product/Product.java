@@ -35,7 +35,7 @@ public class Product extends StdEntity {
 	@JoinColumn(name = "supplier_id")
 	private Supplier supplier;
 	
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "visa_id")
 	private Visa visa;
 

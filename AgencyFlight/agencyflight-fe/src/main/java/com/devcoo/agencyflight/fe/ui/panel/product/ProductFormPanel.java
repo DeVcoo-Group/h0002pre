@@ -1,7 +1,5 @@
 package com.devcoo.agencyflight.fe.ui.panel.product;
 
-import java.text.DecimalFormat;
-
 import com.devcoo.agencyflight.core.country.CountryService;
 import com.devcoo.agencyflight.core.product.Product;
 import com.devcoo.agencyflight.core.product.ProductService;
@@ -11,6 +9,7 @@ import com.devcoo.agencyflight.core.product.visa.type.VisaTypeService;
 import com.devcoo.agencyflight.core.supplier.Supplier;
 import com.devcoo.agencyflight.core.supplier.SupplierService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
+import com.devcoo.agencyflight.core.util.NumberUtil;
 import com.devcoo.agencyflight.core.util.ValidationUtil;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.devcoo.agencyflight.fe.ui.panel.product.visa.ProductVisaFormPanel;
@@ -96,11 +95,9 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 			entity = new Product();
 		} else {
 			entity = service.find(entityId);
-			DecimalFormat df = new DecimalFormat("#0.00");
-			
 			txtCode.setValue(entity.getCode());
 			txtName.setValue(entity.getName());
-			txtPrice.setValue(df.format(entity.getPrice()));
+			txtPrice.setValue(NumberUtil.formatCurrency(entity.getPrice()));
 			cboProductType.setValue(entity.getProductType());
 			cboSupplier.setValue(entity.getSupplier().getId());
 			if (entity.getProductType() == ProductType.PASSPORT_VISA.getId()) {
@@ -135,6 +132,8 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 		}
 		if (!ValidationUtil.validateRequiredTextField(txtPrice)) {
 			valid = false;
+		} else if (!ValidationUtil.validateDoubleField(txtPrice)) {
+			valid = false;
 		}
 		if (!ValidationUtil.validateRequiredSelectField(cboProductType)) {
 			valid = false;
@@ -157,7 +156,7 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 		}
 		entity.setCode(txtCode.getValue());
 		entity.setName(txtName.getValue());
-		entity.setPrice(Double.valueOf(txtPrice.getValue()));
+		entity.setPrice(NumberUtil.getDouble(txtPrice));
 		entity.setProductType((Integer) cboProductType.getValue());
 		entity.setSupplier(supplier);
 		if ((Integer) cboProductType.getValue() == ProductType.PASSPORT_VISA.getId()) {

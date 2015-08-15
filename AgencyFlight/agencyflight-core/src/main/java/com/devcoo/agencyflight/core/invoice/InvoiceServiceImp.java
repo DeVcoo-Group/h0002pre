@@ -1,4 +1,4 @@
-package com.devcoo.agencyflight.core.invoice.visa;
+package com.devcoo.agencyflight.core.invoice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,13 +8,13 @@ import com.devcoo.agencyflight.core.std.StdServiceImp;
 
 @Service
 @Transactional
-public class InvoiceVisaServiceImp extends StdServiceImp<InvoiceVisaDao, InvoiceVisa> implements InvoiceVisaService {
+public class InvoiceServiceImp extends StdServiceImp<InvoiceDao, Invoice> implements InvoiceService {
 
 	@Autowired
-	private InvoiceVisaDao dao;
+	private InvoiceDao dao;
 
 	@Override
-	public InvoiceVisa saveAndFlush(InvoiceVisa entity) {
+	public Invoice saveAndFlush(Invoice entity) {
 		return dao.saveAndFlush(entity);
 	}
 
