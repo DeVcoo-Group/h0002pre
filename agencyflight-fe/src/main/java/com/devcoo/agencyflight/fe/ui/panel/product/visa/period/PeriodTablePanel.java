@@ -43,7 +43,7 @@ public class PeriodTablePanel extends AbstractListLayout<PeriodService, Period> 
 	@Override
 	protected List<Column> buildColumns() {
 		List<Column> columns = new ArrayList<Column>();
-		columns.add(new Column(ID, "Id", Integer.class, Align.LEFT, 50));
+		columns.add(new Column(ID, "Id", Integer.class, Align.LEFT, 100));
 		columns.add(new Column(DAYS, "Days", String.class, Align.LEFT));
 		return columns;
 	}

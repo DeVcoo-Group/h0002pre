@@ -2,8 +2,8 @@ package com.devcoo.agencyflight.fe.ui.panel.invoice;
 
 import java.util.Iterator;
 
-import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisa;
-import com.devcoo.agencyflight.core.invoice.visa.InvoiceVisaService;
+import com.devcoo.agencyflight.core.invoice.Invoice;
+import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractSearchLayout;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.vaadin.ui.Component;
@@ -11,7 +11,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 
-public class InvoiceSearchPanel extends AbstractSearchLayout<InvoiceVisaService, InvoiceVisa> {
+public class InvoiceSearchPanel extends AbstractSearchLayout<InvoiceService, Invoice> {
 
 	private static final long serialVersionUID = -3058329587541361141L;
 	
@@ -21,7 +21,7 @@ public class InvoiceSearchPanel extends AbstractSearchLayout<InvoiceVisaService,
 	private TextField txtEmployee;
 
 	public InvoiceSearchPanel() {
-		super("invoiceVisaServiceImp");
+		super("invoiceServiceImp");
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class InvoiceSearchPanel extends AbstractSearchLayout<InvoiceVisaService,
 	}
 
 	@Override
-	public Iterator<InvoiceVisa> getRestrictions() {
+	public Iterator<Invoice> getRestrictions() {
 		// TODO Auto-generated method stub
 		return null;
 	}

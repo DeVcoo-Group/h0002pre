@@ -24,6 +24,7 @@ public class PeriodFormPanel extends AbstractFormLayout<PeriodService, Period> {
 		txtDays = VaadinFactory.getTextField("Days");
 		txtDays.setRequired(true);
 		FormLayout formLayout = new FormLayout();
+		formLayout.addComponent(VaadinFactory.getLabel("Period Detail"));
 		formLayout.addComponent(txtDays);
 		return formLayout;
 	}

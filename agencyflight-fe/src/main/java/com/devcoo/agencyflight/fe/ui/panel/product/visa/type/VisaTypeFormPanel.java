@@ -24,6 +24,7 @@ public class VisaTypeFormPanel extends AbstractFormLayout<VisaTypeService, VisaT
 	protected Component initGUI() {
 		initControls();
 		FormLayout formLayout = new FormLayout();
+		formLayout.addComponent(VaadinFactory.getLabel("Visa Type Detail"));
 		formLayout.addComponent(txtCode);
 		formLayout.addComponent(txtDescription);
 		return formLayout;

@@ -6,6 +6,7 @@ import com.devcoo.agencyflight.core.product.visa.Visa;
 import com.devcoo.agencyflight.core.product.visa.period.Period;
 import com.devcoo.agencyflight.core.product.visa.period.PeriodService;
 import com.devcoo.agencyflight.core.product.visa.type.VisaTypeService;
+import com.devcoo.agencyflight.core.util.NumberUtil;
 import com.devcoo.agencyflight.core.util.ValidationUtil;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.vaadin.ui.ComboBox;
@@ -63,7 +64,7 @@ public class ProductVisaFormPanel extends VerticalLayout {
 			cboPeriod.setValue(entity.getPeriod() != null ? entity.getPeriod().getId() : null);
 			cboVisaType.setValue(entity.getVisaType().getId());
 			cboNationality.setValue(entity.getNationality() != null ? entity.getNationality().getId() : null);
-			txtFindFee.setValue(entity.getFindFee() + "");
+			txtFindFee.setValue(NumberUtil.formatCurrency(entity.getFindFee()));
 		}
 	}
 
@@ -78,6 +79,9 @@ public class ProductVisaFormPanel extends VerticalLayout {
 	public boolean validate() {
 		boolean valid = true;
 		if (!ValidationUtil.validateRequiredSelectField(cboVisaType)) {
+			valid = false;
+		}
+		if (!ValidationUtil.validateDoubleField(txtFindFee)) {
 			valid = false;
 		}
 		return valid;
@@ -95,7 +99,7 @@ public class ProductVisaFormPanel extends VerticalLayout {
 		entity.setPeriod(period);
 		entity.setVisaType(visaTypeService.find((Integer) cboVisaType.getValue()));
 		entity.setNationality(nationality);
-		entity.setFindFee(Double.valueOf(txtFindFee.getValue()));
+		entity.setFindFee(NumberUtil.getDouble(txtFindFee));
 		return entity;
 	}
 

@@ -1,4 +1,4 @@
-package com.devcoo.agencyflight.core.invoice.visa;
+package com.devcoo.agencyflight.core.invoice;
 
 import java.util.List;
 
@@ -12,12 +12,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.devcoo.agencyflight.core.customer.Customer;
+import com.devcoo.agencyflight.core.invoice.article.InvoiceArticle;
 import com.devcoo.agencyflight.core.std.StdEntity;
 import com.devcoo.agencyflight.core.user.User;
 
 @Entity
-@Table(name = "invoiceVisa")
-public class InvoiceVisa extends StdEntity {
+@Table(name = "invoices")
+public class Invoice extends StdEntity {
 
 	private static final long serialVersionUID = -1503906552312944843L;
 	
@@ -35,8 +36,11 @@ public class InvoiceVisa extends StdEntity {
 	@Column(name = "amount_receive")
 	private Double amountReceive;	// Amount receive from customer, include exchange
 	
+	@Column(name = "deposit")
+	private Double deposit;
+	
 	@OneToMany(mappedBy = "invoice", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	private List<InvoiceVisaArticle> articles;
+	private List<InvoiceArticle> articles;
 
 	public String getCode() {
 		return code;
@@ -70,12 +74,20 @@ public class InvoiceVisa extends StdEntity {
 		this.amountReceive = amountReceive;
 	}
 
-	public List<InvoiceVisaArticle> getArticles() {
+	public List<InvoiceArticle> getArticles() {
 		return articles;
 	}
 
-	public void setArticles(List<InvoiceVisaArticle> articles) {
+	public void setArticles(List<InvoiceArticle> articles) {
 		this.articles = articles;
+	}
+
+	public Double getDeposit() {
+		return deposit;
+	}
+
+	public void setDeposit(Double deposit) {
+		this.deposit = deposit;
 	}
 
 	@Override
