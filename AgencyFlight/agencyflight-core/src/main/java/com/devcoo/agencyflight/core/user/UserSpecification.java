@@ -48,8 +48,11 @@ public class UserSpecification implements Specification<User> {
 		return role;
 	}
 
-	public void setRole(Integer role) {
-		this.role = role;
+	public void setRole(UserRole role) {
+		this.role = null;
+		if (role != null) {
+			this.role = role.getId();
+		}
 	}
 	
 }

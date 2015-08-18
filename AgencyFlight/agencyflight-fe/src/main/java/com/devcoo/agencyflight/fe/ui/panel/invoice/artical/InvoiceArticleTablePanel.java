@@ -1,6 +1,7 @@
 package com.devcoo.agencyflight.fe.ui.panel.invoice.artical;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import com.devcoo.agencyflight.core.product.visa.period.PeriodService;
 import com.devcoo.agencyflight.core.product.visa.type.VisaType;
 import com.devcoo.agencyflight.core.product.visa.type.VisaTypeService;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
+import com.devcoo.agencyflight.core.ui.field.selelct.ComboBox;
 import com.devcoo.agencyflight.core.ui.field.selelct.SimpleTable;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.ui.layout.ButtonBar;
@@ -34,7 +36,6 @@ import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -60,21 +61,21 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	private CountryService countryService;
 	private PeriodService periodService;
 	
-	private ComboBox cboProductType;
-	private ComboBox cboProduct;
-	private ComboBox cboVisaType;
-	private ComboBox cboNationality;
-	private ComboBox cboPeriod;
+	private ComboBox<ProductType> cboProductType;
+	private ComboBox<Product> cboProduct;
+	private ComboBox<VisaType> cboVisaType;
+	private ComboBox<Country> cboNationality;
+	private ComboBox<Period> cboPeriod;
 	private TextField txtUnit;
 	private TextField txtPrice;
 	private SimpleTable tbArticles;
 	private ButtonBar crudBar;
 	private Window window;
 	
-	private List<Product> products;
-	private List<VisaType> visaTypes;
-	private List<Country> countries;
-	private List<Period> periods;
+//	private List<Product> products;
+//	private List<VisaType> visaTypes;
+//	private List<Country> countries;
+//	private List<Period> periods;
 	private Integer selectedItemId;
 
 	public InvoiceArticleTablePanel() {
@@ -109,7 +110,7 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	protected void save() {
 		InvoiceArticle article = new InvoiceArticle();
 		article.setInvoice(entity);
-		Product product = productService.find((Integer) cboProduct.getValue());
+		Product product = cboProduct.getEntity();
 		article.setName(product.getName());
 		article.setPrice(NumberUtil.getDouble(txtPrice));
 		article.setUnit(NumberUtil.getInteger(txtUnit));
@@ -157,10 +158,9 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 		visaTypeService = (VisaTypeService) ctx.getBean("visaTypeServiceImp");
 		countryService = (CountryService) ctx.getBean("countryServiceImp");
 		periodService = (PeriodService) ctx.getBean("periodServiceImp");
-		products = productService.findAllNotDelete();
-		visaTypes = visaTypeService.findAllNotDelete();
-		countries = countryService.findAllNotDelete();
-		periods = periodService.findAllNotDelete();
+//		visaTypes = visaTypeService.findAllNotDelete();
+//		countries = countryService.findAllNotDelete();
+//		periods = periodService.findAllNotDelete();
 		tbArticles = new SimpleTable("Visa items list");
 		tbArticles.addColumns(buildColumns());
 		tbArticles.addItemClickListener(new ItemClickListener() {
@@ -201,7 +201,7 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 		final FormLayout leftFormLayout = new FormLayout();
 		
 		// TODO
-		cboProductType = VaadinFactory.getComboBox("Product type", 200, false, ProductType.values());
+		cboProductType = VaadinFactory.getComboBox("Product type", Arrays.asList(ProductType.values()));
 		cboProductType.addValueChangeListener(new ValueChangeListener() {
 
 			private static final long serialVersionUID = 3249910111408470250L;
@@ -211,7 +211,7 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 				leftFormLayout.removeAllComponents();
 				leftFormLayout.addComponent(cboProductType);
 				if (cboProductType.getValue() != null) {
-					if ((Integer) cboProductType.getValue() == ProductType.PASSPORT_VISA.getId()) {
+					if (cboProductType.getValue() == ProductType.PASSPORT_VISA) {
 						leftFormLayout.addComponent(cboVisaType);
 						leftFormLayout.addComponent(cboNationality);
 						leftFormLayout.addComponent(cboPeriod);
@@ -220,10 +220,10 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 				}
 			}
 		});
-		cboProduct = VaadinFactory.getComboBox("Product", 200, true, products);
-		cboVisaType = VaadinFactory.getComboBox("Visa type", 200, false, visaTypes);
-		cboNationality = VaadinFactory.getComboBox("Nationality", 200, false, countries);
-		cboPeriod = VaadinFactory.getComboBox("Period", 200, false, periods);
+		cboProduct = VaadinFactory.getComboBox("Product", productService.findAllNotDelete());
+		cboVisaType = VaadinFactory.getComboBox("Visa type", visaTypeService.findAllNotDelete());
+		cboNationality = VaadinFactory.getComboBox("Nationality", countryService.findAllNotDelete());
+		cboPeriod = VaadinFactory.getComboBox("Period", periodService.findAllNotDelete());
 		txtUnit = VaadinFactory.getTextField("Unit");
 		txtPrice = VaadinFactory.getTextField("Product Price");
 		
@@ -292,8 +292,8 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 
 	@Override
 	protected void reset() {
-		cboProductType.setValue(null);
-		cboProduct.setValue(null);
+		cboProductType.setEntity(null);
+		cboProduct.setEntity(null);
 		txtUnit.setValue("");
 		txtPrice.setValue("");
 		cboProduct.setComponentError(null);
