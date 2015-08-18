@@ -4,12 +4,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.devcoo.agencyflight.core.country.Country;
+import com.devcoo.agencyflight.core.country.CountryService;
 import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.invoice.article.InvoiceArticle;
 import com.devcoo.agencyflight.core.product.Product;
 import com.devcoo.agencyflight.core.product.ProductService;
 import com.devcoo.agencyflight.core.product.ProductType;
+import com.devcoo.agencyflight.core.product.visa.period.Period;
+import com.devcoo.agencyflight.core.product.visa.period.PeriodService;
+import com.devcoo.agencyflight.core.product.visa.type.VisaType;
+import com.devcoo.agencyflight.core.product.visa.type.VisaTypeService;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
 import com.devcoo.agencyflight.core.ui.field.selelct.SimpleTable;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
@@ -19,6 +25,8 @@ import com.devcoo.agencyflight.core.util.Tools;
 import com.devcoo.agencyflight.core.util.ValidationUtil;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.vaadin.data.Item;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.FontAwesome;
@@ -29,6 +37,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table.Align;
 import com.vaadin.ui.TextField;
@@ -46,7 +55,16 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	private static final String UNIT = "unit";
 	private static final String PRICE = "price";
 	
+	private ProductService productService;
+	private VisaTypeService visaTypeService;
+	private CountryService countryService;
+	private PeriodService periodService;
+	
+	private ComboBox cboProductType;
 	private ComboBox cboProduct;
+	private ComboBox cboVisaType;
+	private ComboBox cboNationality;
+	private ComboBox cboPeriod;
 	private TextField txtUnit;
 	private TextField txtPrice;
 	private SimpleTable tbArticles;
@@ -54,7 +72,9 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	private Window window;
 	
 	private List<Product> products;
-	private ProductService productService;
+	private List<VisaType> visaTypes;
+	private List<Country> countries;
+	private List<Period> periods;
 	private Integer selectedItemId;
 
 	public InvoiceArticleTablePanel() {
@@ -134,7 +154,13 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	
 	private void initControls() {
 		productService = (ProductService) ctx.getBean("productServiceImp");
+		visaTypeService = (VisaTypeService) ctx.getBean("visaTypeServiceImp");
+		countryService = (CountryService) ctx.getBean("countryServiceImp");
+		periodService = (PeriodService) ctx.getBean("periodServiceImp");
 		products = productService.findAllNotDelete();
+		visaTypes = visaTypeService.findAllNotDelete();
+		countries = countryService.findAllNotDelete();
+		periods = periodService.findAllNotDelete();
 		tbArticles = new SimpleTable("Visa items list");
 		tbArticles.addColumns(buildColumns());
 		tbArticles.addItemClickListener(new ItemClickListener() {
@@ -172,24 +198,55 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 			}
 		});
 		
+		final FormLayout leftFormLayout = new FormLayout();
+		
+		// TODO
+		cboProductType = VaadinFactory.getComboBox("Product type", 200, false, ProductType.values());
+		cboProductType.addValueChangeListener(new ValueChangeListener() {
+
+			private static final long serialVersionUID = 3249910111408470250L;
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				leftFormLayout.removeAllComponents();
+				leftFormLayout.addComponent(cboProductType);
+				if (cboProductType.getValue() != null) {
+					if ((Integer) cboProductType.getValue() == ProductType.PASSPORT_VISA.getId()) {
+						leftFormLayout.addComponent(cboVisaType);
+						leftFormLayout.addComponent(cboNationality);
+						leftFormLayout.addComponent(cboPeriod);
+						
+					}
+				}
+			}
+		});
 		cboProduct = VaadinFactory.getComboBox("Product", 200, true, products);
+		cboVisaType = VaadinFactory.getComboBox("Visa type", 200, false, visaTypes);
+		cboNationality = VaadinFactory.getComboBox("Nationality", 200, false, countries);
+		cboPeriod = VaadinFactory.getComboBox("Period", 200, false, periods);
 		txtUnit = VaadinFactory.getTextField("Unit");
 		txtPrice = VaadinFactory.getTextField("Product Price");
 		
-		FormLayout formLayout = new FormLayout();
-		formLayout.addComponent(cboProduct);
-		formLayout.addComponent(txtUnit);
-		formLayout.addComponent(txtPrice);
+		leftFormLayout.addComponent(cboProductType);
+		
+		FormLayout rightFormLayout = new FormLayout();
+		rightFormLayout.addComponent(cboProduct);
+		rightFormLayout.addComponent(txtUnit);
+		rightFormLayout.addComponent(txtPrice);
+		
+		HorizontalLayout horizontalLayout = new HorizontalLayout();
+		horizontalLayout.setSpacing(true);
+		horizontalLayout.addComponent(leftFormLayout);
+		horizontalLayout.addComponent(rightFormLayout);
 		
 		VerticalLayout verticalLayout = new VerticalLayout();
 		verticalLayout.setSpacing(true);
 		verticalLayout.setMargin(true);
 		verticalLayout.addComponent(buttonBar);
-		verticalLayout.addComponent(formLayout);
+		verticalLayout.addComponent(horizontalLayout);
 		
 		window = new Window("Add new item");
-		window.setWidth(380, Unit.PIXELS);
-		window.setHeight(260, Unit.PIXELS);
+		window.setSizeUndefined();
 		window.setModal(true);
 		window.setContent(verticalLayout);
 	}
@@ -235,6 +292,7 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 
 	@Override
 	protected void reset() {
+		cboProductType.setValue(null);
 		cboProduct.setValue(null);
 		txtUnit.setValue("");
 		txtPrice.setValue("");

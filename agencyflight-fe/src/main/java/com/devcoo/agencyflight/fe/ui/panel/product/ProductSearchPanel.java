@@ -2,16 +2,9 @@ package com.devcoo.agencyflight.fe.ui.panel.product;
 
 import java.util.Iterator;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
-import org.springframework.data.jpa.domain.Specification;
-
 import com.devcoo.agencyflight.core.product.Product;
 import com.devcoo.agencyflight.core.product.ProductService;
+import com.devcoo.agencyflight.core.product.ProductSpecification;
 import com.devcoo.agencyflight.core.ui.layout.AbstractSearchLayout;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.vaadin.ui.Component;
@@ -54,24 +47,6 @@ public class ProductSearchPanel extends AbstractSearchLayout<ProductService, Pro
 	public void reset() {
 		txtCode.setValue("");
 		txtName.setValue("");
-	}
-	
-	private class ProductSpecification implements Specification<Product> {
-
-		@Override
-		public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-
-			String strCode = "%" + txtCode.getValue() + "%";
-			Expression<String> productCode = root.get("code");
-			
-			String strName = "%" + txtName.getValue() + "%";
-			Expression<String> productName = root.get("name");
-			
-			return cb.and(
-					cb.like(cb.lower(productCode), strCode),
-					cb.like(cb.lower(productName), strName));
-		}
-		
 	}
 
 }
