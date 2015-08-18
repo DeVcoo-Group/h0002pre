@@ -2,11 +2,12 @@ package com.devcoo.agencyflight.core.ui.layout.customer;
 
 import java.util.Date;
 
+import com.devcoo.agencyflight.core.country.Country;
 import com.devcoo.agencyflight.core.country.CountryService;
 import com.devcoo.agencyflight.core.customer.Customer;
+import com.devcoo.agencyflight.core.ui.field.selelct.ComboBox;
 import com.devcoo.agencyflight.core.util.ValidationUtil;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
@@ -22,7 +23,7 @@ public class BaseCustomerFormPanel extends FormLayout {
 	private TextField txtLastName;
 	private DateField dfBirthDate;
 	private TextField txtBirthPlace;
-	private ComboBox cboNationality;
+	private ComboBox<Country> cboNationality;
 	
 	public BaseCustomerFormPanel(CountryService service) {
 		super();
@@ -49,7 +50,7 @@ public class BaseCustomerFormPanel extends FormLayout {
 		dfBirthDate.setValue(new Date());
 		dfBirthDate.setWidth(200, Unit.PIXELS);
 		txtBirthPlace = VaadinFactory.getTextField("Birth place", 200);
-		cboNationality = VaadinFactory.getComboBox("Nationality", 200, false, service.findAllNotDelete());
+		cboNationality = VaadinFactory.getComboBox("Nationality", service.findAllNotDelete());
 	}
 	
 	public void assignValues(Customer customer) {
@@ -59,9 +60,7 @@ public class BaseCustomerFormPanel extends FormLayout {
 			txtLastName.setValue(customer.getLastName());
 			dfBirthDate.setValue(customer.getBirthDate());
 			txtBirthPlace.setValue(customer.getBirthPlace());
-			if (customer.getNationality() != null) {
-				cboNationality.setValue(customer.getNationality().getId());
-			}
+			cboNationality.setEntity(customer.getNationality());
 		}
 	}
 	
@@ -72,9 +71,7 @@ public class BaseCustomerFormPanel extends FormLayout {
 		customer.setLastName(txtLastName.getValue());
 		customer.setBirthDate(dfBirthDate.getValue());
 		customer.setBirthPlace(txtBirthPlace.getValue());
-		if (cboNationality.getValue() != null) {
-			customer.setNationality(service.find((Integer) cboNationality.getValue()));
-		}
+		customer.setNationality(cboNationality.getEntity());
 		return customer;
 	}
 	
@@ -100,7 +97,7 @@ public class BaseCustomerFormPanel extends FormLayout {
 		txtLastName.setValue("");
 		dfBirthDate.setValue(new Date());
 		txtBirthPlace.setValue("");
-		cboNationality.setValue(null);
+		cboNationality.setEntity(null);
 	}
 
 }

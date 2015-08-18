@@ -5,11 +5,12 @@ import com.devcoo.agencyflight.core.country.CountryService;
 import com.devcoo.agencyflight.core.product.visa.Visa;
 import com.devcoo.agencyflight.core.product.visa.period.Period;
 import com.devcoo.agencyflight.core.product.visa.period.PeriodService;
+import com.devcoo.agencyflight.core.product.visa.type.VisaType;
 import com.devcoo.agencyflight.core.product.visa.type.VisaTypeService;
+import com.devcoo.agencyflight.core.ui.field.selelct.ComboBox;
 import com.devcoo.agencyflight.core.util.NumberUtil;
 import com.devcoo.agencyflight.core.util.ValidationUtil;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
@@ -22,9 +23,9 @@ public class ProductVisaFormPanel extends VerticalLayout {
 	private VisaTypeService visaTypeService;
 	private CountryService countryService;
 	
-	private ComboBox cboPeriod;
-	private ComboBox cboVisaType;
-	private ComboBox cboNationality;
+	private ComboBox<Period> cboPeriod;
+	private ComboBox<VisaType> cboVisaType;
+	private ComboBox<Country> cboNationality;
 	private TextField txtFindFee;
 	private Visa entity;
 
@@ -48,9 +49,9 @@ public class ProductVisaFormPanel extends VerticalLayout {
 	}
 	
 	private void initControls() {
-		cboPeriod = VaadinFactory.getComboBox("Visa period", 200, false, periodService.findAllNotDelete());
-		cboVisaType = VaadinFactory.getComboBox("Visa type", 200, true, visaTypeService.findAllNotDelete());
-		cboNationality = VaadinFactory.getComboBox("Nationality", 200, false, countryService.findAllNotDelete());
+		cboPeriod = VaadinFactory.getComboBox("Visa period", periodService.findAllNotDelete());
+		cboVisaType = VaadinFactory.getComboBox("Visa type", visaTypeService.findAllNotDelete());
+		cboNationality = VaadinFactory.getComboBox("Nationality", countryService.findAllNotDelete());
 		txtFindFee = VaadinFactory.getTextField("Find fee");
 	}
 
@@ -61,17 +62,17 @@ public class ProductVisaFormPanel extends VerticalLayout {
 			this.entity = new Visa();
 			this.entity.setDelete(false);
 		} else {
-			cboPeriod.setValue(entity.getPeriod() != null ? entity.getPeriod().getId() : null);
-			cboVisaType.setValue(entity.getVisaType().getId());
-			cboNationality.setValue(entity.getNationality() != null ? entity.getNationality().getId() : null);
+			cboPeriod.setEntity(entity.getPeriod());
+			cboVisaType.setEntity(entity.getVisaType());
+			cboNationality.setEntity(entity.getNationality());
 			txtFindFee.setValue(NumberUtil.formatCurrency(entity.getFindFee()));
 		}
 	}
 
 	protected void reset() {
-		cboPeriod.setValue(null);
-		cboVisaType.setValue(null);
-		cboNationality.setValue(null);
+		cboPeriod.setEntity(null);
+		cboVisaType.setEntity(null);
+		cboNationality.setEntity(null);
 		txtFindFee.setValue("");
 		cboVisaType.setComponentError(null);
 	}
@@ -88,17 +89,9 @@ public class ProductVisaFormPanel extends VerticalLayout {
 	}
 	
 	public Visa getEntity() {
-		Period period = null;
-		Country nationality = null;
-		if (cboPeriod.getValue() != null) {
-			period = periodService.find((Integer)cboPeriod.getValue());
-		}
-		if (cboNationality.getValue() != null) {
-			nationality = countryService.find((Integer) cboNationality.getValue());
-		}
-		entity.setPeriod(period);
-		entity.setVisaType(visaTypeService.find((Integer) cboVisaType.getValue()));
-		entity.setNationality(nationality);
+		entity.setPeriod(cboPeriod.getEntity());
+		entity.setVisaType(cboVisaType.getEntity());
+		entity.setNationality(cboNationality.getEntity());
 		entity.setFindFee(NumberUtil.getDouble(txtFindFee));
 		return entity;
 	}

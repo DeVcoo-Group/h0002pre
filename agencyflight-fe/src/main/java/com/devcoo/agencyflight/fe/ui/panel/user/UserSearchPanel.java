@@ -1,15 +1,16 @@
 package com.devcoo.agencyflight.fe.ui.panel.user;
 
 
+import java.util.Arrays;
 import java.util.Iterator;
 
+import com.devcoo.agencyflight.core.ui.field.selelct.ComboBox;
 import com.devcoo.agencyflight.core.ui.layout.AbstractSearchLayout;
 import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.user.UserRole;
 import com.devcoo.agencyflight.core.user.UserService;
 import com.devcoo.agencyflight.core.user.UserSpecification;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -22,7 +23,7 @@ public class UserSearchPanel extends AbstractSearchLayout<UserService, User> {
 	private UserSpecification userQuery = new UserSpecification();
 	
 	private TextField txtUserName;
-	private ComboBox cboRole;
+	private ComboBox<UserRole> cboRole;
 
 	public UserSearchPanel() {
 		super(serviceName);
@@ -31,7 +32,7 @@ public class UserSearchPanel extends AbstractSearchLayout<UserService, User> {
 	@Override
 	protected Component initGUI() {
 		txtUserName = VaadinFactory.getTextField("User name");
-		cboRole = VaadinFactory.getComboBox("User role", 200, false, UserRole.values());
+		cboRole = VaadinFactory.getComboBox("User role", Arrays.asList(UserRole.values()));
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
 		horizontalLayout.setSpacing(true);
 		horizontalLayout.addComponent(new FormLayout(txtUserName));
@@ -42,7 +43,7 @@ public class UserSearchPanel extends AbstractSearchLayout<UserService, User> {
 	@Override
 	public Iterator<User> getRestrictions() {
 		userQuery.setName(txtUserName.getValue());
-		userQuery.setRole((Integer) cboRole.getValue());
+		userQuery.setRole(cboRole.getEntity());
 		return service.findAll(userQuery).iterator();
 	}
 

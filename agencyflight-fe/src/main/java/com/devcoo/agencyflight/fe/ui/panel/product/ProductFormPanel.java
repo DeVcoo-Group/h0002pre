@@ -1,5 +1,7 @@
 package com.devcoo.agencyflight.fe.ui.panel.product;
 
+import java.util.Arrays;
+
 import com.devcoo.agencyflight.core.country.CountryService;
 import com.devcoo.agencyflight.core.product.Product;
 import com.devcoo.agencyflight.core.product.ProductService;
@@ -8,14 +10,15 @@ import com.devcoo.agencyflight.core.product.visa.period.PeriodService;
 import com.devcoo.agencyflight.core.product.visa.type.VisaTypeService;
 import com.devcoo.agencyflight.core.supplier.Supplier;
 import com.devcoo.agencyflight.core.supplier.SupplierService;
+import com.devcoo.agencyflight.core.ui.field.selelct.ComboBox;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.util.NumberUtil;
+import com.devcoo.agencyflight.core.util.Tools;
 import com.devcoo.agencyflight.core.util.ValidationUtil;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.devcoo.agencyflight.fe.ui.panel.product.visa.ProductVisaFormPanel;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -33,8 +36,8 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 	private TextField txtCode;
 	private TextField txtName;
 	private TextField txtPrice;
-	private ComboBox cboProductType;
-	private ComboBox cboSupplier;
+	private ComboBox<ProductType> cboProductType;
+	private ComboBox<Supplier> cboSupplier;
 	private VerticalLayout productTypePanel;
 	private ProductVisaFormPanel visaFormPanel;
 
@@ -71,21 +74,21 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 		txtCode = VaadinFactory.getTextField("Product Code", 200, true);
 		txtName = VaadinFactory.getTextField("Product Name", 200, true);
 		txtPrice = VaadinFactory.getTextField("Price", 200, true);
-		cboProductType = VaadinFactory.getComboBox("Product Type", 200, true, ProductType.values());
+		cboProductType = VaadinFactory.getComboBox("Product Type", Arrays.asList(ProductType.values()));
 		cboProductType.addValueChangeListener(new ValueChangeListener() {
 			private static final long serialVersionUID = 5905436660773736609L;
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				productTypePanel.removeAllComponents();
 				if (cboProductType.getValue() != null) {
-					if ((Integer) cboProductType.getValue() == ProductType.PASSPORT_VISA.getId()) {
+					if (cboProductType.getValue() == ProductType.PASSPORT_VISA) {
 						visaFormPanel.assignValues(entity.getVisa());
 						productTypePanel.addComponent(visaFormPanel);
 					}
 				}
 			}
 		});
-		cboSupplier = VaadinFactory.getComboBox("Supplier", 200, false, supplierService.findAllNotDelete());
+		cboSupplier = VaadinFactory.getComboBox("Supplier", supplierService.findAllNotDelete());
 	}
 
 	@Override
@@ -98,8 +101,8 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 			txtCode.setValue(entity.getCode());
 			txtName.setValue(entity.getName());
 			txtPrice.setValue(NumberUtil.formatCurrency(entity.getPrice()));
-			cboProductType.setValue(entity.getProductType());
-			cboSupplier.setValue(entity.getSupplier().getId());
+			cboProductType.setEntity((ProductType) Tools.getEnum(entity.getProductType(), ProductType.values()));
+			cboSupplier.setEntity(entity.getSupplier());
 			if (entity.getProductType() == ProductType.PASSPORT_VISA.getId()) {
 				visaFormPanel.assignValues(entity.getVisa());
 			}
@@ -111,8 +114,8 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 		txtCode.setValue("");
 		txtName.setValue("");
 		txtPrice.setValue("");
-		cboProductType.setValue(null);
-		cboSupplier.setValue(null);
+		cboProductType.setEntity(null);
+		cboSupplier.setEntity(null);
 		
 		txtCode.setComponentError(null);
 		txtName.setComponentError(null);
@@ -138,7 +141,7 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 		if (!ValidationUtil.validateRequiredSelectField(cboProductType)) {
 			valid = false;
 		} else {
-			if ((Integer) cboProductType.getValue() == ProductType.PASSPORT_VISA.getId()) {
+			if (cboProductType.getValue() == ProductType.PASSPORT_VISA) {
 				if (!visaFormPanel.validate()) {
 					valid = false;
 				}
@@ -150,15 +153,11 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 	
 	@Override
 	protected void save() {
-		Supplier supplier = null;
-		if (cboSupplier.getValue() != null) {
-			supplier = supplierService.find((Integer) cboSupplier.getValue());
-		}
 		entity.setCode(txtCode.getValue());
 		entity.setName(txtName.getValue());
 		entity.setPrice(NumberUtil.getDouble(txtPrice));
 		entity.setProductType((Integer) cboProductType.getValue());
-		entity.setSupplier(supplier);
+		entity.setSupplier(cboSupplier.getEntity());
 		if ((Integer) cboProductType.getValue() == ProductType.PASSPORT_VISA.getId()) {
 			entity.setVisa(visaFormPanel.getEntity());
 		}
