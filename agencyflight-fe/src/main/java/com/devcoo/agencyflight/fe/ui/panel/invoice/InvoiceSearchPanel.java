@@ -54,7 +54,7 @@ public class InvoiceSearchPanel extends AbstractSearchLayout<InvoiceService, Inv
 	@Override
 	public Iterator<Invoice> getRestrictions() {
 		// TODO Auto-generated method stub
-		return null;
+		return service.findAllNotDelete().iterator();
 	}
 
 	@Override

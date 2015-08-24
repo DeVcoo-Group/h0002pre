@@ -80,8 +80,8 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				productTypePanel.removeAllComponents();
-				if (cboProductType.getValue() != null) {
-					if (cboProductType.getValue() == ProductType.PASSPORT_VISA) {
+				if (cboProductType.getEntity() != null) {
+					if (cboProductType.getEntity() == ProductType.PASSPORT_VISA) {
 						visaFormPanel.assignValues(entity.getVisa());
 						productTypePanel.addComponent(visaFormPanel);
 					}

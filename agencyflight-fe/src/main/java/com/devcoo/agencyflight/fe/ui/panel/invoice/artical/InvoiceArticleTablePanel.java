@@ -12,6 +12,7 @@ import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.invoice.article.InvoiceArticle;
 import com.devcoo.agencyflight.core.product.Product;
 import com.devcoo.agencyflight.core.product.ProductService;
+import com.devcoo.agencyflight.core.product.ProductSpecification;
 import com.devcoo.agencyflight.core.product.ProductType;
 import com.devcoo.agencyflight.core.product.visa.period.Period;
 import com.devcoo.agencyflight.core.product.visa.period.PeriodService;
@@ -46,7 +47,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService, Invoice> {
+public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService, Invoice> implements ValueChangeListener {
 	
 	private static final long serialVersionUID = -1541944952619789149L;
 	
@@ -55,6 +56,7 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	private static final String PRODUCT_TYPE = "productType";
 	private static final String UNIT = "unit";
 	private static final String PRICE = "price";
+	private static final String TOTAL_PRICE = "total.price";
 	
 	private ProductService productService;
 	private VisaTypeService visaTypeService;
@@ -72,21 +74,20 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	private ButtonBar crudBar;
 	private Window window;
 	
-//	private List<Product> products;
-//	private List<VisaType> visaTypes;
-//	private List<Country> countries;
-//	private List<Period> periods;
 	private Integer selectedItemId;
+	private ProductSpecification productSpecification;
 
 	public InvoiceArticleTablePanel() {
 		super("invoiceServiceImp");
 		setMargin(false);
+		productSpecification = new ProductSpecification();
 	}
 
 	@Override
 	protected void buildDefaultCRUDBar() {
 		crudBar = new ButtonBar();
-		Button btnAdd = crudBar.addButton("Add");
+		Button btnAdd = VaadinFactory.getButtonPrimary("Add");
+		crudBar.addButton(btnAdd);
 		btnAdd.setIcon(FontAwesome.PLUS);
 		btnAdd.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = -1927041419615320662L;
@@ -158,9 +159,7 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 		visaTypeService = (VisaTypeService) ctx.getBean("visaTypeServiceImp");
 		countryService = (CountryService) ctx.getBean("countryServiceImp");
 		periodService = (PeriodService) ctx.getBean("periodServiceImp");
-//		visaTypes = visaTypeService.findAllNotDelete();
-//		countries = countryService.findAllNotDelete();
-//		periods = periodService.findAllNotDelete();
+		
 		tbArticles = new SimpleTable("Visa items list");
 		tbArticles.addColumns(buildColumns());
 		tbArticles.addItemClickListener(new ItemClickListener() {
@@ -174,7 +173,8 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	
 	private void buildPopup() {
 		ButtonBar buttonBar = new ButtonBar();
-		Button btnSave = buttonBar.addButton("Save");
+		Button btnSave = VaadinFactory.getButtonPrimary("Save");
+		buttonBar.addButton(btnSave);
 		btnSave.setIcon(FontAwesome.SAVE);
 		btnSave.addClickListener(new ClickListener() {
 			private static final long serialVersionUID = -123690668575982206L;
@@ -200,7 +200,6 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 		
 		final FormLayout leftFormLayout = new FormLayout();
 		
-		// TODO
 		cboProductType = VaadinFactory.getComboBox("Product type", Arrays.asList(ProductType.values()));
 		cboProductType.addValueChangeListener(new ValueChangeListener() {
 
@@ -210,22 +209,28 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 			public void valueChange(ValueChangeEvent event) {
 				leftFormLayout.removeAllComponents();
 				leftFormLayout.addComponent(cboProductType);
-				if (cboProductType.getValue() != null) {
-					if (cboProductType.getValue() == ProductType.PASSPORT_VISA) {
+				cboVisaType.setEntity(null);
+				cboNationality.setEntity(null);
+				cboPeriod.setEntity(null);
+				if (cboProductType.getEntity() != null) {
+					if (cboProductType.getEntity() == ProductType.PASSPORT_VISA) {
 						leftFormLayout.addComponent(cboVisaType);
 						leftFormLayout.addComponent(cboNationality);
 						leftFormLayout.addComponent(cboPeriod);
-						
 					}
 				}
+				setProductSpecification();
 			}
 		});
-		cboProduct = VaadinFactory.getComboBox("Product", productService.findAllNotDelete());
+		cboProduct = VaadinFactory.getComboBox("Product", productService.findAllNotDelete(), true);
 		cboVisaType = VaadinFactory.getComboBox("Visa type", visaTypeService.findAllNotDelete());
+		cboVisaType.addValueChangeListener(this);
 		cboNationality = VaadinFactory.getComboBox("Nationality", countryService.findAllNotDelete());
+		cboNationality.addValueChangeListener(this);
 		cboPeriod = VaadinFactory.getComboBox("Period", periodService.findAllNotDelete());
-		txtUnit = VaadinFactory.getTextField("Unit");
-		txtPrice = VaadinFactory.getTextField("Product Price");
+		cboPeriod.addValueChangeListener(this);
+		txtUnit = VaadinFactory.getTextField("Unit", true);
+		txtPrice = VaadinFactory.getTextField("Product Price", true);
 		
 		leftFormLayout.addComponent(cboProductType);
 		
@@ -249,6 +254,15 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 		window.setSizeUndefined();
 		window.setModal(true);
 		window.setContent(verticalLayout);
+	}
+	
+	private void setProductSpecification() {
+		productSpecification.reset();
+		productSpecification.setProductType(cboProductType.getEntity());
+		productSpecification.setVisaType(cboVisaType.getEntity());
+		productSpecification.setPeriod(cboPeriod.getEntity());
+		productSpecification.setNationality(cboNationality.getEntity());
+		cboProduct.setValues(productService.findAll(productSpecification));
 	}
 
 	@Override
@@ -278,6 +292,7 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 		item.getItemProperty(PRODUCT_TYPE).setValue(Tools.getEnumToString(entity.getProduct().getProductType(), ProductType.values()));
 		item.getItemProperty(UNIT).setValue(entity.getUnit());
 		item.getItemProperty(PRICE).setValue(NumberUtil.formatCurrency(entity.getPrice()));
+		item.getItemProperty(TOTAL_PRICE).setValue(NumberUtil.formatCurrency(entity.getUnit() * entity.getPrice()));
 	}
 	
 	protected List<Column> buildColumns() {
@@ -287,6 +302,7 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 		columns.add(new Column(PRODUCT_TYPE, "Product type", String.class, Align.LEFT, 200));
 		columns.add(new Column(UNIT, "Unit", Integer.class, Align.RIGHT, 200));
 		columns.add(new Column(PRICE, "Price", String.class, Align.RIGHT, 200));
+		columns.add(new Column(TOTAL_PRICE, "Total Price", String.class, Align.RIGHT, 200));
 		return columns;
 	}
 
@@ -320,6 +336,11 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 		}
 		
 		return valid;
+	}
+
+	@Override
+	public void valueChange(ValueChangeEvent event) {
+		setProductSpecification();
 	}
 	
 }
