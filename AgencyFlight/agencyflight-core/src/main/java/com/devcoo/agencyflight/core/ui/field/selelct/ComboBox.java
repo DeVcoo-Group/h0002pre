@@ -18,7 +18,7 @@ public class ComboBox<T extends StdField> extends com.vaadin.ui.ComboBox {
 	
 	public ComboBox(String caption, List<T> values) {
 		super(caption);
-		this.values = new HashMap<>();
+		this.values = new HashMap<Integer, T>();
 		build(values);
 	}
 	
@@ -50,7 +50,11 @@ public class ComboBox<T extends StdField> extends com.vaadin.ui.ComboBox {
 	}
 	
 	public void setEntity(T entity) {
-		setValue(values.get(entity));
+		if (entity == null) {
+			setValue(null);
+		} else {
+			setValue(entity.getId());
+		}
 	}
 
 }

@@ -70,6 +70,10 @@ public class VaadinFactory {
 		return getTextField(caption, width, false);
 	}
 	
+	public static TextField getTextField(String caption, boolean required) {
+		return getTextField(caption, 200, required);
+	}
+	
 	public static TextField getTextField(String caption, float width, boolean required) {
 		TextField txt = new TextField(caption);
 		txt.setWidth(width, Unit.PIXELS);
@@ -97,12 +101,17 @@ public class VaadinFactory {
 	// ============== ComboBox ================== //
 	
 	public static <T extends StdField> ComboBox<T> getComboBox(List<T> values) {
-		return getComboBox(values);
+		return getComboBox("", values);
 	}
 	
 	public static <T extends StdField> ComboBox<T> getComboBox(String caption, List<T> values) {
+		return getComboBox(caption, values, false);
+	}
+	
+	public static <T extends StdField> ComboBox<T> getComboBox(String caption, List<T> values, boolean required) {
 		ComboBox<T> cbo = new ComboBox<T>(caption, values);
 		cbo.setWidth(200, Unit.PIXELS);
+		cbo.setRequired(required);
 		return cbo;
 	}
 	
