@@ -27,6 +27,9 @@ public enum ProductType implements StdField {
 
 	@Override
 	public String getDisplayName() {
-		return getCode();
+		if(getCode() != null) {
+			return getCode();
+		}
+		return "";
 	}
 }

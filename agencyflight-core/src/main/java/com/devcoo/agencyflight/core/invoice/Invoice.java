@@ -92,7 +92,10 @@ public class Invoice extends StdEntity {
 
 	@Override
 	public String getDisplayName() {
-		return getCode();
+		if(getCode() != null) {
+			return getCode();
+		}
+		return "";
 	}
 
 }

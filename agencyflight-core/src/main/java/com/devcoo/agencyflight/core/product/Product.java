@@ -89,7 +89,10 @@ public class Product extends StdEntity {
 
 	@Override
 	public String getDisplayName() {
-		return getName();
+		if(getName() != null) {
+			return getName();
+		}
+		return "";
 	}
 
 }

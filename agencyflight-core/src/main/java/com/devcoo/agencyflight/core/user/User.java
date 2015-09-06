@@ -49,7 +49,10 @@ public class User extends StdEntity implements Serializable {
 
 	@Override
 	public String getDisplayName() {
-		return getName();
+		if(getName() != null) {
+			return getName();
+		}
+		return "";
 	}
 	
 }

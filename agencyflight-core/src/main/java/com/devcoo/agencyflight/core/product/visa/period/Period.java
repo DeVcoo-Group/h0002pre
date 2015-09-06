@@ -25,7 +25,10 @@ public class Period extends StdEntity {
 
 	@Override
 	public String getDisplayName() {
-		return getDay();
+		if(getDay() != null) {
+			return getDay();
+		}
+		return "";
 	}
 	
 }

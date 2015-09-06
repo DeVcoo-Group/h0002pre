@@ -24,6 +24,9 @@ public enum UserRole implements StdField{
 
 	@Override
 	public String getDisplayName() {
-		return getCode();
+		if(getCode() != null) {
+			return getCode();
+		}
+		return "";
 	}
 }

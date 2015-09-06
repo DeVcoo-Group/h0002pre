@@ -73,6 +73,9 @@ public class CustomerSearchPanel extends AbstractSearchLayout<CustomerService, C
 //		});
 		
 		btnGenerateReport.addClickListener(new ClickListener() {
+			
+			private static final long serialVersionUID = -3196097681513221180L;
+
 			public void buttonClick(ClickEvent event) {
 				ReportCustomerList report = new ReportCustomerList(service.findAll(new CustomerSpecification()));
 				File f = report.generateReport();

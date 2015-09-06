@@ -36,7 +36,10 @@ public class VisaType extends StdEntity {
 
 	@Override
 	public String getDisplayName() {
-		return getDescription();
+		if(getDescription() != null) {
+			return getDescription();
+		}
+		return "";
 	}
 
 }
