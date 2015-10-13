@@ -13,6 +13,8 @@ import com.devcoo.agencyflight.core.std.StdEntity;
 @Entity
 @Table(name="payment")
 public class Payment extends StdEntity {
+	private static final long serialVersionUID = -8142565987479356966L;
+
 	@Column(name = "amount", nullable = false)
 	private Double amount;
 	

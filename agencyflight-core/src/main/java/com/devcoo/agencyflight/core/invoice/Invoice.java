@@ -1,5 +1,6 @@
 package com.devcoo.agencyflight.core.invoice;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -96,6 +97,26 @@ public class Invoice extends StdEntity {
 			return getCode();
 		}
 		return "";
+	}
+	
+	public List<InvoiceArticle> getArticlesNotDelete() {
+		List<InvoiceArticle> articles = new ArrayList<InvoiceArticle>();
+		if (getArticles() != null) {
+			for (InvoiceArticle article : getArticles()) {
+				if (!article.isDelete()) {
+					articles.add(article);
+				}
+			}
+		}
+		return articles;
+	}
+	
+	public Double getTotalAmountToPaid() {
+		Double amount = 0d;
+		for (InvoiceArticle article : getArticlesNotDelete()) {
+			amount += article.getTotal();
+		}
+		return amount;
 	}
 
 }

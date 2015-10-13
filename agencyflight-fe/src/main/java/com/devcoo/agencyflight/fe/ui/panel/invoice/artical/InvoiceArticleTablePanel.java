@@ -1,7 +1,6 @@
 package com.devcoo.agencyflight.fe.ui.panel.invoice.artical;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.devcoo.agencyflight.core.invoice.Invoice;
@@ -88,12 +87,12 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	}
 	
 	@Override
-	public void save() {
-		InvoiceArticle article = window.getArticle();
+	public void save() { }
+	
+	public void add(InvoiceArticle article) {
 		article.setInvoice(entity);
 		entity.getArticles().add(article);
-		entity = service.saveAndFlush(entity);
-		buildTableDataSource(entity.getArticles().iterator());
+		buildTableDataSource(entity.getArticlesNotDelete());
 	}
 	
 	private void remove() {
@@ -102,16 +101,9 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 			Notification notification = VaadinFactory.getNotification("Information", msg);
 			notification.show(Page.getCurrent());
 		} else {
-			Iterator<InvoiceArticle> articles = entity.getArticles().iterator();
-			while (articles.hasNext()) {
-				InvoiceArticle article = articles.next();
-				if (article.getId() == selectedItemId) {
-					article.setDelete(true);
-					break;
-				}
-			}
-			entity = service.saveAndFlush(entity);
-			buildTableDataSource(entity.getArticles().iterator());
+			InvoiceArticle article = entity.getArticles().remove(selectedItemId.intValue());
+			article.setDelete(true);
+			buildTableDataSource(entity.getArticlesNotDelete());
 		}
 	}
 
@@ -132,25 +124,24 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	public void assignValues(Integer entityId) {
 		if (entityId != null) {
 			entity = service.find(entityId);
-			buildTableDataSource(entity.getArticles().iterator());
+			buildTableDataSource(entity.getArticlesNotDelete());
 		}
 	}
 	
-	protected void buildTableDataSource(Iterator<InvoiceArticle> entities) {
+	@SuppressWarnings("unchecked")
+	protected void buildTableDataSource(List<InvoiceArticle> entities) {
 		tbArticles.removeAllItems();
 		if (entities != null) {
-			while (entities.hasNext()) {
-				InvoiceArticle row = entities.next();
-				if (row.isDelete() == null || !row.isDelete()) {
-					renderRow(tbArticles.addItem(row.getId()), row);
-				}
+			for (int i = 0; i < entities.size(); i++) {
+				Item item = tbArticles.addItem(i);
+				item.getItemProperty(ID).setValue(i);
+				renderRow(item, entities.get(i));
 			}
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
 	protected void renderRow(Item item, InvoiceArticle entity) {
-		item.getItemProperty(ID).setValue(entity.getId());
 		item.getItemProperty(PRODUCT).setValue(entity.getName());
 		item.getItemProperty(PRODUCT_TYPE).setValue(Tools.getEnumToString(entity.getProduct().getProductType(), ProductType.values()));
 		item.getItemProperty(UNIT).setValue(entity.getUnit());
@@ -160,7 +151,7 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	
 	protected List<Column> buildColumns() {
 		List<Column> columns = new ArrayList<Column>();
-		columns.add(new Column(ID, "Id", Integer.class, Align.RIGHT, 100));
+		columns.add(new Column(ID, "No.", Integer.class, Align.RIGHT, 100));
 		columns.add(new Column(PRODUCT, "Product", String.class, Align.LEFT));
 		columns.add(new Column(PRODUCT_TYPE, "Product type", String.class, Align.LEFT, 200));
 		columns.add(new Column(UNIT, "Unit", Integer.class, Align.RIGHT, 200));
@@ -170,15 +161,13 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	}
 
 	@Override
-	protected void reset() {
-		
-	}
+	protected void reset() { }
 
 	@Override
-	protected boolean validate() {
-		boolean valid = true;
-		
-		return valid;
+	protected boolean validate() { return true; }
+	
+	public Invoice getEntity() {
+		return entity;
 	}
 	
 }

@@ -91,5 +91,9 @@ public class InvoiceArticle extends StdEntity {
 		}
 		return "";
 	}
+	
+	public Double getTotal() {
+		return getPrice() * getUnit();
+	}
 
 }

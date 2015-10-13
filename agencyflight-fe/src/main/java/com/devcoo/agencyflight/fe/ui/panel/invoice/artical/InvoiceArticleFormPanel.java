@@ -74,7 +74,7 @@ public class InvoiceArticleFormPanel extends Window implements ValueChangeListen
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (validate()) {
-					mainPanel.save();
+					mainPanel.add(getArticle());
 					close();
 				}
 			}

@@ -3,16 +3,22 @@ package com.devcoo.agencyflight.fe.ui.panel.invoice;
 import java.text.DecimalFormat;
 import java.util.Date;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.devcoo.agencyflight.core.context.WebContext;
 import com.devcoo.agencyflight.core.customer.Customer;
 import com.devcoo.agencyflight.core.customer.CustomerService;
 import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.invoice.InvoiceService;
+import com.devcoo.agencyflight.core.payment.PaymentService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.devcoo.agencyflight.fe.ui.panel.invoice.artical.InvoiceArticleTablePanel;
 import com.vaadin.server.Page;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -33,8 +39,11 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	private TextField txtEmployee;
 	private TextField txtAmountReceive;
 	
+	private Button btnFullPay;
+	
 	private Integer customerId;
 	private CustomerService customerService = (CustomerService) ctx.getBean("customerServiceImp");
+	private PaymentService paymentService = (PaymentService) ctx.getBean("paymentServiceImp");
 	private InvoiceArticleTablePanel articleTablePanel;
 
 	public InvoiceFormPanel() {
@@ -43,6 +52,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 
 	@Override
 	protected void save() {
+		entity = articleTablePanel.getEntity();
 		entity.setCode(txtCode.getValue());
 		service.save(entity);
 	}
@@ -66,6 +76,26 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 		txtCustomerLastName = VaadinFactory.getTextField("Customer last name", 200);
 		txtEmployee = VaadinFactory.getTextField("Employee", 200);
 		txtAmountReceive = VaadinFactory.getTextField("Amount receive", 200);
+		btnFullPay = VaadinFactory.getButton("Full pay");
+		btnFullPay.addClickListener(new ClickListener() {
+			private static final long serialVersionUID = 1419062435575782097L;
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ConfirmDialog.show(UI.getCurrent(),
+						"Full pay",
+						"Pay the full amount",
+						"Paid", "Cancel",
+						new ConfirmDialog.Listener() {
+					private static final long serialVersionUID = -1434125433119430677L;
+					@Override
+					public void onClose(ConfirmDialog conform) {
+						if (conform.isConfirmed()) {
+							paymentService.paid(entity);
+						}
+					}
+				});
+			}
+		});
 		articleTablePanel = new InvoiceArticleTablePanel();
 	}
 	
@@ -77,15 +107,16 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 		FormLayout formLayout = new FormLayout();
 		formLayout.addComponent(txtCode);
 		formLayout.addComponent(txtCustomerFirstName);
+		formLayout.addComponent(txtAmountReceive);
 		horizontalLayout.addComponent(formLayout);
 		
 		formLayout = new FormLayout();
 		formLayout.addComponent(txtEmployee);
 		formLayout.addComponent(txtCustomerLastName);
+		formLayout.addComponent(btnFullPay);
 		horizontalLayout.addComponent(formLayout);
 		
 		formLayout = new FormLayout();
-		formLayout.addComponent(txtAmountReceive);
 		horizontalLayout.addComponent(formLayout);
 		
 		Panel panel = new Panel("Customer Invoice Detail");
@@ -151,7 +182,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 		txtCustomerFirstName.setEnabled(enabled);
 		txtCustomerLastName.setEnabled(enabled);
 		txtEmployee.setEnabled(enabled);
-		txtAmountReceive.setEnabled(enabled);
+//		txtAmountReceive.setEnabled(enabled);
 	}
 
 	@Override
