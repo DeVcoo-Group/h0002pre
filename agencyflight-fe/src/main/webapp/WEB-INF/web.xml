@@ -3,14 +3,15 @@
 	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
      http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-
+     
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/root-context.xml</param-value>
-	</context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/META-INF/spring/spring-master.xml
+        </param-value>
+    </context-param>
 	<context-param>
 		<param-name>heartbeatInterval</param-name>
 		<param-value>300</param-value>
@@ -20,7 +21,21 @@
 		<session-timeout>60</session-timeout>
 	</session-config>
 
-
+	<!-- trick for jndi error: 
+	spring jndi NamingException: Name [spring.liveBeansView.mbeanDomain] is not bound in this Context -->
+	<context-param>  
+	    <param-name>spring.profiles.active</param-name>  
+	    <param-value>dev</param-value>  
+	</context-param>  
+	<context-param>  
+	    <param-name>spring.profiles.default</param-name>  
+	    <param-value>dev</param-value>  
+	</context-param>
+	<context-param>  
+	    <param-name>spring.liveBeansView.mbeanDomain</param-name>  
+	    <param-value>dev</param-value>  
+	</context-param>  
+	
 	<servlet>
 		<servlet-name>agencyflight</servlet-name>
 		<servlet-class>ru.xpoft.vaadin.SpringVaadinServlet</servlet-class>
