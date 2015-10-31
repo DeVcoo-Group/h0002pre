@@ -1,20 +1,15 @@
 package com.devcoo.agencyflight.fe.ui.panel.invoice;
 
-import java.text.DecimalFormat;
-import java.util.Date;
-
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.devcoo.agencyflight.core.context.WebContext;
-import com.devcoo.agencyflight.core.customer.Customer;
 import com.devcoo.agencyflight.core.customer.CustomerService;
 import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.payment.PaymentService;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
-import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.devcoo.agencyflight.fe.ui.panel.invoice.artical.InvoiceArticleTablePanel;
+import com.devcoo.agencyflight.fe.ui.panel.invoice.payment.InvoicePaymentTablePanel;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -45,6 +40,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	private CustomerService customerService = (CustomerService) ctx.getBean("customerServiceImp");
 	private PaymentService paymentService = (PaymentService) ctx.getBean("paymentServiceImp");
 	private InvoiceArticleTablePanel articleTablePanel;
+	private InvoicePaymentTablePanel paymentTablePanel;
 
 	public InvoiceFormPanel() {
 		super("invoiceServiceImp");
@@ -66,6 +62,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 		verticalLayout.setSpacing(true);
 		verticalLayout.addComponent(buildInvoiceDetailPanel());
 		verticalLayout.addComponent(articleTablePanel);
+		verticalLayout.addComponent(paymentTablePanel);
 		
 		return verticalLayout;
 	}
@@ -97,6 +94,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 			}
 		});
 		articleTablePanel = new InvoiceArticleTablePanel();
+		paymentTablePanel = new InvoicePaymentTablePanel();
 	}
 	
 	private Panel buildInvoiceDetailPanel() {
@@ -127,16 +125,10 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	@Override
 	protected void assignValues(Integer entityId) {
 		if (entityId == null) {
-			entity = new Invoice();
 			if (this.customerId != null) {
-				Customer customer = customerService.find(this.customerId);
-				entity.setCode(new Date() + "");
-				entity.setCustomer(customer);
-				WebContext context = (WebContext) UI.getCurrent().getSession().getAttribute(WebContext.WEB_CONTEXT);
-				User employee = context.getLog_user();
-				entity.setEmployee(employee);
-				service.save(entity);
-				entityId = entity.getId();
+				entity = new Invoice();
+				entity.setCustomer(customerService.find(this.customerId));
+				entityId = service.createInvoice(entity).getId();
 			} else {
 				String msg = "To create invoice, a customer must be exist";
 				Notification info = VaadinFactory.getNotification("Error", msg, Type.ERROR_MESSAGE);
@@ -145,17 +137,16 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 		} else {
 			entity = service.find(entityId);
 			txtCode.setValue(entity.getCode());
-			DecimalFormat df = new DecimalFormat("#0.00");
-			Double amountReceive = entity.getAmountReceive();
-			if (amountReceive == null) {
-				amountReceive = 0d;
-			}
-			txtAmountReceive.setValue(df.format(amountReceive));
+//			DecimalFormat df = new DecimalFormat("#0.00");
+//			txtAmountReceive.setValue(df.format(0d));
 		}
 		txtCustomerFirstName.setValue(entity.getCustomer().getFirstName());
 		txtCustomerLastName.setValue(entity.getCustomer().getLastName());
 		txtEmployee.setValue(entity.getEmployee().getName());
 		articleTablePanel.assignValues(entityId);
+		if (entity != null  && entity.getId() > 0) {
+			paymentTablePanel.assignValues(entity);
+		}
 	}
 	
 	public void assignValues(Integer entityId, Integer customerId) {

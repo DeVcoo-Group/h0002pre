@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.std.StdEntity;
+import com.devcoo.agencyflight.core.user.User;
 
 @Entity
 @Table(name="payment")
@@ -22,7 +23,21 @@ public class Payment extends StdEntity {
 	@JoinColumn(name = "invoice")
 	private Invoice invoice;
 	
+	@ManyToOne
+	@JoinColumn(name = "employee_id", nullable = false)
+	private User employee;
 	
+	
+	public User getEmployee() {
+		return employee;
+	}
+
+
+	public void setEmployee(User employee) {
+		this.employee = employee;
+	}
+
+
 	public Double getAmount() {
 		return amount;
 	}

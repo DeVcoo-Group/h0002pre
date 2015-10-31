@@ -45,7 +45,7 @@ public class InvoiceHolderPanel extends AbstractTabsheet<InvoiceService, Invoice
 
 	@Override
 	protected void editEntity(Integer entityId) {
-		formPanel.setCaption("New Invoice");
+		formPanel.setCaption("Edit Invoice");
 		formPanel.reset();
 		formPanel.assignValues(entityId);
 		addFormLayout(formPanel);

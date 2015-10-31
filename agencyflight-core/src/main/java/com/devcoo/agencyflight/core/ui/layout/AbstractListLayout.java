@@ -38,16 +38,21 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 		setMargin(true);
 		setSpacing(true);
 		
-		searchLayout = buildSearchPanel();
-		searchLayout.addSearchClickListener(new SearchClickListener());
+		if (enableSearchPanel()) {
+			searchLayout = buildSearchPanel();
+			searchLayout.addSearchClickListener(new SearchClickListener());
+			addComponent(searchLayout);
+		}
 		
 		table = new SimpleTable("List");
 		table.addColumns(buildColumns());
 		table.addItemClickListener(this);
-		initGUI();
-		
-		addComponent(searchLayout);
 		addComponent(table);
+		initGUI();
+	}
+	
+	protected boolean enableSearchPanel() {
+		return true;
 	}
 
 	protected void buildDefaultCRUDBar() {
@@ -159,7 +164,9 @@ public abstract class AbstractListLayout<Service extends StdService<T>,T extends
 	}
 	
 	public void refresh() {
-		searchLayout.reset();
+		if (enableSearchPanel()) {
+			searchLayout.reset();
+		}
 		selectedItem = null;
 		selectedItemId = null;
 		Iterator<T> entities = service.findAllNotDelete().iterator();

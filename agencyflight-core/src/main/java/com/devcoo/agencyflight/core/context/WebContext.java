@@ -23,4 +23,8 @@ public class WebContext {
 		Page.getCurrent().setUriFragment("!");
 	}
 	
+	public static WebContext getWebContext() {
+		return (WebContext) UI.getCurrent().getSession().getAttribute(WebContext.WEB_CONTEXT);
+	}
+	
 }

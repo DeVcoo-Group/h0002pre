@@ -20,7 +20,7 @@ public class InvoiceTablePanel extends AbstractListLayout<InvoiceService, Invoic
 	private static final String CUSTOMER = "customer";
 	private static final String EMPLOYEE = "employee";
 	private static final String DEPOSIT = "deposit";
-	private static final String AMOUNT_RECEIVE = "amountReceive";
+//	private static final String AMOUNT_RECEIVE = "amountReceive";
 
 	public InvoiceTablePanel() {
 		super("invoiceServiceImp");
@@ -46,7 +46,7 @@ public class InvoiceTablePanel extends AbstractListLayout<InvoiceService, Invoic
 		item.getItemProperty(CUSTOMER).setValue(entity.getCustomer().getFirstName() + entity.getCustomer().getLastName());
 		item.getItemProperty(EMPLOYEE).setValue(entity.getEmployee().getName());
 		item.getItemProperty(DEPOSIT).setValue(NumberUtil.formatCurrency(entity.getDeposit()));
-		item.getItemProperty(AMOUNT_RECEIVE).setValue(NumberUtil.formatCurrency(entity.getAmountReceive()));
+//		item.getItemProperty(AMOUNT_RECEIVE).setValue(NumberUtil.formatCurrency(entity.getAmountReceive()));
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class InvoiceTablePanel extends AbstractListLayout<InvoiceService, Invoic
 		columns.add(new Column(CUSTOMER, "Customer Name", String.class, Align.LEFT, 200));
 		columns.add(new Column(EMPLOYEE, "Employee", String.class, Align.LEFT, 200));
 		columns.add(new Column(DEPOSIT, "Deposit", String.class, Align.RIGHT, 200));
-		columns.add(new Column(AMOUNT_RECEIVE, "Amount receive", String.class, Align.RIGHT, 200));
+//		columns.add(new Column(AMOUNT_RECEIVE, "Amount receive", String.class, Align.RIGHT, 200));
 		return columns;
 	}
 

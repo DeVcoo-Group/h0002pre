@@ -67,18 +67,18 @@ public class test1 extends ReportWriter{
 	}
 
 	public void addSimpleTable() {
-		final List<TableItem> items = new ArrayList<TableItem>();
-		TableItem i = new TableItem("42", "forty-two", 42);
-		TableItem i2 = new TableItem();
-		i2.setFoo("test for table");
-		i2.setBar("");
-		TableItem i3 = new TableItem("foo", "bar", 100);
-
-		items.add(i);
-		items.add(i2);
-		items.add(i3);
-
-		data.put("tableitems", items);
+//		final List<TableItem> items = new ArrayList<TableItem>();
+//		TableItem i = new TableItem("42", "forty-two", 42);
+//		TableItem i2 = new TableItem();
+//		i2.setFoo("test for table");
+//		i2.setBar("");
+//		TableItem i3 = new TableItem("foo", "bar", 100);
+//
+//		items.add(i);
+//		items.add(i2);
+//		items.add(i3);
+//
+//		data.put("tableitems", items);
 	}
 
 	public void addSimpleTableFromLists() {
