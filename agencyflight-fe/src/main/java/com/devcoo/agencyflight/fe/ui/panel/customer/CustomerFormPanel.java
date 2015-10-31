@@ -3,6 +3,7 @@ package com.devcoo.agencyflight.fe.ui.panel.customer;
 import com.devcoo.agencyflight.core.country.CountryService;
 import com.devcoo.agencyflight.core.customer.Customer;
 import com.devcoo.agencyflight.core.customer.CustomerService;
+import com.devcoo.agencyflight.core.std.ApplicationContext;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.ui.layout.customer.BaseCustomerFormPanel;
 import com.vaadin.ui.Component;
@@ -24,7 +25,7 @@ public class CustomerFormPanel extends AbstractFormLayout<CustomerService, Custo
 
 	@Override
 	protected Component initGUI() {
-		customerForm = new BaseCustomerFormPanel((CountryService) ctx.getBean("countryServiceImp"));
+		customerForm = new BaseCustomerFormPanel((CountryService) ApplicationContext.getContext().getBean("countryServiceImp"));
 		return customerForm;
 	}
 	

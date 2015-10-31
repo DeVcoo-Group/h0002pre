@@ -1,6 +1,6 @@
 package com.devcoo.agencyflight.fe.ui.menu;
 
-import com.devcoo.agencyflight.core.context.WebContext;
+import com.devcoo.agencyflight.core.std.ApplicationContext;
 import com.devcoo.agencyflight.core.ui.menu.AbstractMenuBar;
 import com.devcoo.agencyflight.fe.ui.panel.country.CountryHolderPanel;
 import com.devcoo.agencyflight.fe.ui.panel.customer.CustomerHolderPanel;
@@ -47,7 +47,7 @@ public class FEMenu extends AbstractMenuBar {
 
 		@Override
 		public void menuSelected(MenuItem selectedItem) {
-			WebContext.logOut();
+			ApplicationContext.logOut();
 		}
 		
 	}

@@ -5,12 +5,12 @@ import java.util.Date;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.devcoo.agencyflight.core.context.WebContext;
 import com.devcoo.agencyflight.core.customer.Customer;
 import com.devcoo.agencyflight.core.customer.CustomerService;
 import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.payment.PaymentService;
+import com.devcoo.agencyflight.core.std.ApplicationContext;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.user.User;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
@@ -42,8 +42,8 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	private Button btnFullPay;
 	
 	private Integer customerId;
-	private CustomerService customerService = (CustomerService) ctx.getBean("customerServiceImp");
-	private PaymentService paymentService = (PaymentService) ctx.getBean("paymentServiceImp");
+	private CustomerService customerService = (CustomerService) ApplicationContext.getContext().getBean("customerServiceImp");
+	private PaymentService paymentService = (PaymentService) ApplicationContext.getContext().getBean("paymentServiceImp");
 	private InvoiceArticleTablePanel articleTablePanel;
 
 	public InvoiceFormPanel() {
@@ -132,8 +132,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 				Customer customer = customerService.find(this.customerId);
 				entity.setCode(new Date() + "");
 				entity.setCustomer(customer);
-				WebContext context = (WebContext) UI.getCurrent().getSession().getAttribute(WebContext.WEB_CONTEXT);
-				User employee = context.getLog_user();
+				User employee = ApplicationContext.getLog_user();
 				entity.setEmployee(employee);
 				service.save(entity);
 				entityId = entity.getId();
