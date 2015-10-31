@@ -5,6 +5,7 @@ import com.devcoo.agencyflight.core.customer.Customer;
 import com.devcoo.agencyflight.core.customer.CustomerService;
 import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.invoice.InvoiceService;
+import com.devcoo.agencyflight.core.std.ApplicationContext;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.ui.layout.ButtonBar;
 import com.devcoo.agencyflight.core.ui.layout.customer.BaseCustomerFormPanel;
@@ -25,7 +26,7 @@ import com.vaadin.ui.VerticalLayout;
 public class InvoiceCustomerFormPanel extends AbstractFormLayout<InvoiceService, Invoice> {
 	
 	private static final long serialVersionUID = 8713127304847061804L;
-	private CustomerService customerService = (CustomerService) ctx.getBean("customerServiceImp");
+	private CustomerService customerService = (CustomerService) ApplicationContext.getContext().getBean("customerServiceImp");
 	
 	private CheckBox chkOldCustomer;
 	private BaseCustomerFormPanel customerForm;
@@ -86,7 +87,7 @@ public class InvoiceCustomerFormPanel extends AbstractFormLayout<InvoiceService,
 				}
 			}
 		});
-		customerForm = new BaseCustomerFormPanel((CountryService) ctx.getBean("countryServiceImp"));
+		customerForm = new BaseCustomerFormPanel((CountryService) ApplicationContext.getContext().getBean("countryServiceImp"));
 		tablePanel = new InvoiceCustomerTablePanel();
 	}
 

@@ -8,6 +8,7 @@ import com.devcoo.agencyflight.core.product.ProductService;
 import com.devcoo.agencyflight.core.product.ProductType;
 import com.devcoo.agencyflight.core.product.visa.period.PeriodService;
 import com.devcoo.agencyflight.core.product.visa.type.VisaTypeService;
+import com.devcoo.agencyflight.core.std.ApplicationContext;
 import com.devcoo.agencyflight.core.supplier.Supplier;
 import com.devcoo.agencyflight.core.supplier.SupplierService;
 import com.devcoo.agencyflight.core.ui.field.selelct.ComboBox;
@@ -47,10 +48,10 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 
 	@Override
 	protected Component initGUI() {
-		supplierService = (SupplierService) ctx.getBean("supplierServiceImp");
-		periodService = (PeriodService) ctx.getBean("periodServiceImp");
-		visaTypeService = (VisaTypeService) ctx.getBean("visaTypeServiceImp");
-		countryService = (CountryService) ctx.getBean("countryServiceImp");
+		supplierService = (SupplierService) ApplicationContext.getContext().getBean("supplierServiceImp");
+		periodService = (PeriodService) ApplicationContext.getContext().getBean("periodServiceImp");
+		visaTypeService = (VisaTypeService) ApplicationContext.getContext().getBean("visaTypeServiceImp");
+		countryService = (CountryService) ApplicationContext.getContext().getBean("countryServiceImp");
 		initControls();
 		
 		FormLayout formLayout = new FormLayout();

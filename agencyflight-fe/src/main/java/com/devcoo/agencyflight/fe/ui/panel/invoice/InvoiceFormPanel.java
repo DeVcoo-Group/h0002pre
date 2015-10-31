@@ -6,6 +6,7 @@ import com.devcoo.agencyflight.core.customer.CustomerService;
 import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.payment.PaymentService;
+import com.devcoo.agencyflight.core.std.ApplicationContext;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.devcoo.agencyflight.fe.ui.panel.invoice.artical.InvoiceArticleTablePanel;
@@ -37,8 +38,8 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	private Button btnFullPay;
 	
 	private Integer customerId;
-	private CustomerService customerService = (CustomerService) ctx.getBean("customerServiceImp");
-	private PaymentService paymentService = (PaymentService) ctx.getBean("paymentServiceImp");
+	private CustomerService customerService = (CustomerService) ApplicationContext.getContext().getBean("customerServiceImp");
+	private PaymentService paymentService = (PaymentService) ApplicationContext.getContext().getBean("paymentServiceImp");
 	private InvoiceArticleTablePanel articleTablePanel;
 	private InvoicePaymentTablePanel paymentTablePanel;
 
@@ -129,6 +130,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 				entity = new Invoice();
 				entity.setCustomer(customerService.find(this.customerId));
 				entityId = service.createInvoice(entity).getId();
+
 			} else {
 				String msg = "To create invoice, a customer must be exist";
 				Notification info = VaadinFactory.getNotification("Error", msg, Type.ERROR_MESSAGE);

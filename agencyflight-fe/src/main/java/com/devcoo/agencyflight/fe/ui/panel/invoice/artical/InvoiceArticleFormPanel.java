@@ -5,16 +5,13 @@ import java.util.Arrays;
 import org.springframework.context.ApplicationContext;
 
 import com.devcoo.agencyflight.core.country.Country;
-import com.devcoo.agencyflight.core.country.CountryService;
 import com.devcoo.agencyflight.core.invoice.article.InvoiceArticle;
 import com.devcoo.agencyflight.core.product.Product;
 import com.devcoo.agencyflight.core.product.ProductService;
 import com.devcoo.agencyflight.core.product.ProductSpecification;
 import com.devcoo.agencyflight.core.product.ProductType;
 import com.devcoo.agencyflight.core.product.visa.period.Period;
-import com.devcoo.agencyflight.core.product.visa.period.PeriodService;
 import com.devcoo.agencyflight.core.product.visa.type.VisaType;
-import com.devcoo.agencyflight.core.product.visa.type.VisaTypeService;
 import com.devcoo.agencyflight.core.ui.field.selelct.ComboBox;
 import com.devcoo.agencyflight.core.ui.layout.ButtonBar;
 import com.devcoo.agencyflight.core.util.NumberUtil;
@@ -39,9 +36,6 @@ public class InvoiceArticleFormPanel extends Window implements ValueChangeListen
 	private InvoiceArticleTablePanel mainPanel;
 	
 	private ProductService productService;
-	private VisaTypeService visaTypeService;
-	private CountryService countryService;
-	private PeriodService periodService;
 	
 	private ComboBox<ProductType> cboProductType;
 	private ComboBox<VisaType> cboVisaType;
@@ -58,9 +52,6 @@ public class InvoiceArticleFormPanel extends Window implements ValueChangeListen
         setModal(true);
         this.mainPanel = mainPanel;
         productService = (ProductService) ctx.getBean("productServiceImp");
-		visaTypeService = (VisaTypeService) ctx.getBean("visaTypeServiceImp");
-		countryService = (CountryService) ctx.getBean("countryServiceImp");
-		periodService = (PeriodService) ctx.getBean("periodServiceImp");
         initGUI();
     }
 
@@ -114,11 +105,11 @@ public class InvoiceArticleFormPanel extends Window implements ValueChangeListen
 			}
 		});
 		cboProduct = VaadinFactory.getComboBox("Product", productService.findAllNotDelete(), true);
-		cboVisaType = VaadinFactory.getComboBox("Visa type", visaTypeService.findAllNotDelete());
+		cboVisaType = VaadinFactory.getComboBox("Visa type", com.devcoo.agencyflight.core.std.ApplicationContext.getVisaTypies());
 		cboVisaType.addValueChangeListener(this);
-		cboNationality = VaadinFactory.getComboBox("Nationality", countryService.findAllNotDelete());
+		cboNationality = VaadinFactory.getComboBox("Nationality", com.devcoo.agencyflight.core.std.ApplicationContext.getCoutries());
 		cboNationality.addValueChangeListener(this);
-		cboPeriod = VaadinFactory.getComboBox("Period", periodService.findAllNotDelete());
+		cboPeriod = VaadinFactory.getComboBox("Period", com.devcoo.agencyflight.core.std.ApplicationContext.getPeriods());
 		cboPeriod.addValueChangeListener(this);
 		txtUnit = VaadinFactory.getTextField("Unit", true);
 		txtPrice = VaadinFactory.getTextField("Product Price", true);

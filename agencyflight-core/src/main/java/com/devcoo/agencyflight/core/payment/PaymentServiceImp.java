@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.devcoo.agencyflight.core.context.WebContext;
 import com.devcoo.agencyflight.core.invoice.Invoice;
+import com.devcoo.agencyflight.core.std.ApplicationContext;
 import com.devcoo.agencyflight.core.std.StdServiceImp;
 
 @Service
@@ -23,7 +23,7 @@ public class PaymentServiceImp extends StdServiceImp<PaymentDao, Payment> implem
 		Payment payment = new Payment();
 		payment.setInvoice(invoice);
 		payment.setAmount(amount);
-		payment.setEmployee(WebContext.getWebContext().getLog_user());
+		payment.setEmployee(ApplicationContext.getLog_user());
 		save(payment);
 	}
 

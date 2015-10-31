@@ -7,6 +7,7 @@ import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.invoice.article.InvoiceArticle;
 import com.devcoo.agencyflight.core.product.ProductType;
+import com.devcoo.agencyflight.core.std.ApplicationContext;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
 import com.devcoo.agencyflight.core.ui.field.selelct.SimpleTable;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
@@ -108,7 +109,7 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	}
 
 	private void initControls() {
-		window = new InvoiceArticleFormPanel("Add new item", this, ctx);
+		window = new InvoiceArticleFormPanel("Add new item", this, ApplicationContext.getContext());
 		tbArticles = new SimpleTable("Visa items list");
 		tbArticles.addColumns(buildColumns());
 		tbArticles.addItemClickListener(new ItemClickListener() {
