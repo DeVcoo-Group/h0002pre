@@ -42,12 +42,12 @@ public abstract class StdServiceImp<SampleRepository extends StdDao<T>, T extend
 		return dao.findOne(id);
 	}
 	
-	public void save(T entity) {
+	public T save(T entity) {
 		entity.setModifyDate(new Date());
 		entity.setCreateDate(new Date());
 		entity.setDelete(false);
 		entity.setLastModifier(getLogUser());
-		dao.save(entity);
+		return dao.save(entity);
 	}
 	
 	public void update(T entity) {

@@ -28,8 +28,7 @@ public class InvoiceServiceImp extends StdServiceImp<InvoiceDao, Invoice> implem
 		User employee = ApplicationContext.getLog_user();
 		entity.setEmployee(employee);
 		entity.setStatus(InvoiceStatus.NEW);
-		save(entity);
-		return entity;
+		return save(entity);
 	}
 
 }
