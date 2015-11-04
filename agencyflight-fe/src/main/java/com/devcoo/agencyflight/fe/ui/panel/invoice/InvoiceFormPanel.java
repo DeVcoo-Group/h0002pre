@@ -8,6 +8,7 @@ import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.payment.PaymentService;
 import com.devcoo.agencyflight.core.std.ApplicationContext;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
+import com.devcoo.agencyflight.core.util.CodeGenerator;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.devcoo.agencyflight.fe.ui.panel.invoice.artical.InvoiceArticleTablePanel;
 import com.devcoo.agencyflight.fe.ui.panel.invoice.payment.InvoicePaymentTablePanel;
@@ -50,8 +51,8 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	@Override
 	protected void save() {
 		entity = articleTablePanel.getEntity();
-		entity.setCode(txtCode.getValue());
-		service.save(entity);
+		entity.setCode(CodeGenerator.getGenerateCode(CodeGenerator.TYPE_INVOICE, entity));
+		entity = service.save(entity);
 	}
 
 	@Override
