@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 public interface StdService<T extends StdEntity>{
 	public T save(T entity);
+	public T saveAndFlush(T entity);
 	public void delete(T entity);
 	public void update(T entity);
 	public T find(Integer Id);

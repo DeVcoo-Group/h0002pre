@@ -6,6 +6,7 @@ import com.devcoo.agencyflight.core.customer.CustomerService;
 import com.devcoo.agencyflight.core.std.ApplicationContext;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
 import com.devcoo.agencyflight.core.ui.layout.customer.BaseCustomerFormPanel;
+import com.devcoo.agencyflight.core.util.CodeGenerator;
 import com.vaadin.ui.Component;
 
 public class CustomerFormPanel extends AbstractFormLayout<CustomerService, Customer> {
@@ -20,7 +21,10 @@ public class CustomerFormPanel extends AbstractFormLayout<CustomerService, Custo
 
 	@Override
 	protected void save() {
-		service.save(customerForm.getCustomerInfo(entity));
+		entity = customerForm.getCustomerInfo(entity);
+		entity = service.saveAndFlush(entity);
+		entity.setCode(CodeGenerator.getGenerateCode(CodeGenerator.TYPE_CUSTOMER, entity));
+		service.saveAndFlush(entity);
 	}
 
 	@Override

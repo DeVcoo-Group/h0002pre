@@ -43,7 +43,8 @@ public class BaseCustomerFormPanel extends FormLayout {
 	}
 	
 	private void initControls() {
-		txtCode = VaadinFactory.getTextField("Customer Code", 200, true);
+		txtCode = VaadinFactory.getTextField("Customer Code", 200,false);
+		txtCode.setEnabled(false);
 		txtFirstName = VaadinFactory.getTextField("First name", 200, true);
 		txtLastName = VaadinFactory.getTextField("Last name", 200, true);
 		dfBirthDate = new DateField("Birth date");
@@ -77,10 +78,6 @@ public class BaseCustomerFormPanel extends FormLayout {
 	
 	public boolean validate() {
 		boolean valid = true;
-		
-		if (!ValidationUtil.validateRequiredTextField(txtCode)) {
-			valid = false;
-		}
 		if (!ValidationUtil.validateRequiredTextField(txtFirstName)) {
 			valid = false;
 		}

@@ -13,6 +13,7 @@ import com.devcoo.agencyflight.core.supplier.Supplier;
 import com.devcoo.agencyflight.core.supplier.SupplierService;
 import com.devcoo.agencyflight.core.ui.field.selelct.ComboBox;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
+import com.devcoo.agencyflight.core.util.CodeGenerator;
 import com.devcoo.agencyflight.core.util.NumberUtil;
 import com.devcoo.agencyflight.core.util.Tools;
 import com.devcoo.agencyflight.core.util.ValidationUtil;
@@ -127,10 +128,6 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 	@Override
 	protected boolean validate() {
 		boolean valid = true;
-		
-		if (!ValidationUtil.validateRequiredTextField(txtCode)) {
-			valid = false;
-		}
 		if (!ValidationUtil.validateRequiredTextField(txtName)) {
 			valid = false;
 		}
@@ -154,12 +151,13 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 	
 	@Override
 	protected void save() {
-		entity.setCode(txtCode.getValue());
 		entity.setName(txtName.getValue());
 		entity.setPrice(NumberUtil.getDouble(txtPrice));
 		entity.setProductType((Integer) cboProductType.getValue());
 		entity.setSupplier(cboSupplier.getEntity());
+		entity = service.save(entity);
 		if ((Integer) cboProductType.getValue() == ProductType.PASSPORT_VISA.getId()) {
+			entity.setCode(CodeGenerator.getGenerateCode(CodeGenerator.TYPE_VISA_PASSPORT, entity));
 			entity.setVisa(visaFormPanel.getEntity());
 		}
 		service.save(entity);

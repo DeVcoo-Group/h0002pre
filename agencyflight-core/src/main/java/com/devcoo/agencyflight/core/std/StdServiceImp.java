@@ -49,6 +49,13 @@ public abstract class StdServiceImp<SampleRepository extends StdDao<T>, T extend
 		entity.setLastModifier(getLogUser());
 		return dao.save(entity);
 	}
+	public T saveAndFlush(T entity) {
+		entity.setModifyDate(new Date());
+		entity.setCreateDate(new Date());
+		entity.setDelete(false);
+		entity.setLastModifier(getLogUser());
+		return dao.saveAndFlush(entity);
+	}
 	
 	public void update(T entity) {
 		entity.setModifyDate(new Date());
