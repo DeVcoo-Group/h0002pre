@@ -32,4 +32,9 @@ public class PaymentServiceImp extends StdServiceImp<PaymentDao, Payment> implem
 		return dao.findByInvoice(invoice);
 	}
 
+	@Override
+	public Double getTotalAmount(Invoice invoice) {
+		return dao.getTotalAmount(invoice);
+	}
+
 }

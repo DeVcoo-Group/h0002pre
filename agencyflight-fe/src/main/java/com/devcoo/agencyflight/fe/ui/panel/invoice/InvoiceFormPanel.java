@@ -1,5 +1,7 @@
 package com.devcoo.agencyflight.fe.ui.panel.invoice;
 
+import java.text.DecimalFormat;
+
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.devcoo.agencyflight.core.customer.CustomerService;
@@ -71,6 +73,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	
 	private void initControls() {
 		txtCode = VaadinFactory.getTextField("Invoice Code", 200);
+		txtCode.setEnabled(false);
 		txtCustomerFirstName = VaadinFactory.getTextField("Customer first name", 200);
 		txtCustomerLastName = VaadinFactory.getTextField("Customer last name", 200);
 		txtEmployee = VaadinFactory.getTextField("Employee", 200);
@@ -140,8 +143,11 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 		} else {
 			entity = service.find(entityId);
 			txtCode.setValue(entity.getCode());
-//			DecimalFormat df = new DecimalFormat("#0.00");
-//			txtAmountReceive.setValue(df.format(0d));
+			DecimalFormat df = new DecimalFormat("0.00");
+			Double amountReceive = paymentService.getTotalAmount(entity);
+			if( amountReceive != null) {
+				txtAmountReceive.setValue(df.format(amountReceive));
+			}
 		}
 		txtCustomerFirstName.setValue(entity.getCustomer().getFirstName());
 		txtCustomerLastName.setValue(entity.getCustomer().getLastName());

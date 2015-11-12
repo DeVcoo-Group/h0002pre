@@ -10,5 +10,5 @@ public interface PaymentService extends StdService<Payment> {
 	void paid(Invoice invoice);
 	void paid(Invoice invoice, Double amount);
 	List<Payment> findByInvoice(Invoice invoice);
-
+	Double getTotalAmount(Invoice invoice);
 }
