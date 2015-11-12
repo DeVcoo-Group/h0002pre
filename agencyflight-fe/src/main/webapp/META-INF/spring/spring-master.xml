@@ -27,7 +27,7 @@
 	</bean>
 
 	<!-- Core Project scan -->
-	<context:property-placeholder location="/META-INF/spring/*.properties" />
+	<context:property-placeholder location="classpath:*.properties" />
 
 	<jpa:repositories base-package="com.devcoo.agencyflight.core" />
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
