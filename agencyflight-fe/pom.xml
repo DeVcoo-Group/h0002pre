@@ -22,6 +22,26 @@
 			<artifactId>spring-web</artifactId>
 			<version>${spring-framework.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
 	</dependencies>
-
+	<build>
+		<testResources>
+			<testResource>
+				<directory>src/main/webapp/META-INF/spring</directory>
+				<includes>
+                    <include>*.xml</include>
+                    <include>**/*.properties</include>
+                </includes>
+			</testResource>
+		</testResources>
+	</build>
 </project>

@@ -31,6 +31,7 @@
 		<!-- <hibernate.version>4.3.5.Final</hibernate.version> -->
 		<hibernate.version>3.6.9.Final</hibernate.version>
 		<org.apache.commons.version>3.4</org.apache.commons.version>
+		<junit.version>4.11</junit.version>
 	</properties>
 
 	<dependencies>
