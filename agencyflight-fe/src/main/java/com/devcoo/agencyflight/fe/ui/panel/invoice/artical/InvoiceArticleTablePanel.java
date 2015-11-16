@@ -122,11 +122,11 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	}
 	
 	@Override
-	public void assignValues(Integer entityId) {
-		if (entityId != null) {
-			entity = service.find(entityId);
-			buildTableDataSource(entity.getArticlesNotDelete());
-		}
+	public void assignValues(Integer entityId) {}
+	
+	public void assignValues(Invoice invoice) {
+		entity = invoice;
+		buildTableDataSource(entity.getArticlesNotDelete());
 	}
 	
 	@SuppressWarnings("unchecked")

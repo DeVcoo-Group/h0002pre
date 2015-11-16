@@ -24,7 +24,7 @@ public class Invoice extends StdEntity {
 
 	private static final long serialVersionUID = -1503906552312944843L;
 	
-	@Column(name = "code", nullable = false, unique = true)
+	@Column(name = "code")
 	private String code;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -69,6 +69,9 @@ public class Invoice extends StdEntity {
 	}
 
 	public List<InvoiceArticle> getArticles() {
+		if (articles == null) {
+			articles = new ArrayList<InvoiceArticle>();
+		}
 		return articles;
 	}
 

@@ -4,13 +4,12 @@ import java.text.DecimalFormat;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.devcoo.agencyflight.core.customer.CustomerService;
 import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.invoice.InvoiceService;
+import com.devcoo.agencyflight.core.invoice.InvoiceStatus;
 import com.devcoo.agencyflight.core.payment.PaymentService;
 import com.devcoo.agencyflight.core.std.ApplicationContext;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
-import com.devcoo.agencyflight.core.util.CodeGenerator;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.devcoo.agencyflight.fe.ui.panel.invoice.artical.InvoiceArticleTablePanel;
 import com.devcoo.agencyflight.fe.ui.panel.invoice.payment.InvoicePaymentTablePanel;
@@ -41,7 +40,6 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	private Button btnFullPay;
 	
 	private Integer customerId;
-	private CustomerService customerService = (CustomerService) ApplicationContext.getContext().getBean("customerServiceImp");
 	private PaymentService paymentService = (PaymentService) ApplicationContext.getContext().getBean("paymentServiceImp");
 	private InvoiceArticleTablePanel articleTablePanel;
 	private InvoicePaymentTablePanel paymentTablePanel;
@@ -53,8 +51,11 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	@Override
 	protected void save() {
 		entity = articleTablePanel.getEntity();
-		entity.setCode(CodeGenerator.getGenerateCode(CodeGenerator.TYPE_INVOICE, entity));
-		entity = service.save(entity);
+		if (entity.getId() < 1) {
+			entity = service.createInvoice(entity);
+		} else {
+			entity = service.save(entity);
+		}
 	}
 
 	@Override
@@ -73,7 +74,6 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	
 	private void initControls() {
 		txtCode = VaadinFactory.getTextField("Invoice Code", 200);
-		txtCode.setEnabled(false);
 		txtCustomerFirstName = VaadinFactory.getTextField("Customer first name", 200);
 		txtCustomerLastName = VaadinFactory.getTextField("Customer last name", 200);
 		txtEmployee = VaadinFactory.getTextField("Employee", 200);
@@ -93,6 +93,8 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 					public void onClose(ConfirmDialog conform) {
 						if (conform.isConfirmed()) {
 							paymentService.paid(entity);
+							btnFullPay.setEnabled(false);
+							paymentTablePanel.assignValues(entity);
 						}
 					}
 				});
@@ -131,10 +133,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	protected void assignValues(Integer entityId) {
 		if (entityId == null) {
 			if (this.customerId != null) {
-				entity = new Invoice();
-				entity.setCustomer(customerService.find(this.customerId));
-				entityId = service.createInvoice(entity).getId();
-
+				entity = service.newInvoice(this.customerId);
 			} else {
 				String msg = "To create invoice, a customer must be exist";
 				Notification info = VaadinFactory.getNotification("Error", msg, Type.ERROR_MESSAGE);
@@ -149,12 +148,15 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 				txtAmountReceive.setValue(df.format(amountReceive));
 			}
 		}
+		btnFullPay.setEnabled(entity.getEStatus() != InvoiceStatus.FULL_PAY);
 		txtCustomerFirstName.setValue(entity.getCustomer().getFirstName());
 		txtCustomerLastName.setValue(entity.getCustomer().getLastName());
 		txtEmployee.setValue(entity.getEmployee().getName());
-		articleTablePanel.assignValues(entityId);
+		articleTablePanel.assignValues(entity);
 		if (entity != null  && entity.getId() > 0) {
 			paymentTablePanel.assignValues(entity);
+		} else {
+			paymentTablePanel.assignValues(null);
 		}
 	}
 	
@@ -178,11 +180,11 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	}
 	
 	private void setEnabledControls(boolean enabled) {
-//		txtCode.setEnabled(enabled);
+		txtCode.setEnabled(enabled);
 		txtCustomerFirstName.setEnabled(enabled);
 		txtCustomerLastName.setEnabled(enabled);
 		txtEmployee.setEnabled(enabled);
-//		txtAmountReceive.setEnabled(enabled);
+		txtAmountReceive.setEnabled(enabled);
 	}
 
 	@Override

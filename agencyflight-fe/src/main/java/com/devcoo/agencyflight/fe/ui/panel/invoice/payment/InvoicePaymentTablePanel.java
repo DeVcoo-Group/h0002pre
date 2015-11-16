@@ -55,6 +55,8 @@ public class InvoicePaymentTablePanel extends AbstractListLayout<PaymentService,
 	public void assignValues(Invoice invoice) {
 		if (invoice != null) {
 			buildTableDataSource(service.findByInvoice(invoice).iterator());
+		} else {
+			buildTableDataSource(null);
 		}
 	}
 	

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devcoo.agencyflight.core.invoice.Invoice;
+import com.devcoo.agencyflight.core.invoice.InvoiceService;
+import com.devcoo.agencyflight.core.invoice.InvoiceStatus;
 import com.devcoo.agencyflight.core.std.ApplicationContext;
 import com.devcoo.agencyflight.core.std.StdServiceImp;
 
@@ -15,6 +17,9 @@ public class PaymentServiceImp extends StdServiceImp<PaymentDao, Payment> implem
 
 	@Override
 	public void paid(Invoice invoice) {
+		InvoiceService invoiceService = (InvoiceService) ApplicationContext.getContext().getBean("invoiceServiceImp");
+		invoice.setStatus(InvoiceStatus.FULL_PAY);
+		invoiceService.save(invoice);
 		paid(invoice, invoice.getTotalAmountToPaid());
 	}
 
