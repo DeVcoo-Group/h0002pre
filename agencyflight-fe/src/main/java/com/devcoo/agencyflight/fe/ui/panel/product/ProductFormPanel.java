@@ -73,7 +73,8 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 	private void initControls() {
 		visaFormPanel = new ProductVisaFormPanel(periodService, visaTypeService, countryService);
 		productTypePanel = new VerticalLayout();
-		txtCode = VaadinFactory.getTextField("Product Code", 200, true);
+		txtCode = VaadinFactory.getTextField("Product Code", 200, false);
+		txtCode.setEnabled(false);
 		txtName = VaadinFactory.getTextField("Product Name", 200, true);
 		txtPrice = VaadinFactory.getTextField("Price", 200, true);
 		cboProductType = VaadinFactory.getComboBox("Product Type", Arrays.asList(ProductType.values()));
@@ -151,6 +152,7 @@ public class ProductFormPanel extends AbstractFormLayout<ProductService, Product
 	
 	@Override
 	protected void save() {
+		entity.setCode("UNKNOW");
 		entity.setName(txtName.getValue());
 		entity.setPrice(NumberUtil.getDouble(txtPrice));
 		entity.setProductType((Integer) cboProductType.getValue());
