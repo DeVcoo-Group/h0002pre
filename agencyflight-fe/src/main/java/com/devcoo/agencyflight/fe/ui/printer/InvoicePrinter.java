@@ -3,21 +3,12 @@ package com.devcoo.agencyflight.fe.ui.printer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import ru.xpoft.vaadin.VaadinView;
-
 import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.invoice.InvoiceService;
 import com.devcoo.agencyflight.core.ui.field.selelct.Column;
 import com.devcoo.agencyflight.core.ui.layout.report.ReportLayoutGenerator;
 import com.vaadin.ui.Table.Align;
 
-@Component
-@Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@VaadinView(InvoicePrinter.NAME)
 public class InvoicePrinter extends ReportLayoutGenerator<InvoiceService, Invoice>{
 
 	private static final long serialVersionUID = 2725250598876938595L;
@@ -77,5 +68,7 @@ public class InvoicePrinter extends ReportLayoutGenerator<InvoiceService, Invoic
 		columns.add(new Column(TEST_FOOTER_2, "", String.class, Align.LEFT, 200));
 		return columns;
 	}
+
+	
 
 }

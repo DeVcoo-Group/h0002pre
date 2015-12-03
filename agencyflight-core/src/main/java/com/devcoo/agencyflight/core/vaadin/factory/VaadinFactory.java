@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.devcoo.agencyflight.core.std.StdField;
 import com.devcoo.agencyflight.core.ui.field.selelct.ComboBox;
+import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -14,6 +15,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class VaadinFactory {
@@ -137,6 +139,21 @@ public class VaadinFactory {
 		Notification info = new Notification(title, msg, type);
 		info.setDelayMsec(delay);
 		return info;
+	}
+	
+	public static Button getButtonPrinter(String printerPageClassName) {
+		Button btnPrint = VaadinFactory.getButton("Print");
+		try {
+			BrowserWindowOpener opener;
+			opener = new BrowserWindowOpener((Class<? extends UI>) Class.forName("com.devcoo.agencyflight.fe.ui.printer."+printerPageClassName));
+			opener.setFeatures("height=800,width=600,resizable");
+			opener.extend(btnPrint);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return btnPrint;
+		
 	}
 	
 }
