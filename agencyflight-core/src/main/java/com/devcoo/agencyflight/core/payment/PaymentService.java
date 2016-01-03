@@ -7,6 +7,7 @@ import com.devcoo.agencyflight.core.std.StdService;
 
 public interface PaymentService extends StdService<Payment> {
 	
+	Payment newPayment();
 	void paid(Invoice invoice);
 	void paid(Invoice invoice, Double amount);
 	List<Payment> findByInvoice(Invoice invoice);

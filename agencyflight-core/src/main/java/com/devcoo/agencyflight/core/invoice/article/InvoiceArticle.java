@@ -7,8 +7,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.devcoo.agencyflight.core.invoice.Invoice;
+import com.devcoo.agencyflight.core.invoice.InvoiceStatus;
 import com.devcoo.agencyflight.core.product.Product;
 import com.devcoo.agencyflight.core.std.StdEntity;
+import com.devcoo.agencyflight.core.util.Tools;
 
 @Entity
 @Table(name = "invoice_articles")
@@ -35,6 +37,9 @@ public class InvoiceArticle extends StdEntity {
 	@ManyToOne
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
+	
+	@Column(name = "status", nullable = false)
+	private Integer status;
 
 //	public String getCode() {
 //		return code;
@@ -82,6 +87,26 @@ public class InvoiceArticle extends StdEntity {
 
 	public void setProduct(Product Product) {
 		this.product = Product;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+	
+	public InvoiceStatus getEStatus() {
+		return (InvoiceStatus) Tools.getEnum(getStatus(), InvoiceStatus.values());
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	
+	public void setStatus(InvoiceStatus status) {
+		if (status != null) {
+			setStatus(status.getId());
+		} else {
+			this.status = null;
+		}
 	}
 
 	@Override

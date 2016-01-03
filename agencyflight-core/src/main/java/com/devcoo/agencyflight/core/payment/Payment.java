@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.std.StdEntity;
 import com.devcoo.agencyflight.core.user.User;
+import com.devcoo.agencyflight.core.util.Tools;
 
 @Entity
 @Table(name="payment")
@@ -27,6 +28,8 @@ public class Payment extends StdEntity {
 	@JoinColumn(name = "employee_id", nullable = false)
 	private User employee;
 	
+	@Column(name = "status", nullable = false)
+	private Integer status;
 	
 	public User getEmployee() {
 		return employee;
@@ -57,6 +60,26 @@ public class Payment extends StdEntity {
 		this.invoice = invoice;
 	}
 
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public PaymentStatus getEStatus() {
+		return (PaymentStatus) Tools.getEnum(getStatus(), PaymentStatus.values());
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public void setStatus(PaymentStatus status) {
+		if (status != null) {
+			setStatus(status.getId());
+		} else {
+			this.status = null;
+		}
+	}
 
 	@Override
 	public String getDisplayName() {

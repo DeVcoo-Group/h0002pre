@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.devcoo.agencyflight.core.invoice.Invoice;
 import com.devcoo.agencyflight.core.invoice.InvoiceService;
+import com.devcoo.agencyflight.core.invoice.InvoiceStatus;
 import com.devcoo.agencyflight.core.invoice.article.InvoiceArticle;
 import com.devcoo.agencyflight.core.product.ProductType;
 import com.devcoo.agencyflight.core.std.ApplicationContext;
@@ -39,6 +40,7 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	private static final String UNIT = "unit";
 	private static final String PRICE = "price";
 	private static final String TOTAL_PRICE = "total.price";
+	private static final String STATUS = "status";
 	
 	private SimpleTable tbArticles;
 	private ButtonBar crudBar;
@@ -126,16 +128,18 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 	
 	public void assignValues(Invoice invoice) {
 		entity = invoice;
+		crudBar.setEnabled(InvoiceStatus.NEW == invoice.getEStatus());
 		buildTableDataSource(entity.getArticlesNotDelete());
 	}
 	
 	@SuppressWarnings("unchecked")
 	protected void buildTableDataSource(List<InvoiceArticle> entities) {
 		tbArticles.removeAllItems();
+		selectedItemId = null;
 		if (entities != null) {
 			for (int i = 0; i < entities.size(); i++) {
 				Item item = tbArticles.addItem(i);
-				item.getItemProperty(ID).setValue(i);
+				item.getItemProperty(ID).setValue(i + 1);
 				renderRow(item, entities.get(i));
 			}
 		}
@@ -148,6 +152,7 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 		item.getItemProperty(UNIT).setValue(entity.getUnit());
 		item.getItemProperty(PRICE).setValue(NumberUtil.formatCurrency(entity.getPrice()));
 		item.getItemProperty(TOTAL_PRICE).setValue(NumberUtil.formatCurrency(entity.getUnit() * entity.getPrice()));
+		item.getItemProperty(STATUS).setValue(entity.getEStatus().getCode());
 	}
 	
 	protected List<Column> buildColumns() {
@@ -158,6 +163,7 @@ public class InvoiceArticleTablePanel extends AbstractFormLayout<InvoiceService,
 		columns.add(new Column(UNIT, "Unit", Integer.class, Align.RIGHT, 200));
 		columns.add(new Column(PRICE, "Price", String.class, Align.RIGHT, 200));
 		columns.add(new Column(TOTAL_PRICE, "Total Price", String.class, Align.RIGHT, 200));
+		columns.add(new Column(STATUS, "Status", String.class, Align.LEFT, 60));
 		return columns;
 	}
 

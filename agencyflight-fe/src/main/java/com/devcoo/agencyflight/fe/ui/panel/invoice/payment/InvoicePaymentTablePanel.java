@@ -22,6 +22,7 @@ public class InvoicePaymentTablePanel extends AbstractListLayout<PaymentService,
 	private static final String EMPLOYEE = "employee";
 	private static final String PAYMENT_DATE = "paymentDate";
 	private static final String AMOUNT = "amount";
+	private static final String STATUS = "status";
 
 	public InvoicePaymentTablePanel() {
 		super("paymentServiceImp");
@@ -40,6 +41,7 @@ public class InvoicePaymentTablePanel extends AbstractListLayout<PaymentService,
 		item.getItemProperty(EMPLOYEE).setValue(payment.getEmployee().getName());
 		item.getItemProperty(PAYMENT_DATE).setValue(payment.getCreateDate());
 		item.getItemProperty(AMOUNT).setValue(NumberUtil.formatCurrency(payment.getAmount()));
+		item.getItemProperty(STATUS).setValue(payment.getEStatus().getCode());
 	}
 
 	@Override
@@ -49,6 +51,7 @@ public class InvoicePaymentTablePanel extends AbstractListLayout<PaymentService,
 		columns.add(new Column(EMPLOYEE, "Employee", String.class, Align.LEFT, 200));
 		columns.add(new Column(PAYMENT_DATE, "Payment Date", Date.class, Align.LEFT));
 		columns.add(new Column(AMOUNT, "Amount", String.class, Align.RIGHT, 200));
+		columns.add(new Column(STATUS, "Status", String.class, Align.LEFT, 60));
 		return columns;
 	}
 	

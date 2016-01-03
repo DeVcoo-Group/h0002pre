@@ -95,6 +95,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 							paymentService.paid(entity);
 							btnFullPay.setEnabled(false);
 							paymentTablePanel.assignValues(entity);
+							articleTablePanel.assignValues(entity);
 						}
 					}
 				});
