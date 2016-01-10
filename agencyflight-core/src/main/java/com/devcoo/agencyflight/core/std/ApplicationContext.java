@@ -11,6 +11,7 @@ import com.devcoo.agencyflight.core.country.Country;
 import com.devcoo.agencyflight.core.product.visa.period.Period;
 import com.devcoo.agencyflight.core.product.visa.type.VisaType;
 import com.devcoo.agencyflight.core.startup.Register;
+import com.devcoo.agencyflight.core.store.Store;
 import com.devcoo.agencyflight.core.user.User;
 import com.vaadin.server.Page;
 import com.vaadin.ui.UI;
@@ -23,6 +24,7 @@ public class ApplicationContext implements ApplicationContextAware {
 	private static List<Period> periods = new ArrayList<Period>();
 	private static List<Country> coutries = new ArrayList<Country>();
 	private static List<VisaType> visaTypies = new ArrayList<VisaType>();
+	private static Store store = new Store();
 	
     public static void setContext(
 			org.springframework.context.ApplicationContext context) {
@@ -78,5 +80,13 @@ public class ApplicationContext implements ApplicationContextAware {
 
 	public static void setVisaTypies(List<VisaType> visaTypies) {
 		ApplicationContext.visaTypies = visaTypies;
+	}
+
+	public static Store getStore() {
+		return store;
+	}
+
+	public static void setStore(Store store) {
+		ApplicationContext.store = store;
 	}
 }

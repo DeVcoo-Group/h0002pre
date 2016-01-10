@@ -32,6 +32,8 @@
 		<hibernate.version>3.6.9.Final</hibernate.version>
 		<org.apache.commons.version>3.4</org.apache.commons.version>
 		<junit.version>4.11</junit.version>
+		<jasper.version>6.2.0</jasper.version>
+		<jasper.font.version>6.0.0</jasper.font.version>
 	</properties>
 
 	<dependencies>
@@ -78,16 +80,20 @@
 			<artifactId>confirmdialog</artifactId>
 			<version>2.1.2</version>
 		</dependency>
-
 		<dependency>
-			<groupId>net.sf.jodreports</groupId>
-			<artifactId>jodreports</artifactId>
-			<version>2.4.0</version>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>${jasper.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.artofsolving</groupId>
-			<artifactId>jodconverter</artifactId>
-			<version>2.2.1</version>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-fonts</artifactId>
+			<version>${jasper.font.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>fontawesomelabel</artifactId>
+			<version>1.2.0</version>
 		</dependency>
 	</dependencies>
 

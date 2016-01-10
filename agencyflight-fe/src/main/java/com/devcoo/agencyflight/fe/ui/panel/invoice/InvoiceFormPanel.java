@@ -10,9 +10,11 @@ import com.devcoo.agencyflight.core.invoice.InvoiceStatus;
 import com.devcoo.agencyflight.core.payment.PaymentService;
 import com.devcoo.agencyflight.core.std.ApplicationContext;
 import com.devcoo.agencyflight.core.ui.layout.AbstractFormLayout;
+import com.devcoo.agencyflight.core.ui.layout.report.ReportGenerator;
 import com.devcoo.agencyflight.core.vaadin.factory.VaadinFactory;
 import com.devcoo.agencyflight.fe.ui.panel.invoice.artical.InvoiceArticleTablePanel;
 import com.devcoo.agencyflight.fe.ui.panel.invoice.payment.InvoicePaymentTablePanel;
+import com.devcoo.agencyflight.fe.ui.printer.invoice.InvoicePrinterJasper;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -38,11 +40,13 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 	private TextField txtAmountReceive;
 	
 	private Button btnFullPay;
+	private Button btnPrint;
 	
 	private Integer customerId;
 	private PaymentService paymentService = (PaymentService) ApplicationContext.getContext().getBean("paymentServiceImp");
 	private InvoiceArticleTablePanel articleTablePanel;
 	private InvoicePaymentTablePanel paymentTablePanel;
+	private InvoicePrinterJasper invoicePrinter;
 
 	public InvoiceFormPanel() {
 		super("invoiceServiceImp");
@@ -120,6 +124,9 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 		formLayout.addComponent(txtEmployee);
 		formLayout.addComponent(txtCustomerLastName);
 		formLayout.addComponent(btnFullPay);
+		invoicePrinter = new InvoicePrinterJasper();
+		btnPrint = invoicePrinter.generateReportButton("Print", "InvoicePrinter.html", ReportGenerator.HTML);
+		formLayout.addComponent(btnPrint);
 		horizontalLayout.addComponent(formLayout);
 		
 		formLayout = new FormLayout();
@@ -154,6 +161,7 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 		txtCustomerLastName.setValue(entity.getCustomer().getLastName());
 		txtEmployee.setValue(entity.getEmployee().getName());
 		articleTablePanel.assignValues(entity);
+		generateInvoicePrint();
 		if (entity != null  && entity.getId() > 0) {
 			paymentTablePanel.assignValues(entity);
 		} else {
@@ -190,8 +198,10 @@ public class InvoiceFormPanel extends AbstractFormLayout<InvoiceService, Invoice
 
 	@Override
 	protected boolean validate() {
-		
 		return true;
 	}
 
+	private void generateInvoicePrint() {
+		invoicePrinter.setInvoice(entity);
+	}
 }
