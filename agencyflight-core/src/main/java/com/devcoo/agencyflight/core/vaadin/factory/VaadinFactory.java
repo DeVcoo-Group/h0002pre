@@ -141,17 +141,12 @@ public class VaadinFactory {
 		return info;
 	}
 	
-	public static Button getButtonPrinter(String printerPageClassName) {
+	public static Button getButtonPrinter(Class<? extends UI> uiPrinter) {
 		Button btnPrint = VaadinFactory.getButton("Print");
-		try {
-			BrowserWindowOpener opener;
-			opener = new BrowserWindowOpener((Class<? extends UI>) Class.forName("com.devcoo.agencyflight.fe.ui.printer."+printerPageClassName));
-			opener.setFeatures("height=800,width=600,resizable");
-			opener.extend(btnPrint);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
+		BrowserWindowOpener opener;
+		opener = new BrowserWindowOpener(uiPrinter);
+		opener.setFeatures("height=800,width=600,resizable");
+		opener.extend(btnPrint);
 		return btnPrint;
 		
 	}
